@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+/* ─── VINDEX Design Tokens & Scale ─── */
+:root {
+  /* Core Colors */
+  --bg-deep: #020305;
+  --bg-main: #07090C;
+  --bg-elevated: #0C0F14;
+  --bg-surface: #12161D;
+  --bg-float: #1A1E26;
+
+  /* Accent (Gold/Bronze refined for premium corporate) */
+  --accent-mute: #6b583e;
+  --accent: #D4AF37;
+  --accent-bright: #E5C158;
+
+  /* Text Hierarchy */
+  --text-pure: #FFFFFF;
+  --text-primary: #EDEDED;
+  --text-secondary: #9BA3AE;
+  --text-muted: #6B7280;
+
+  /* Borders & Dividers */
+  --border-dim: rgba(255, 255, 255, 0.04);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-accent: rgba(212, 175, 55, 0.3);
+
+  /* FX */
+  --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 40px -10px rgba(212, 175, 55, 0.15);
+}
+
+/* ─── Tailwind 4 Registration ─── */
+@theme inline {
+  --color-background: var(--bg-main);
+  --color-foreground: var(--text-primary);
+  --font-body: var(--font-body);
+  --font-heading: var(--font-heading);
+}
+
+/* ─── Premium Base Styles ─── */
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-body), Inter, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Premium touch: subtle gradient background for depth */
+  background-image: radial-gradient(circle at 50% 0%, var(--bg-elevated) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* ─── Selection ─── */
+::selection {
+  background-color: var(--accent-mute);
+  color: var(--text-pure);
+}
+
+/* ─── Focus Styles ─── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Disable ugly webkit tap highlights on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
