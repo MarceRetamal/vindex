@@ -37,24 +37,23 @@ function escapeHtml(value: string) {
     .replace(/'/g, '&#039;')
 }
 
-const smtpHost = getEnv('SMTP_HOST')
-const smtpPort = Number(getEnv('SMTP_PORT'))
-const smtpSecure = parseBoolean(process.env.SMTP_SECURE, true)
-const smtpUser = getEnv('SMTP_USER')
-const smtpPass = getEnv('SMTP_PASS')
+function getTransporter() {
+  const smtpHost = getEnv('SMTP_HOST')
+  const smtpPort = Number(getEnv('SMTP_PORT'))
+  const smtpSecure = parseBoolean(process.env.SMTP_SECURE, true)
+  const smtpUser = getEnv('SMTP_USER')
+  const smtpPass = getEnv('SMTP_PASS')
 
-const mailFrom = getEnv('MAIL_FROM')
-const mailTo = getEnv('MAIL_TO')
-
-const transporter = nodemailer.createTransport({
-  host: smtpHost,
-  port: smtpPort,
-  secure: smtpSecure,
-  auth: {
-    user: smtpUser,
-    pass: smtpPass,
-  },
-})
+  return nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpSecure,
+    auth: {
+      user: smtpUser,
+      pass: smtpPass,
+    },
+  })
+}
 
 async function sendInstitutionalEmail(payload: IntakePayload) {
   const subject = `[VINDEX] Nueva evaluación jurídica — ${payload.name}`
@@ -92,6 +91,10 @@ ${payload.message}
       <p>${escapeHtml(payload.message).replace(/\n/g, '<br />')}</p>
     </div>
   `
+
+  const mailFrom = getEnv('MAIL_FROM')
+  const mailTo = getEnv('MAIL_TO')
+  const transporter = getTransporter()
 
   await transporter.sendMail({
     from: mailFrom,
