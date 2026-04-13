@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { fontBody, fontHeading } from '@/lib/fonts'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://vindex.ar'),
@@ -40,7 +41,10 @@ export default function RootLayout({
   return (
     <html lang="es" data-scroll-behavior="smooth" className={`${fontBody.variable} ${fontHeading.variable}`}>
       
-          <body>{children}</body>
+          <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
