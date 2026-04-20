@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import { fontBody, fontHeading } from '@/lib/fonts'
 
@@ -39,8 +40,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" data-scroll-behavior="smooth" className={`${fontBody.variable} ${fontHeading.variable}`}>
-      
-          <body>{children}</body>
+      <body>
+        {children}
+        
+        {/* HubSpot Embed Code */}
+        <Script
+          id="hs-script-loader"
+          src="//js-na1.hs-scripts.com/51328372.js"
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   )
 }
