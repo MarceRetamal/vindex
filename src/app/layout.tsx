@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import './globals.css'
 import { fontBody, fontHeading } from '@/lib/fonts'
+import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://vindex.ar'),
@@ -42,7 +43,7 @@ export default function RootLayout({
     <html lang="es" data-scroll-behavior="smooth" className={`${fontBody.variable} ${fontHeading.variable}`}>
       <body>
         {children}
-        
+        <FloatingWhatsApp />
         {/* HubSpot Embed Code */}
         <Script
           id="hs-script-loader"
