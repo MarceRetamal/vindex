@@ -6,7 +6,7 @@ export function FloatingWhatsApp() {
   const [isHovered, setIsHovered] = useState(false)
   
   // Reemplazar con el número de teléfono deseado, con código de país (ej. 5491123456789)
-  const phoneNumber = "5491100000000" 
+  const phoneNumber = "5491125826179" 
   const message = "Hola, me gustaría recibir más información."
   
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
