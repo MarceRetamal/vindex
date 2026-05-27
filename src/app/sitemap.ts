@@ -26,5 +26,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: 'https://vindex.ar/contacto',
       lastModified: new Date(),
     },
+    {
+      url: 'https://vindex.ar/politica-de-privacidad',
+      lastModified: new Date(),
+    },
   ]
 }
