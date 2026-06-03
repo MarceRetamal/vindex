@@ -3,31 +3,31 @@ import type { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://vindex.ar',
+      url: 'https://vindex.dpdns.org',
       lastModified: new Date(),
     },
     {
-      url: 'https://vindex.ar/sistema',
+      url: 'https://vindex.dpdns.org',
       lastModified: new Date(),
     },
     {
-      url: 'https://vindex.ar/areas',
+      url: 'https://vindex.dpdns.org',
       lastModified: new Date(),
     },
     {
-      url: 'https://vindex.ar/criterio',
+      url: 'https://vindex.dpdns.org',
       lastModified: new Date(),
     },
     {
-      url: 'https://vindex.ar/evaluacion',
+      url: 'https://vindex.dpdns.org',
       lastModified: new Date(),
     },
     {
-      url: 'https://vindex.ar/contacto',
+      url: 'https://vindex.dpdns.org',
       lastModified: new Date(),
     },
     {
-      url: 'https://vindex.ar/politica-de-privacidad',
+      url: 'https://vindex.dpdns.org',
       lastModified: new Date(),
     },
   ]
