@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://vindex.ar/sitemap.xml',
+    sitemap: 'https://vindex.dpdns.org/sitemap.xml',
   }
 }
