@@ -18,6 +18,12 @@
     "traces": {
       "enabled": false
     }
+  },
+  "vars": {
+    "SMTP_HOST": "c2751146.ferozo.com",
+    "SMTP_PORT": "465",
+    "SMTP_SECURE": "true",
+    "MAIL_FROM": "VINDEX",
+    "MAIL_TO": "vindex@estudioretamalmarcelo.com"
   }
-  // Forzar redeploy para activar variables SMTP
 }
