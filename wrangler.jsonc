@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/cloudflare/wrangler/main/schemas/config-schema.json",
   "name": "vindex",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-06-03",
