@@ -132,24 +132,20 @@ async function sendCourtesyEmail(payload: IntakePayload, requestID: string) {
   })
 }
 
-// =========================================================================
-// 3. NUEVO: DISPARADOR DIRECTO DE WHATSAPP (Meta Cloud API)
-// =========================================================================
+// 3. OPTIMIZADO: DISPARADOR DIRECTO DE WHATSAPP (Soporta Encabezado con Imagen)
 async function sendWhatsAppNotification(payload: IntakePayload, requestID: string) {
   try {
     const phoneNumberID = getEnv('WA_PHONE_NUMBER_ID')
     const accessToken = getEnv('WA_ACCESS_TOKEN')
+    const logoUrl = getEnv('WA_LOGO_URL') // Traemos el link público de la imagen de cabecera
 
-    // Limpieza estricta del teléfono: dejamos solo números
     let cleanedPhone = payload.phone.replace(/\D/g, '')
 
-    // Parche de conversión para prefijos de Argentina si el usuario escribió "0" o "15"
     if (cleanedPhone.startsWith('5409')) {
       cleanedPhone = '549' + cleanedPhone.substring(4)
     } else if (cleanedPhone.startsWith('549')) {
-      // Formato correcto internacional de Meta para Argentina
+      // Formato correcto
     } else if (cleanedPhone.startsWith('11') || cleanedPhone.startsWith('34') || cleanedPhone.startsWith('26') || cleanedPhone.startsWith('35')) {
-      // Si omitió el código de país, le anteponemos el de Argentina (549)
       cleanedPhone = '549' + cleanedPhone
     }
 
@@ -167,6 +163,18 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
           name: "vindex_admision_cortesia",
           language: { code: "es" },
           components: [
+            // 🛠️ AGREGO PARÁMETRO DE HEADER: Envía el logotipo al encabezado del mensaje de Meta
+            {
+              type: "header",
+              parameters: [
+                {
+                  type: "image",
+                  image: {
+                    link: logoUrl
+                  }
+                }
+              ]
+            },
             {
               type: "body",
               parameters: [
@@ -184,14 +192,11 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
       console.error('Meta API rechazó el mensaje de WhatsApp:', errData)
     }
   } catch (waError) {
-    // Aislamos el error para que la API principal responda OK aunque falle WhatsApp
     console.error('Error de conexión con la infraestructura de WhatsApp:', waError)
   }
 }
 
-// =========================================================================
 // 4. ENRUTADOR POST PRINCIPAL
-// =========================================================================
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as Partial<IntakePayload>
@@ -218,11 +223,10 @@ export async function POST(request: Request) {
 
     const requestID = `VX-${Math.floor(1000 + Math.random() * 9000)}`
 
-    // Envíos concurrentes de correos
     await sendInstitutionalEmail(payload)
     await sendCourtesyEmail(payload, requestID)
 
-    // Gatillo automático de WhatsApp (en paralelo y seguro)
+    // Gatillo automático en paralelo
     await sendWhatsAppNotification(payload, requestID)
 
     return NextResponse.json({ ok: true, warnings: [] })
