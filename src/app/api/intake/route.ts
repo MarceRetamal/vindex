@@ -56,7 +56,7 @@ function getTransporter() {
 }
 
 // =========================================================================
-// 1. CORREO INSTITUCIONAL (El que te llega a vos)
+// 1. CORREO INSTITUCIONAL (Notificación interna para tu estudio)
 // =========================================================================
 async function sendInstitutionalEmail(payload: IntakePayload) {
   const subject = `[VINDEX] Nueva evaluación jurídica — ${payload.name}`
@@ -110,25 +110,27 @@ ${payload.message}
 }
 
 // =========================================================================
-// 2. NUEVO: CORREO DE CORTESÍA PREMIUM (El que le llega al cliente)
+// 2. CORREO DE CORTESÍA REVISADO (Identidad legal disruptiva y anti-spam)
 // =========================================================================
 async function sendCourtesyEmail(payload: IntakePayload) {
-  const subject = `NOTIFICACIÓN DE INGRESO: Protocolo de Evaluación — VINDEX`
+  // Asunto en formato elegante, limpio y sin mayúsculas sostenidas
+  const subject = `Confirmación de ingreso: Protocolo de Evaluación — VINDEX`
   const requestID = `VX-${Math.floor(1000 + Math.random() * 9000)}`
 
   const text = `
-SISTEMA VINDEX — CONFIRMACIÓN DE RECEPCIÓN
+ESTUDIO JURÍDICO VINDEX — DIRECCIÓN DE ADMISIÓN
 --------------------------------------------------
 ID de Solicitud: ${requestID}
 Destinatario: ${payload.name}
 
-Se han recibido correctamente los parámetros del escenario provisto y la descripción del conflicto en nuestra plataforma.
-El caso ingresó formalmente en fase de análisis técnico-legal para determinar su admisibilidad y viabilidad estratégica. 
+Le confirmamos que los parámetros del escenario provisto y la descripción de la situación han sido indexados correctamente en nuestra plataforma.
 
-VINDEX no procesa consultas automáticas. Un analista especializado evaluará el statu quo del escenario y se pondrá en contacto directo con usted a la brevedad a través de este medio o al teléfono provisto (${payload.phone || '-'}).
+El caso ha ingresado formalmente bajo el protocolo de análisis para evaluar la admisibilidad y viabilidad de una intervención estratégica.
+
+Un analista especializado evaluará el statu quo del escenario y se pondrá en contacto directo con usted a la brevedad a través de este medio o al teléfono registrado (${payload.phone || '-'}).
 
 Atentamente,
-Gabinete de Estrategia VINDEX
+Gabinete de Estrategia Jurídica — VINDEX
 https://vindex.dpdns.org
 --------------------------------------------------
 Documento de transmisión interna. Por favor, no responda directamente a este correo automático.
@@ -162,7 +164,7 @@ Documento de transmisión interna. Por favor, no responda directamente a este co
         </p>
 
         <p style="font-size: 15px; line-height: 1.7; color: #D1D5DB; margin-bottom: 18px;">
-          A partir de este momento, el caso ingresa formalmente en nuestra <strong>fase de evaluación estricta</strong>. Nuestro equipo técnico y legal analizará los elementos provistos para determinar la admisibilidad de una intervención y proyectar la arquitectura de la estrategia jurídica adecuada.
+          A partir de este momento, el caso ingresa formalmente en nuestra <strong>fase de análisis de admisión</strong>. Nuestro equipo evaluará detalladamente los elementos provistos para determinar la viabilidad de una intervención y proyectar la arquitectura de la estrategia jurídica adecuada.
         </p>
 
         <p style="font-size: 15px; line-height: 1.7; color: #D1D5DB; margin-bottom: 35px;">
@@ -170,11 +172,11 @@ Documento de transmisión interna. Por favor, no responda directamente a este co
         </p>
 
         <div style="border-top: 1px solid #1F2937; padding-top: 25px; font-size: 13px; color: #9CA3AF; line-height: 1.6;">
-          <p style="margin: 0 0 5px 0; color: #F3F4F6; font-weight: bold;">Gabinete Técnico Legal — VINDEX</p>
+          <p style="margin: 0 0 5px 0; color: #F3F4F6; font-weight: bold;">Gabinete de Estrategia Jurídica — VINDEX</p>
           <p style="margin: 0 0 15px 0;"><a href="https://vindex.dpdns.org" style="color: #9CA3AF; text-decoration: none; border-bottom: 1px dashed #4B5563;">vindex.dpdns.org</a></p>
           
           <p style="font-size: 11px; color: #6B7280; margin: 0; font-family: monospace; line-height: 1.4;">
-            CONFIDENCIALIDAD: La información contenida en esta transmisión interna está sujeta a reserva estricta del protocolo de evaluación VINDEX.
+            CONFIDENCIALIDAD: La información contenida en esta transmisión interna está sujeta a reserva estricta del protocolo de evaluación de admisión VINDEX.
           </p>
         </div>
 
@@ -234,10 +236,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // Ejecuta el envío interno para vos
     await sendInstitutionalEmail(payload)
-
-    // AHORA SÍ: Ejecuta el envío de cortesía disruptivo para el cliente
     await sendCourtesyEmail(payload)
 
     return NextResponse.json({
