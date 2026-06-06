@@ -161,7 +161,7 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
         type: "template",
         template: {
           name: "vindex_admision_cortesia",
-          language: { code: "es" },
+          language: { code: "es_AR" },
           components: [
             // 🛠️ AGREGO PARÁMETRO DE HEADER: Envía el logotipo al encabezado del mensaje de Meta
             {
