@@ -42,6 +42,9 @@ export function EvaluationForm() {
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
+    // 🛠️ OPTIMIZACIÓN CRÍTICA INP: Validar únicamente al perder el foco del campo
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
     defaultValues: {
       name: '', email: '', phone: '', locality: '', province: '',
       status: '', urgency: '', message: '', website: ''
