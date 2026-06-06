@@ -1,34 +1,32 @@
-import type { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = 'https://vindex.dpdns.org'
+
   return [
     {
-      url: 'https://vindex.dpdns.org',
+      url: baseUrl,
       lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 1.0,
     },
     {
-      url: 'https://vindex.dpdns.org',
+      url: `${baseUrl}/areas`,
       lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
     {
-      url: 'https://vindex.dpdns.org',
+      url: `${baseUrl}/evaluacion`,
       lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
     },
     {
-      url: 'https://vindex.dpdns.org',
+      url: `${baseUrl}/criterio`,
       lastModified: new Date(),
-    },
-    {
-      url: 'https://vindex.dpdns.org',
-      lastModified: new Date(),
-    },
-    {
-      url: 'https://vindex.dpdns.org',
-      lastModified: new Date(),
-    },
-    {
-      url: 'https://vindex.dpdns.org',
-      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
     },
   ]
 }
