@@ -160,7 +160,7 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
         to: cleanedPhone,
         type: "template",
         template: {
-          name: "vindex_admision_cortesia",
+          name: "hello_world",
           language: { code: "es_AR" },
           components: [
             // 🛠️ AGREGO PARÁMETRO DE HEADER: Envía el logotipo al encabezado del mensaje de Meta
