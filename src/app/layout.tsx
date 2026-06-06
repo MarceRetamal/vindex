@@ -5,7 +5,8 @@ import { fontBody, fontHeading } from '@/lib/fonts'
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://vindex.ar'),
+  // 1. CORREGIDO: Actualizamos la base del dominio para indexación real de Google
+  metadataBase: new URL('https://vindex.dpdns.org'), 
   title: {
     default: 'VINDEX',
     template: '%s | VINDEX',
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'VINDEX',
     description: 'Estrategia jurídica para conflictos complejos.',
-    url: 'https://vindex.ar',
+    url: 'https://vindex.dpdns.org', // 2. CORREGIDO: URL canónica oficial para redes sociales
     siteName: 'VINDEX',
     locale: 'es_AR',
     type: 'website',
@@ -41,9 +42,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" data-scroll-behavior="smooth" className={`${fontBody.variable} ${fontHeading.variable}`}>
-      <body>
+      {/* 3. OPTIMIZADO: Aseguramos una altura mínima estructural y suavizado de fuentes */}
+      <body className="min-h-screen bg-[#07090C] antialiased">
         {children}
         <FloatingWhatsApp />
+        
         {/* HubSpot Embed Code */}
         <Script
           id="hs-script-loader"
