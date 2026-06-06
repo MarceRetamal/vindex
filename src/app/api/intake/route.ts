@@ -161,7 +161,7 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
         type: "template",
         template: {
           name: "hello_world",
-          language: { code: "es_AR" },
+          language: { code: "en_US" },
           components: [
             // 🛠️ AGREGO PARÁMETRO DE HEADER: Envía el logotipo al encabezado del mensaje de Meta
             {
