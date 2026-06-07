@@ -112,7 +112,7 @@ async function sendCourtesyEmail(payload: IntakePayload, requestID: string) {
         <p style="font-size: 15px; line-height: 1.7; color: #D1D5DB; margin-bottom: 18px;">A partir de este momento, el caso ingresa formalmente en nuestra <strong>fase de análisis de admisión</strong>. Nuestro equipo evaluará detalladamente los elementos provistos para determinar la viabilidad de una intervención y proyectar la arquitectura de la estrategia jurídica adecuada.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #D1D5DB; margin-bottom: 35px;">Un analista especializado se pondrá en comunicación directa con usted a la brevedad, utilizando esta vía de contacto o el teléfono de enlace directo que ha registrado: <span style="color: #FFFFFF; font-weight: 600; font-family: monospace;">${escapeHtml(payload.phone)}</span>.</p>
         <div style="border-top: 1px solid #1F2937; padding-top: 25px; font-size: 13px; color: #9CA3AF; line-height: 1.6;">
-          <p style="margin: 0 0 5px 0; color: #F3F4F6; font-weight: bold;">Gabinete de Estrategia Jurídica — VINDEX</p>
+          <p style="margin: 0 0 5px 0; color: #F3F4F6; font-weight: bold;">Gabinete de Estrategia — VINDEX</p>
           <p style="margin: 0 0 15px 0;"><a href="https://vindex.dpdns.org" style="color: #9CA3AF; text-decoration: none; border-bottom: 1px dashed #4B5563;">vindex.dpdns.org</a></p>
           <p style="font-size: 11px; color: #6B7280; margin: 0; font-family: monospace; line-height: 1.4;">CONFIDENCIALIDAD: La información contenida en esta transmisión interna está sujeta a reserva estricta del protocolo de evaluación de admisión VINDEX.</p>
         </div>
@@ -132,24 +132,27 @@ async function sendCourtesyEmail(payload: IntakePayload, requestID: string) {
   })
 }
 
-// 3. OPTIMIZADO: DISPARADOR DIRECTO DE WHATSAPP (Soporta Encabezado con Imagen)
+// =========================================================================
+// 3. ENTORNO TRIPLE DISPARO SECUENCIAL (Parte 1 ➡️ Parte 2 ➡️ Parte 3)
+// =========================================================================
 async function sendWhatsAppNotification(payload: IntakePayload, requestID: string) {
   try {
     const phoneNumberID = getEnv('WA_PHONE_NUMBER_ID')
     const accessToken = getEnv('WA_ACCESS_TOKEN')
-    const logoUrl = getEnv('WA_LOGO_URL') // Traemos el link público de la imagen de cabecera
+    const logoUrl = getEnv('WA_LOGO_URL')
 
     let cleanedPhone = payload.phone.replace(/\D/g, '')
 
     if (cleanedPhone.startsWith('5409')) {
       cleanedPhone = '549' + cleanedPhone.substring(4)
     } else if (cleanedPhone.startsWith('549')) {
-      // Formato correcto
+      // Formato internacional correcto
     } else if (cleanedPhone.startsWith('11') || cleanedPhone.startsWith('34') || cleanedPhone.startsWith('26') || cleanedPhone.startsWith('35')) {
       cleanedPhone = '549' + cleanedPhone
     }
 
-    const response = await fetch(`https://graph.facebook.com/v18.0/${phoneNumberID}/messages`, {
+    // 🚀 MENSAJE 1: Saludo con logotipo + Código de Registro Estratégico
+    const response1 = await fetch(`https://graph.facebook.com/v18.0/${phoneNumberID}/messages`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
@@ -160,18 +163,15 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
         to: cleanedPhone,
         type: "template",
         template: {
-          name: "hello_world",
-          language: { code: "en_US" },
+          name: "vindex_admision_v2_parte1",
+          language: { code: "es_AR" },
           components: [
-            // 🛠️ AGREGO PARÁMETRO DE HEADER: Envía el logotipo al encabezado del mensaje de Meta
             {
               type: "header",
               parameters: [
                 {
                   type: "image",
-                  image: {
-                    link: logoUrl
-                  }
+                  image: { link: logoUrl }
                 }
               ]
             },
@@ -187,16 +187,67 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
       }),
     })
 
-    if (!response.ok) {
-      const errData = await response.json()
-      console.error('Meta API rechazó el mensaje de WhatsApp:', errData)
+    if (!response1.ok) {
+      const errData1 = await response1.json()
+      console.error('Meta API rechazó la Parte 1:', errData1)
     }
+
+    // 🚀 MENSAJE 2: Manifiesto y Quiebre de Simetría (Texto Puro)
+    const response2 = await fetch(`https://graph.facebook.com/v18.0/${phoneNumberID}/messages`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messaging_product: "whatsapp",
+        to: cleanedPhone,
+        type: "template",
+        template: {
+          name: "vindex_admision_v2_parte2",
+          language: { code: "es_AR" },
+          components: [] // Sin variables
+        }
+      }),
+    })
+
+    if (!response2.ok) {
+      const errData2 = await response2.json()
+      console.error('Meta API rechazó la Parte 2:', errData2)
+    }
+
+    // 🚀 MENSAJE 3: Protocolo de Confidencialidad + Cierre con Botón Web
+    const response3 = await fetch(`https://graph.facebook.com/v18.0/${phoneNumberID}/messages`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messaging_product: "whatsapp",
+        to: cleanedPhone,
+        type: "template",
+        template: {
+          name: "vindex_admision_v2_parte3",
+          language: { code: "es_AR" },
+          components: [] // Sin variables
+        }
+      }),
+    })
+
+    if (!response3.ok) {
+      const errData3 = await response3.json()
+      console.error('Meta API rechazó la Parte 3:', errData3)
+    }
+
   } catch (waError) {
     console.error('Error de conexión con la infraestructura de WhatsApp:', waError)
   }
 }
 
+// =========================================================================
 // 4. ENRUTADOR POST PRINCIPAL
+// =========================================================================
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as Partial<IntakePayload>
@@ -226,7 +277,7 @@ export async function POST(request: Request) {
     await sendInstitutionalEmail(payload)
     await sendCourtesyEmail(payload, requestID)
 
-    // Gatillo automático en paralelo
+    // Gatillo automático triple
     await sendWhatsAppNotification(payload, requestID)
 
     return NextResponse.json({ ok: true, warnings: [] })
