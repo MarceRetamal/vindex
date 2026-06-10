@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { navigation } from '@/data/navigation'
@@ -34,26 +33,17 @@ export function Header() {
       <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--bg-main)]/80 backdrop-blur-xl">
         <Container className="flex h-[72px] items-center">
           
-          {/* 🏛️ LOGOTIPO DE ÉLITE: Isotipo Metalizado + Texto Autoritaria Vivo */}
+          {/* 🏛️ IDENTIDAD DE ÉLITE: Tipografía Desnuda, Nítida y Expansiva */}
           <Link
             href="/"
-            className="group relative z-50 flex items-center gap-3 shrink-0"
+            className="group relative z-50 shrink-0 py-2"
           >
-            <div className="relative h-9 w-9 transition-transform duration-300 group-hover:scale-105 md:h-10 md:w-10">
-              <Image
-                src="/logo def 2.PNG" 
-                alt="VINDEX"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-            <span className="text-base font-bold tracking-[0.25em] text-white transition-colors group-hover:text-[var(--accent)] md:text-xl font-heading">
+            <span className="text-base font-extrabold tracking-[0.35em] text-white uppercase transition-colors group-hover:text-[var(--accent)] sm:text-lg md:text-xl font-heading">
               VINDEX
             </span>
           </Link>
 
-          <nav className="ml-10 hidden items-center gap-8 md:flex">
+          <nav className="ml-12 hidden items-center gap-8 md:flex">
             {navigation.map((item) => {
               const isActive = pathname === item.href
 

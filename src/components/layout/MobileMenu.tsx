@@ -27,7 +27,7 @@ export function MobileMenu({
           : 'pointer-events-none -translate-y-4 opacity-0'
       }`}
     >
-      <div className="mx-auto flex h-full max-w-[1200px] flex-col px-5 pt-8 pb-6">
+      <div className="mx-auto flex h-[calc(100vh-72px)] max-w-[1200px] flex-col px-5 pt-8 pb-10">
         <nav className="flex flex-col gap-1">
           {navigation.map((item) => {
             const isActive = pathname === item.href
@@ -53,7 +53,16 @@ export function MobileMenu({
         </nav>
 
         <div className="mt-8 px-4">
-          <Button href={siteConfig.cta.href}>{siteConfig.cta.label}</Button>
+          <Button href={siteConfig.cta.href}>
+            {siteConfig.cta.label}
+          </Button>
+        </div>
+
+        {/* 🏛️ DETALLE DE ÉLITE: Cierre protocolar al fondo del viewport móvil */}
+        <div className="mt-auto px-4 text-center">
+          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-zinc-600">
+            VINDEX — Protocolo de Admisión Activo
+          </p>
         </div>
       </div>
     </div>
