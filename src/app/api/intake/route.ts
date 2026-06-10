@@ -7,10 +7,8 @@ type IntakePayload = {
   name: string
   email: string
   phone: string
-  locality: string
-  province: string
-  status?: string
-  urgency?: string
+  jurisdiction: string
+  urgency: string
   message: string
   website?: string
 }
@@ -55,10 +53,19 @@ function getTransporter() {
   })
 }
 
-// 1. CORREO INSTITUCIONAL (Notificación para tu estudio)
+// Diccionario para formatear los plazos en los emails internos del estudio
+const urgencyLabels: Record<string, string> = {
+  plazo_corriendo: 'Plazo judicial / procesal corriendo (Urgente)',
+  medida_notificada: 'Medida cautelar o intimación notificada',
+  conflicto_preventivo: 'Conflicto abierto sin curso judicial (Fase preventiva)',
+  auditoria_estrategia: 'Auditoría de riesgos o diseño de estrategia de fondo'
+}
+
+// 1. CORREO INSTITUCIONAL (Notificación refinada para tu estudio)
 async function sendInstitutionalEmail(payload: IntakePayload) {
+  const humanUrgency = urgencyLabels[payload.urgency] || payload.urgency
   const subject = `[VINDEX] Nueva evaluación jurídica — ${payload.name}`
-  const text = `Nuevo potencial cliente recibido desde vindex.website\n\nNombre: ${payload.name}\nEmail: ${payload.email}\nTeléfono: ${payload.phone}\nLocalidad: ${payload.locality}\nProvincia: ${payload.province}\nEstado actual: ${payload.status || '-'}\nUrgencia: ${payload.urgency || '-'}\n\nMensaje:\n${payload.message}`.trim()
+  const text = `Nuevo potencial cliente recibido desde vindex.website\n\nNombre: ${payload.name}\nEmail: ${payload.email}\nTeléfono: ${payload.phone}\nJurisdicción: ${payload.jurisdiction}\nEstado de plazos: ${humanUrgency}\n\nMensaje:\n${payload.message}`.trim()
 
   const html = `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111;">
@@ -66,12 +73,10 @@ async function sendInstitutionalEmail(payload: IntakePayload) {
       <p><strong>Nombre:</strong> ${escapeHtml(payload.name)}</p>
       <p><strong>Email:</strong> ${escapeHtml(payload.email)}</p>
       <p><strong>Teléfono:</strong> ${escapeHtml(payload.phone)}</p>
-      <p><strong>Localidad:</strong> ${escapeHtml(payload.locality)}</p>
-      <p><strong>Provincia:</strong> ${escapeHtml(payload.province)}</p>
-      <p><strong>Estado actual:</strong> ${escapeHtml(payload.status || '-')}</p>
-      <p><strong>Urgencia:</strong> ${escapeHtml(payload.urgency || '-')}</p>
+      <p><strong>Jurisdicción Principal:</strong> ${escapeHtml(payload.jurisdiction)}</p>
+      <p><strong>Estado de Plazos Legales:</strong> ${escapeHtml(humanUrgency)}</p>
       <hr />
-      <p><strong>Mensaje:</strong></p>
+      <p><strong>Mensaje / Síntesis Estructural:</strong></p>
       <p>${escapeHtml(payload.message).replace(/\n/g, '<br />')}</p>
     </div>
   `
@@ -132,9 +137,7 @@ async function sendCourtesyEmail(payload: IntakePayload, requestID: string) {
   })
 }
 
-// =========================================================================
-// 3. ENTORNO TRIPLE DISPARO SECUENCIAL (Parte 1 ➡️ Parte 2 ➡️ Parte 3)
-// =========================================================================
+// 3. ENTORNO TRIPLE DISPARO SECUENCIAL (Sincronizado)
 async function sendWhatsAppNotification(payload: IntakePayload, requestID: string) {
   try {
     const phoneNumberID = getEnv('WA_PHONE_NUMBER_ID')
@@ -206,7 +209,7 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
         template: {
           name: "vindex_admision_v2_parte2",
           language: { code: "es_AR" },
-          components: [] // Sin variables
+          components: []
         }
       }),
     })
@@ -230,7 +233,7 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
         template: {
           name: "vindex_admision_v2_parte3",
           language: { code: "es_AR" },
-          components: [] // Sin variables
+          components: []
         }
       }),
     })
@@ -245,9 +248,7 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
   }
 }
 
-// =========================================================================
-// 4. ENRUTADOR POST PRINCIPAL
-// =========================================================================
+// 4. ENRUTADOR POST PRINCIPAL REFACtORIZADO
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as Partial<IntakePayload>
@@ -256,9 +257,7 @@ export async function POST(request: Request) {
       name: String(body.name ?? '').trim(),
       email: String(body.email ?? '').trim(),
       phone: String(body.phone ?? '').trim(),
-      locality: String(body.locality ?? '').trim(),
-      province: String(body.province ?? '').trim(),
-      status: String(body.status ?? '').trim(),
+      jurisdiction: String(body.jurisdiction ?? '').trim(),
       urgency: String(body.urgency ?? '').trim(),
       message: String(body.message ?? '').trim(),
       website: String(body.website ?? '').trim(),
@@ -268,7 +267,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, warnings: [] })
     }
 
-    if (!payload.name || !payload.email || !payload.phone || !payload.locality || !payload.province || !payload.message) {
+    // 🎯 VALIDACIÓN QUIRÚRGICA CON CAMPOS DE ELITE
+    if (!payload.name || !payload.email || !payload.phone || !payload.jurisdiction || !payload.urgency || !payload.message) {
       return NextResponse.json({ ok: false, error: 'Faltan campos obligatorios.' }, { status: 400 })
     }
 
@@ -277,7 +277,7 @@ export async function POST(request: Request) {
     await sendInstitutionalEmail(payload)
     await sendCourtesyEmail(payload, requestID)
 
-    // Gatillo automático triple
+    // Gatillo automático triple blindado
     await sendWhatsAppNotification(payload, requestID)
 
     return NextResponse.json({ ok: true, warnings: [] })
