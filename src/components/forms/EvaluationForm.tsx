@@ -13,22 +13,15 @@ const formSchema = z.object({
   name: z.string().min(2, 'El nombre es obligatorio y debe ser válido.'),
   email: z.string().email('Dirección de email inválida.'),
   phone: z.string().min(6, 'El teléfono es obligatorio.'),
-  locality: z.string().min(2, 'La localidad es obligatoria.'),
-  province: z.string().min(1, 'La provincia es obligatoria.'),
-  status: z.string().optional(),
-  urgency: z.string().optional(),
-  message: z.string().min(10, 'La descripción del escenario requiere mayor detalle.'),
+  jurisdiction: z.string().min(2, 'La jurisdicción principal del conflicto es obligatoria.'),
+  urgency: z.string().min(1, 'Debe seleccionar el estado técnico de los plazos.'),
+  message: z.string()
+    .min(10, 'La descripción del escenario requiere mayor detalle.')
+    .max(800, 'La síntesis técnica estructural no debe superar los 800 caracteres.'),
   website: z.string().optional(),
 })
 
 type FormValues = z.infer<typeof formSchema>
-
-const provinceOptions = [
-  'Buenos Aires', 'CABA', 'Catamarca', 'Chaco', 'Chubut', 'Córdoba', 'Corrientes', 
-  'Entre Ríos', 'Formosa', 'Jujuy', 'La Pampa', 'La Rioja', 'Mendoza', 'Misiones', 
-  'Neuquén', 'Río Negro', 'Salta', 'San Juan', 'San Luis', 'Santa Cruz', 
-  'Santa Fe', 'Santiago del Estero', 'Tierra del Fuego', 'Tucumán'
-]
 
 export function EvaluationForm() {
   const [isSuccess, setIsSuccess] = useState(false)
@@ -46,8 +39,8 @@ export function EvaluationForm() {
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: {
-      name: '', email: '', phone: '', locality: '', province: '',
-      status: '', urgency: '', message: '', website: ''
+      name: '', email: '', phone: '', jurisdiction: '',
+      urgency: '', message: '', website: ''
     }
   })
 
@@ -81,6 +74,25 @@ export function EvaluationForm() {
     }
   }
 
+  // 🎯 PANTALLA DE ÉXITO: MODO BÚNKER (Sustituye todo el formulario para generar alta tensión psicológica)
+  if (isSuccess) {
+    return (
+      <div className="rounded-[20px] border border-[var(--border-strong)] bg-black p-8 md:rounded-[24px] md:p-16 shadow-2xl min-h-[450px] flex flex-col justify-center items-center text-center relative overflow-hidden animate-fade-in">
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent pointer-events-none" />
+        <div className="max-w-xl space-y-6 relative z-10">
+          <h3 className="text-[22px] font-bold tracking-[0.15em] text-white uppercase sm:text-[26px]">
+            Análisis en ejecución.
+          </h3>
+          <p className="text-[14px] leading-relaxed text-zinc-400 font-light md:text-[15px] text-justify md:text-center">
+            Los datos ingresados han sido derivados al área de estrategia para evaluar la viabilidad de la intervención. 
+            Si el escenario cumple con los criterios de admisibilidad institucional del gabinete, se abrirá un canal 
+            oficial de comunicación en su línea telefónica registrada dentro de los próximos minutos.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -111,43 +123,26 @@ export function EvaluationForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="urgency">Nivel de Riesgo (Prioridad)</Label>
+            <Label htmlFor="urgency">Estado de Plazos Legales *</Label>
             <Select id="urgency" {...register('urgency')}>
-              <option value="">Seleccionar nivel...</option>
-              <option value="baja">Riesgo Bajo (Estratégico)</option>
-              <option value="media">Riesgo Medio (Contingencia)</option>
-              <option value="alta">Riesgo Alto (Exposición Crítica)</option>
-              <option value="urgente">Urgencia Máxima (Plazos inminentes)</option>
+              <option value="">Seleccionar estado...</option>
+              <option value="plazo_corriendo">Plazo judicial / procesal corriendo (Urgente)</option>
+              <option value="medida_notificada">Medida cautelar o intimación notificada</option>
+              <option value="conflicto_preventivo">Conflicto abierto sin curso judicial (Fase preventiva)</option>
+              <option value="auditoria_estrategia">Auditoría de riesgos o diseño de estrategia de fondo</option>
             </Select>
-          </div>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="locality">Sede / Localidad *</Label>
-            <Input id="locality" {...register('locality')} placeholder="Jurisdicción local" />
-            {errors.locality && <p className="text-[13px] text-red-400">{errors.locality.message}</p>}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="province">Provincia *</Label>
-            <Select id="province" {...register('province')}>
-              <option value="">Seleccionar jurisdicción...</option>
-              {provinceOptions.map((province) => (
-                <option key={province} value={province}>{province}</option>
-              ))}
-            </Select>
-            {errors.province && <p className="text-[13px] text-red-400">{errors.province.message}</p>}
+            {errors.urgency && <p className="text-[13px] text-red-400">{errors.urgency.message}</p>}
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="status">Statu Quo (Estado del Conflicto)</Label>
+          <Label htmlFor="jurisdiction">Jurisdicción Principal del Conflicto *</Label>
           <Input 
-            id="status" 
-            {...register('status')} 
-            placeholder="Ej.: mediación judicial en curso, medida cautelar notificada..." 
+            id="jurisdiction" 
+            {...register('jurisdiction')} 
+            placeholder="Ej.: Justicia Federal, Tribunales Ordinarios CABA, PBA, Arbitraje Internacional..." 
           />
+          {errors.jurisdiction && <p className="text-[13px] text-red-400">{errors.jurisdiction.message}</p>}
         </div>
 
         <div className="space-y-2">
@@ -155,7 +150,7 @@ export function EvaluationForm() {
           <Textarea 
             id="message" 
             {...register('message')} 
-            placeholder="Describa el núcleo del conflicto, los posibles daños patrimoniales y las partes involucradas..." 
+            placeholder="Describa el núcleo del conflicto, la contraparte y los activos o estructuras comprometidas en forma sintética (máx. 800 caracteres)..." 
           />
           {errors.message && <p className="text-[13px] text-red-400">{errors.message.message}</p>}
         </div>
@@ -163,7 +158,16 @@ export function EvaluationForm() {
         {/* Honey pot */}
         <input type="text" {...register('website')} className="hidden" tabIndex={-1} autoComplete="off" />
 
-        <div className="pt-4 space-y-4">
+        {/* 🏛️ DISCLAIMER INSTITUCIONAL DE ADMISIBILIDAD */}
+        <div className="text-justify border-t border-white/[0.05] pt-4">
+          <p className="text-[12px] text-zinc-500 leading-relaxed font-light">
+            La transmisión de estos datos inicia el protocolo preliminar de análisis de admisibilidad técnica de VINDEX. 
+            El envío del formulario no constituye la aceptación del caso ni genera relación profesional alguna hasta tanto 
+            la firma emita un dictamen de viabilidad estratégica formal e informe las condiciones de contratación.
+          </p>
+        </div>
+
+        <div className="pt-2 space-y-4">
           <button
             type="submit"
             disabled={isSubmitting}
@@ -171,14 +175,6 @@ export function EvaluationForm() {
           >
             {isSubmitting ? 'Cifrando envío...' : 'Someter Caso a Evaluación Estricta'}
           </button>
-
-          {isSuccess && (
-            <div className="rounded-[10px] bg-green-500/10 border border-green-500/20 p-4">
-              <p className="text-[14px] font-medium text-green-400">
-                El caso se encuentra bajo análisis de nuestra estructura central. Responderemos oportunamente.
-              </p>
-            </div>
-          )}
 
           {warnings.length > 0 && (
             <div className="rounded-[10px] border border-[var(--accent-mute)] bg-[var(--accent-mute)]/10 p-4">
