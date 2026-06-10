@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
 import { HeroVisual } from '@/components/sections/home/HeroVisual'
@@ -12,6 +15,31 @@ const attributes = [
 ]
 
 export function Hero() {
+  // 🏛️ REF DE ÉLITE: Captura el contenedor del vector para moverlo por hardware
+  const visualWrapperRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!visualWrapperRef.current) return
+
+      // Calculamos el centro del viewport como punto de equilibrio (0,0)
+      const centerX = window.innerWidth / 2
+      const centerY = window.innerHeight / 2
+
+      // Atenuación drástica: el delta del mouse se divide por 120 (Max ~6px de recorrido)
+      const moveX = (e.clientX - centerX) / 120
+      const moveY = (e.clientY - centerY) / 120
+
+      // Inyección directa en el DOM usando matriz 3D para activar la GPU
+      visualWrapperRef.current.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [])
+
   return (
     <Section className="pt-12 sm:pt-16 md:pt-28">
       <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
@@ -53,7 +81,13 @@ export function Hero() {
 
         <div className="w-full mt-8 md:mt-0">
           <FadeIn delay={0.15}>
-            <HeroVisual />
+            {/* 🛡️ CONTENEDOR REACTIVO: Aplica la física del cursor de forma ultra suavizada */}
+            <div 
+              ref={visualWrapperRef} 
+              className="transition-transform duration-500 ease-out will-change-transform"
+            >
+              <HeroVisual />
+            </div>
           </FadeIn>
         </div>
       </div>
