@@ -12,7 +12,7 @@ export function RadarScanner() {
   const handleScan = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.cuit || !formData.nombre || !formData.telefono) {
-      setError('Todos los campos del protocolo de seguridad son obligatorios.')
+      setError('Todos los parámetros de validación del directivo son obligatorios.')
       return
     }
 
@@ -30,33 +30,32 @@ export function RadarScanner() {
       const data = await response.json()
 
       if (data.analisis) {
-        setReporte(data.analisis)
-        // 💡 AQUÍ ES DONDE TE QUEDÁS CON LOS DATOS:
-        console.log("NUEVO LEAD DE ALTA PRECISIÓN CAPTURADO:", formData)
-        // (Acá en el futuro asociamos un webhook para que te llegue un mail automático con el CUIT/Teléfono de este tipo)
+        // Filtro de seguridad: Borramos de raíz cualquier asterisco de formato residual antes de renderizar
+        const formatoLimpio = data.analisis.replace(/\*/g, '')
+        setReporte(formatoLimpio)
       } else {
-        setError('Acceso denegado en el procesamiento perimetral.')
+        setError('No se pudo establecer el puente de diagnóstico perimetral.')
       }
     } catch (err) {
-      setError('Fallo de conexión con el búnker analítico.')
+      setError('Fallo crítico de comunicación con el búnker analítico.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-8 bg-[#080a0f] border border-red-950/30 rounded-2xl shadow-2xl relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-red-900/50 to-transparent" />
+    <div className="w-full max-w-3xl mx-auto p-8 bg-[#07090d] border border-red-950/40 rounded-2xl shadow-2xl relative">
+      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-red-900/60 to-transparent" />
       
       <div className="text-center space-y-2 mb-8">
         <span className="text-xs font-mono tracking-widest text-red-500 uppercase font-bold animate-pulse">
-          • ALERTA DE VULNERABILIDAD INSTITUCIONAL
+          • ACCESO RESTRINGIDO - ANÁLISIS DE RIESGO CORPORATIVO
         </span>
         <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl font-mono">
-          VINDEX RADAR ENGINE
+          VINDEX RADAR
         </h2>
         <p className="text-sm text-gray-500 max-w-md mx-auto">
-          Módulo restringido para directivos. Evaluación perimetral de riesgo corporativo, asedio procesal y medidas cautelares bancarias en Argentina.
+          Módulo de contingencia patrimonial. Verificación automatizada de pasivos bancarios consolidados, alertas de asedio judicial y medidas cautelares en Argentina.
         </p>
       </div>
 
@@ -64,7 +63,8 @@ export function RadarScanner() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input
             type="text"
-            placeholder="Nombre completo del Directivo / CEO"
+            required
+            placeholder="Nombre Completo del Director / CEO"
             value={formData.nombre}
             onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
             className="w-full px-4 py-3 bg-black/60 border border-gray-800 rounded-xl text-white placeholder:text-gray-600 focus:outline-none focus:border-red-900 font-mono text-sm transition-colors"
@@ -72,7 +72,8 @@ export function RadarScanner() {
           />
           <input
             type="text"
-            placeholder="Teléfono Directo de Contacto"
+            required
+            placeholder="Teléfono Corporativo Directo"
             value={formData.telefono}
             onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
             className="w-full px-4 py-3 bg-black/60 border border-gray-800 rounded-xl text-white placeholder:text-gray-600 focus:outline-none focus:border-red-900 font-mono text-sm transition-colors"
@@ -83,8 +84,9 @@ export function RadarScanner() {
         <div className="relative">
           <input
             type="text"
+            required
             maxLength={11}
-            placeholder="Ingrese CUIT de la Firma Corporativa (Solo números)"
+            placeholder="Ingrese CUIT Corporativo a Evaluar (Solo números)"
             value={formData.cuit}
             onChange={(e) => setFormData({ ...formData, cuit: e.target.value.replace(/\D/g, '') })}
             className="w-full px-5 py-4 bg-black border border-gray-800 rounded-xl text-white placeholder:text-gray-600 focus:outline-none focus:border-red-700 text-center font-mono tracking-widest text-lg transition-colors shadow-inner"
@@ -95,20 +97,21 @@ export function RadarScanner() {
         <button 
           type="submit" 
           disabled={loading}
-          className="w-full py-4 text-sm font-bold bg-red-950/40 text-red-400 border border-red-900/60 rounded-xl hover:bg-red-900 hover:text-white transition-all disabled:opacity-40 font-mono tracking-widest uppercase cursor-pointer shadow-[0_4px_30px_rgba(153,27,27,0.1)]"
+          className="w-full py-4 text-sm font-bold bg-red-950/30 text-red-400 border border-red-900/50 rounded-xl hover:bg-red-900 hover:text-white transition-all disabled:opacity-40 font-mono tracking-widest uppercase cursor-pointer shadow-[0_4px_30px_rgba(153,27,27,0.1)]"
         >
-          {loading ? '[EJECUTANDO ESCANEO DE AMENAZAS...]' : '[INICIAR AUDITORÍA DE CONTINGENCIA]'}
+          {loading ? '[EJECUTANDO AUDITORÍA PERIMETRAL...]' : '[INICIAR EVALUACIÓN DE CONTINGENCIA]'}
         </button>
       </form>
 
-      {/* RESULTADOS PROFESIONALES */}
+      {/* PANTALLA TÉCNICA DE DICTAMEN */}
       {(loading || reporte || error) && (
         <div className="mt-8 pt-6 border-t border-gray-900 font-mono text-xs">
           {loading && (
             <div className="text-center py-6 space-y-2 text-red-500/60 animate-pulse">
-              <p>[SISTEMA AMENAZAS: CONECTADO]</p>
-              <p>Rastreando bases consolidadas del BCRA y fueros judiciales...</p>
-              <p>Mapeando medidas cautelares y perfiles de deudores...</p>
+              <p>[SISTEMA CORE VINDEX: CONECTADO]</p>
+              <p>Rastreando posiciones en la Central de Deudores del BCRA...</p>
+              <p>Mapeando expedientes en los Fueros Comerciales de la Nación...</p>
+              <p>Compilando matriz pericial de riesgo estructural...</p>
             </div>
           )}
 
@@ -120,10 +123,10 @@ export function RadarScanner() {
 
           {reporte && (
             <FadeIn>
-              <div className="p-6 bg-black border border-red-900/30 rounded-xl text-gray-400 space-y-4 whitespace-pre-wrap leading-relaxed shadow-2xl relative">
-                <div className="flex justify-between items-center text-[10px] text-red-500 border-b border-gray-900 pb-2 mb-2 font-bold tracking-widest">
-                  <span>DOCUMENTO INTERNO DE SEGUIMIENTO</span>
-                  <span>ESTADO: RESERVADO</span>
+              <div className="p-6 bg-black border border-red-900/30 rounded-xl text-gray-300 space-y-4 shadow-2xl relative">
+                <div className="flex justify-between items-center text-[10px] text-red-500 border-b border-gray-900 pb-2 mb-4 font-bold tracking-widest">
+                  <span>DOCUMENTO TÉCNICO EVALUATIVO</span>
+                  <span>ESTADO: RESERVADO / CONFIDENCIAL</span>
                 </div>
                 <div className="text-gray-300 font-sans text-sm leading-relaxed whitespace-pre-line">
                   {reporte}
