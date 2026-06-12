@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '@/components/ui/Button'
 import { FadeIn } from '@/components/motion/FadeIn'
 
 export function RadarScanner() {
@@ -69,19 +68,24 @@ export function RadarScanner() {
           />
         </div>
 
-        <Button type="submit" className="w-full py-4 text-base" disabled={loading}>
+        {/* 🚀 BOTÓN NATIVO OPTIMIZADO: Pasa el control de TypeScript sin quejas */}
+        <button 
+          type="submit" 
+          disabled={loading}
+          className="w-full py-4 text-base font-bold bg-[#D4AF37] text-black rounded-xl hover:bg-[#b8952e] transition-colors disabled:opacity-40 font-mono tracking-widest uppercase shadow-[0_4px_20px_rgba(212,175,55,0.15)] cursor-pointer"
+        >
           {loading ? 'EJECUTANDO ESCANEO PERIMETRAL...' : 'INICIAR AUDITORÍA DE RIESGO'}
-        </Button>
+        </button>
       </form>
 
-      {/* 📊 PANTALLA DE RESULTADOS DE ELITE */}
+      {/* 📊 PANTALLA DE RESULTADOS */}
       {(loading || reporte || error) && (
         <div className="mt-8 pt-6 border-t border-[var(--border)] font-mono text-sm">
           {loading && (
             <div className="text-center py-6 space-y-3 text-gray-500 animate-pulse">
               <p>[SISTEMA CORE: ACTIVADO]</p>
-              <p>Abriendo navegador fantasma en el Edge...</p>
-              <p>Consultando bases de datos públicas...</p>
+              <p>Conectando con servidores en el Edge...</p>
+              <p>Procesando matriz de riesgo con Llama-3.1...</p>
             </div>
           )}
 
