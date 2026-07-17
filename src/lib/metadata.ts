@@ -7,7 +7,7 @@ type BuildMetadataProps = {
   image?: string
 }
 
-const siteUrl = 'https://vindex.ar'
+const siteUrl = 'https://vindexlegal.com.ar'
 
 export function buildMetadata({
   title,
