@@ -98,7 +98,7 @@ async function sendInstitutionalEmail(payload: IntakePayload) {
 // 2. CORREO DE CORTESÍA PREMIUM (Para el cliente)
 async function sendCourtesyEmail(payload: IntakePayload, requestID: string) {
   const subject = `Confirmación de ingreso: Protocolo de Evaluación — VINDEX`
-  const text = `ESTUDIO JURÍDICO VINDEX — DIRECCIÓN DE ADMISIÓN\n--------------------------------------------------\nID de Solicitud: ${requestID}\nDestinatario: ${payload.name}\n\nLe confirmamos que los datos han sido indexados correctamente.\n\nGabinete de Estrategia Jurídica — VINDEX\nhttps://vindex.dpdns.org`.trim()
+  const text = `ESTUDIO JURÍDICO VINDEX — DIRECCIÓN DE ADMISIÓN\n--------------------------------------------------\nID de Solicitud: ${requestID}\nDestinatario: ${payload.name}\n\nLe confirmamos que los datos han sido indexados correctamente.\n\nGabinete de Estrategia Jurídica — VINDEX\nhttps://vindexlegal.com.ar`.trim()
 
   const html = `
     <div style="background-color: #0B0F17; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 40px 20px; text-align: center; color: #F3F4F6;">
@@ -118,7 +118,7 @@ async function sendCourtesyEmail(payload: IntakePayload, requestID: string) {
         <p style="font-size: 15px; line-height: 1.7; color: #D1D5DB; margin-bottom: 35px;">Un analista especializado se pondrá en comunicación directa con usted a la brevedad, utilizando esta vía de contacto o el teléfono de enlace directo que ha registrado: <span style="color: #FFFFFF; font-weight: 600; font-family: monospace;">${escapeHtml(payload.phone)}</span>.</p>
         <div style="border-top: 1px solid #1F2937; padding-top: 25px; font-size: 13px; color: #9CA3AF; line-height: 1.6;">
           <p style="margin: 0 0 5px 0; color: #F3F4F6; font-weight: bold;">Gabinete de Estrategia — VINDEX</p>
-          <p style="margin: 0 0 15px 0;"><a href="https://vindex.dpdns.org" style="color: #9CA3AF; text-decoration: none; border-bottom: 1px dashed #4B5563;">vindex.dpdns.org</a></p>
+          <p style="margin: 0 0 15px 0;"><a href="https://vindexlegal.com.ar" style="color: #9CA3AF; text-decoration: none; border-bottom: 1px dashed #4B5563;">vindex.dpdns.org</a></p>
           <p style="font-size: 11px; color: #6B7280; margin: 0; font-family: monospace; line-height: 1.4;">CONFIDENCIALIDAD: La información contenida en esta transmisión interna está sujeta a reserva estricta del protocolo de evaluación de admisión VINDEX.</p>
         </div>
       </div>

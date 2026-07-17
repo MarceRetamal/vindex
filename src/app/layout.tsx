@@ -5,7 +5,7 @@ import { fontBody, fontHeading } from '@/lib/fonts'
 
 export const metadata: Metadata = {
   // 1. CORREGIDO: Actualizamos la base del dominio para indexación real de Google
-  metadataBase: new URL('https://vindex.dpdns.org'), 
+  metadataBase: new URL('https://vindexlegal.com.ar'), 
   title: {
     default: 'VINDEX',
     template: '%s | VINDEX',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'VINDEX',
     description: 'Estrategia jurídica para conflictos complejos.',
-    url: 'https://vindex.dpdns.org', // 2. CORREGIDO: URL canónica oficial para redes sociales
+    url: 'https://vindexlegal.com.ar', // 2. CORREGIDO: URL canónica oficial para redes sociales
     siteName: 'VINDEX',
     locale: 'es_AR',
     type: 'website',

@@ -25,6 +25,6 @@
     "SMTP_SECURE": "true",
     "SMTP_USER": "vindex@estudioretamal.com.ar",
     "MAIL_FROM": "VINDEX <vindex@estudioretamal.com.ar>",
-    "MAIL_TO": "vindex@estudioretamal.com.ar"
+    "MAIL_TO": "info@vindexlegal.com.ar"
   }
 }
