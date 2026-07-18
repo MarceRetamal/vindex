@@ -5,7 +5,7 @@ import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp'
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     /* 🏛️ OPTIMIZACIÓN DE ELITE: overflow-x-hidden evita scrolls horizontales fantasmas en mobile por los blurs */
-    <div className="relative min-h-dvh bg-[var(--bg)] text-[var(--text-primary)] overflow-x-hidden">
+    <div className="relative min-h-dvh bg-[var(--bg)] text-[var(--text-primary)] overflow-x-clip">
 
       {/* Capa de atmósfera del búnker */}
       <div className="pointer-events-none fixed inset-0 z-0 bg-[var(--bg)]">
