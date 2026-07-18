@@ -14,7 +14,7 @@ export default function NotFound() {
 
         <p className="max-w-2xl text-[15px] leading-7 text-[var(--text-secondary)] md:text-lg md:leading-8">
           El recurso que intentaste abrir no forma parte de la estructura actual
-          de VINDEX o fue desplazado dentro del sistema.
+          de VINDEX LEGAL o fue desplazado dentro del sistema.
         </p>
 
         <div className="pt-2">

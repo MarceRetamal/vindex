@@ -7,21 +7,21 @@ export const metadata: Metadata = {
   // 1. CORREGIDO: Actualizamos la base del dominio para indexación real de Google
   metadataBase: new URL('https://vindexlegal.com.ar'), 
   title: {
-    default: 'VINDEX',
-    template: '%s | VINDEX',
+    default: 'VINDEX LEGAL',
+    template: '%s | VINDEX LEGAL',
   },
   description: 'Estrategia jurídica para conflictos complejos.',
   openGraph: {
-    title: 'VINDEX',
+    title: 'VINDEX LEGAL',
     description: 'Estrategia jurídica para conflictos complejos.',
     url: 'https://vindexlegal.com.ar', // 2. CORREGIDO: URL canónica oficial para redes sociales
-    siteName: 'VINDEX',
+    siteName: 'VINDEX LEGAL',
     locale: 'es_AR',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VINDEX',
+    title: 'VINDEX LEGAL',
     description: 'Estrategia jurídica para conflictos complejos.',
   },
 }

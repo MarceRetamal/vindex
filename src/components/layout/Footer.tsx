@@ -9,11 +9,18 @@ export function Footer() {
           <div className="space-y-3 md:space-y-4">
             <div className="text-sm font-bold tracking-[0.22em] text-white">
               VINDEX
+              <span className="ml-1 text-[0.6em] font-semibold tracking-[0.18em] text-[var(--accent)]">
+                LEGAL
+              </span>
             </div>
 
             <p className="max-w-md text-[15px] leading-7 text-[var(--text-secondary)] md:text-base">
               Análisis, estrategia e intervención jurídica para conflictos
               complejos.
+            </p>
+
+            <p className="text-[13px] leading-6 text-[var(--text-muted)]">
+              La Plata, Provincia de Buenos Aires.
             </p>
           </div>
 
@@ -62,7 +69,7 @@ export function Footer() {
         <div className="mt-8 border-t border-[var(--border-strong)] pt-5 md:mt-10 md:pt-6">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <p className="text-[11px] leading-6 text-[var(--text-muted)] md:text-xs">
-              VINDEX — estrategia jurídica para conflictos complejos.
+              VINDEX LEGAL — estrategia jurídica para conflictos complejos.
             </p>
             <Link
               href="/politica-de-privacidad"

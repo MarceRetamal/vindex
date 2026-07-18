@@ -12,6 +12,15 @@ import { MobileMenu } from '@/components/layout/MobileMenu'
 export function Header() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const [lastPathname, setLastPathname] = useState(pathname)
+
+  // Cierra el menú móvil al cambiar de ruta. Se ajusta durante el render
+  // (no dentro de un efecto) siguiendo el patrón recomendado por React para
+  // resetear estado cuando cambia un valor externo, evitando renders en cascada.
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname)
+    setIsOpen(false)
+  }
 
   useEffect(() => {
     if (isOpen) {
@@ -23,10 +32,6 @@ export function Header() {
       document.body.classList.remove('overflow-hidden', 'touch-none')
     }
   }, [isOpen])
-
-  useEffect(() => {
-    setIsOpen(false)
-  }, [pathname])
 
   return (
     <>
@@ -40,6 +45,9 @@ export function Header() {
           >
             <span className="text-base font-extrabold tracking-[0.35em] text-white uppercase transition-colors group-hover:text-[var(--accent)] sm:text-lg md:text-xl font-heading">
               VINDEX
+              <span className="ml-1.5 text-[0.55em] font-semibold tracking-[0.25em] text-[var(--accent)] align-middle">
+                LEGAL
+              </span>
             </span>
           </Link>
 

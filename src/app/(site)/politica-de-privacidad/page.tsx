@@ -8,7 +8,7 @@ import { PageShell } from '@/components/ui/PageShell'
 export const metadata: Metadata = buildMetadata({
   title: 'Política de Privacidad',
   description:
-    'Política de privacidad de VINDEX | Estrategia Jurídica. Información sobre el tratamiento de datos personales conforme a la Ley N° 25.326.',
+    'Política de privacidad de VINDEX LEGAL | Estrategia Jurídica. Información sobre el tratamiento de datos personales conforme a la Ley N° 25.326.',
   path: '/politica-de-privacidad',
 })
 
@@ -17,9 +17,9 @@ const sections = [
     num: '01',
     title: 'Introducción y Responsable del Tratamiento',
     content: [
-      'VINDEX | Estrategia Jurídica (en adelante, "VINDEX", "nosotros" o "el Estudio") es un estudio jurídico con sede en La Plata, Provincia de Buenos Aires, República Argentina, que presta servicios de asesoramiento, representación y estrategia legal.',
-      'La presente Política de Privacidad describe cómo recopilamos, utilizamos, almacenamos, protegemos y compartimos la información personal de quienes interactúan con nuestros canales de comunicación, incluyendo el sitio web vindex.website, el canal de WhatsApp Business y cualquier otro medio digital habilitado por el Estudio.',
-      'VINDEX actúa como Responsable del Tratamiento de los datos personales en los términos de la Ley N° 25.326 de Protección de los Datos Personales de la República Argentina y la normativa complementaria aplicable.',
+      'VINDEX LEGAL | Estrategia Jurídica (en adelante, "VINDEX LEGAL", "nosotros" o "el Estudio") es un estudio jurídico con sede en La Plata, Provincia de Buenos Aires, República Argentina, que presta servicios de asesoramiento, representación y estrategia legal.',
+      'La presente Política de Privacidad describe cómo recopilamos, utilizamos, almacenamos, protegemos y compartimos la información personal de quienes interactúan con nuestros canales de comunicación, incluyendo el sitio web VINDEX LEGAL.website, el canal de WhatsApp Business y cualquier otro medio digital habilitado por el Estudio.',
+      'VINDEX LEGAL actúa como Responsable del Tratamiento de los datos personales en los términos de la Ley N° 25.326 de Protección de los Datos Personales de la República Argentina y la normativa complementaria aplicable.',
     ],
   },
   {
@@ -41,7 +41,7 @@ const sections = [
     num: '04',
     title: 'Canal de WhatsApp Business e Inteligencia Artificial',
     content: [
-      'VINDEX utiliza WhatsApp Business API (Meta Platforms, Inc.) como canal oficial de comunicación. Las interacciones realizadas a través de este canal pueden ser procesadas por sistemas de inteligencia artificial para clasificar y priorizar consultas entrantes, brindar orientación general de carácter informativo sobre el ordenamiento jurídico argentino, y derivar la comunicación al profesional responsable cuando corresponda.',
+      'VINDEX LEGAL utiliza WhatsApp Business API (Meta Platforms, Inc.) como canal oficial de comunicación. Las interacciones realizadas a través de este canal pueden ser procesadas por sistemas de inteligencia artificial para clasificar y priorizar consultas entrantes, brindar orientación general de carácter informativo sobre el ordenamiento jurídico argentino, y derivar la comunicación al profesional responsable cuando corresponda.',
       'Las respuestas automatizadas tienen carácter meramente orientativo e informativo. No constituyen asesoramiento jurídico, no crean relación abogado-cliente y no reemplazan la consulta profesional personalizada.',
       'Los mensajes intercambiados a través de WhatsApp están sujetos adicionalmente a la Política de Privacidad de WhatsApp y las condiciones de Meta Platforms, Inc.',
     ],
@@ -50,7 +50,7 @@ const sections = [
     num: '05',
     title: 'Base Legal del Tratamiento',
     content: [
-      'El tratamiento de datos personales por parte de VINDEX se fundamenta en alguna de las siguientes bases legales: consentimiento del titular, otorgado de forma libre, expresa e informada al iniciar una comunicación; ejecución de un contrato, cuando el tratamiento es necesario para la prestación del servicio jurídico encomendado; obligación legal, cuando el tratamiento resulta exigido por el ordenamiento jurídico aplicable; e interés legítimo, para la gestión interna del Estudio y la mejora de los servicios.',
+      'El tratamiento de datos personales por parte de VINDEX LEGAL LEGAL se fundamenta en alguna de las siguientes bases legales: consentimiento del titular, otorgado de forma libre, expresa e informada al iniciar una comunicación; ejecución de un contrato, cuando el tratamiento es necesario para la prestación del servicio jurídico encomendado; obligación legal, cuando el tratamiento resulta exigido por el ordenamiento jurídico aplicable; e interés legítimo, para la gestión interna del Estudio y la mejora de los servicios.',
     ],
   },
   {
@@ -65,7 +65,7 @@ const sections = [
     num: '07',
     title: 'Compartición con Terceros',
     content: [
-      'VINDEX no comercializa ni cede datos personales a terceros con fines comerciales. Los datos podrán ser compartidos únicamente con proveedores tecnológicos que actúan como encargados del tratamiento (plataformas de gestión, servicios en la nube, herramientas de automatización), bajo acuerdos de confidencialidad y seguridad; con organismos judiciales o administrativos cuando sea requerido por mandato legal o resolución judicial; y con peritos, mediadores u otros profesionales intervinientes en el proceso, cuando resulte necesario para la defensa del cliente.',
+      'VINDEX LEGAL no comercializa ni cede datos personales a terceros con fines comerciales. Los datos podrán ser compartidos únicamente con proveedores tecnológicos que actúan como encargados del tratamiento (plataformas de gestión, servicios en la nube, herramientas de automatización), bajo acuerdos de confidencialidad y seguridad; con organismos judiciales o administrativos cuando sea requerido por mandato legal o resolución judicial; y con peritos, mediadores u otros profesionales intervinientes en el proceso, cuando resulte necesario para la defensa del cliente.',
       'Los proveedores tecnológicos utilizados incluyen, entre otros: Meta Platforms Inc. (WhatsApp Business API), Google LLC (servicios de inteligencia artificial), HubSpot Inc. (gestión de contactos y análisis de navegación mediante cookies) y servicios de infraestructura en la nube. Todos ellos operan bajo marcos de protección de datos reconocidos internacionalmente.',
     ],
   },
@@ -73,8 +73,8 @@ const sections = [
     num: '08',
     title: 'Derechos del Titular de los Datos',
     content: [
-      'De conformidad con la Ley N° 25.326 y demás normativa aplicable, el titular de los datos personales tiene derecho a: acceder a qué datos personales trata VINDEX y con qué finalidad; rectificar datos inexactos o incompletos; solicitar la cancelación o supresión de datos cuando ya no resulten necesarios; oponerse al tratamiento de sus datos en determinadas circunstancias; y solicitar la portabilidad de sus datos en formato estructurado y legible.',
-      'Para ejercer cualquiera de estos derechos, el titular puede dirigirse a VINDEX a través de los medios indicados en la sección de Contacto. La solicitud será atendida dentro de los plazos previstos por la normativa vigente.',
+      'De conformidad con la Ley N° 25.326 y demás normativa aplicable, el titular de los datos personales tiene derecho a: acceder a qué datos personales trata VINDEX LEGAL y con qué finalidad; rectificar datos inexactos o incompletos; solicitar la cancelación o supresión de datos cuando ya no resulten necesarios; oponerse al tratamiento de sus datos en determinadas circunstancias; y solicitar la portabilidad de sus datos en formato estructurado y legible.',
+      'Para ejercer cualquiera de estos derechos, el titular puede dirigirse a VINDEX LEGAL a través de los medios indicados en la sección de Contacto. La solicitud será atendida dentro de los plazos previstos por la normativa vigente.',
       'El titular tiene derecho a presentar una reclamación ante la Dirección Nacional de Protección de Datos Personales (www.argentina.gob.ar/aaip) si considera que el tratamiento de sus datos vulnera la normativa aplicable.',
     ],
   },
@@ -82,29 +82,29 @@ const sections = [
     num: '09',
     title: 'Seguridad de la Información',
     content: [
-      'VINDEX implementa medidas técnicas y organizativas adecuadas para garantizar la seguridad de los datos personales y prevenir su pérdida, alteración, acceso no autorizado o divulgación indebida.',
-      'No obstante, ningún sistema de transmisión de datos por internet puede garantizar una seguridad absoluta. En caso de detectar una brecha de seguridad que pueda afectar sus datos, VINDEX lo comunicará conforme a los procedimientos previstos por la normativa vigente.',
+      'VINDEX LEGAL implementa medidas técnicas y organizativas adecuadas para garantizar la seguridad de los datos personales y prevenir su pérdida, alteración, acceso no autorizado o divulgación indebida.',
+      'No obstante, ningún sistema de transmisión de datos por internet puede garantizar una seguridad absoluta. En caso de detectar una brecha de seguridad que pueda afectar sus datos, VINDEX LEGAL lo comunicará conforme a los procedimientos previstos por la normativa vigente.',
     ],
   },
   {
     num: '10',
     title: 'Transferencias Internacionales',
     content: [
-      'Algunos de nuestros proveedores tecnológicos están ubicados fuera de Argentina. En tales casos, VINDEX verifica que dichas transferencias se realicen hacia países o entidades que garanticen un nivel adecuado de protección, o bajo las garantías contractuales previstas por la normativa de protección de datos personales.',
+      'Algunos de nuestros proveedores tecnológicos están ubicados fuera de Argentina. En tales casos, VINDEX LEGAL verifica que dichas transferencias se realicen hacia países o entidades que garanticen un nivel adecuado de protección, o bajo las garantías contractuales previstas por la normativa de protección de datos personales.',
     ],
   },
   {
     num: '11',
     title: 'Modificaciones a esta Política',
     content: [
-      'VINDEX se reserva el derecho de actualizar la presente Política de Privacidad cuando resulte necesario por cambios normativos, tecnológicos o en los servicios prestados. La versión actualizada estará siempre disponible en esta página con indicación de la fecha de última modificación.',
+      'VINDEX LEGAL se reserva el derecho de actualizar la presente Política de Privacidad cuando resulte necesario por cambios normativos, tecnológicos o en los servicios prestados. La versión actualizada estará siempre disponible en esta página con indicación de la fecha de última modificación.',
     ],
   },
   {
     num: '12',
     title: 'Contacto',
     content: [
-      'Para cualquier consulta, solicitud de ejercicio de derechos o comunicación relacionada con el tratamiento de datos personales, puede dirigirse a VINDEX a través del formulario de evaluación jurídica disponible en el sitio web o mediante el canal de WhatsApp Business habilitado.',
+      'Para cualquier consulta, solicitud de ejercicio de derechos o comunicación relacionada con el tratamiento de datos personales, puede dirigirse a VINDEX LEGAL a través del formulario de evaluación jurídica disponible en el sitio web o mediante el canal de WhatsApp Business habilitado.',
     ],
   },
 ]

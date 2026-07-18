@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'VINDEX',
-    short_name: 'VINDEX',
+    name: 'VINDEX LEGAL',
+    short_name: 'VINDEX LEGAL',
     description: 'Estrategia jurídica para conflictos complejos.',
     start_url: '/',
     display: 'standalone',

@@ -53,8 +53,9 @@ export function Hero() {
 
             <p className="max-w-2xl text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base md:text-lg md:leading-8">
               VINDEX estructura análisis, evaluación e intervención para escenarios
-              jurídicos donde la claridad técnica, la lectura profunda del conflicto
-              y la superioridad estratégica modifican el resultado.
+              jurídicos en La Plata y en toda la Provincia de Buenos Aires, donde
+              la claridad técnica, la lectura profunda del conflicto y la
+              superioridad estratégica modifican el resultado.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 pt-1">
