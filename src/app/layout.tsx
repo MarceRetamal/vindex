@@ -41,7 +41,7 @@ export default function RootLayout({
     <html lang="es" data-scroll-behavior="smooth" className={`${fontBody.variable} ${fontHeading.variable}`}>
       {/* 3. OPTIMIZADO: Aseguramos una altura mínima estructural y suavizado de fuentes */}
       {/* 3. OPTIMIZADO: Aseguramos una altura mínima estructural y suavizado de fuentes */}
-      <body className="min-h-screen bg-[#07090C] antialiased">
+      <body className="min-h-dvh bg-[#07090C] antialiased">
         {/* 🏛️ Datos estructurados (Schema.org) — identidad del estudio para Google */}
         <script
           type="application/ld+json"
