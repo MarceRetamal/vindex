@@ -259,15 +259,53 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
   }
 }
 
+// 🔒 Verifica el token de Turnstile contra la API de Cloudflare (siteverify).
+// Si esto falla o no está bien configurado, el envío se rechaza — nunca se
+// asume "humano" por defecto.
+async function verifyTurnstile(token: string, remoteIp: string | null): Promise<boolean> {
+  const secret = getEnv('TURNSTILE_SECRET_KEY')
+
+  const formData = new URLSearchParams()
+  formData.append('secret', secret)
+  formData.append('response', token)
+  if (remoteIp) formData.append('remoteip', remoteIp)
+
+  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    body: formData,
+  })
+
+  const outcome = (await response.json()) as { success: boolean }
+  return outcome.success === true
+}
+
 // 4. ENRUTADOR POST PRINCIPAL REFACtORIZADO
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as Partial<IntakePayload>
+    const body = (await request.json()) as Partial<IntakePayload> & { turnstileToken?: string }
 
     // Honeypot: si el campo oculto viene completo, es un bot. Respondemos
     // "éxito" sin procesar nada, para no revelarle que fue detectado.
     if (String(body.website ?? '').trim()) {
       return NextResponse.json({ ok: true, warnings: [] })
+    }
+
+    // 🔒 CAPTCHA invisible (Cloudflare Turnstile) — se verifica antes que nada.
+    const turnstileToken = String(body.turnstileToken ?? '').trim()
+    if (!turnstileToken) {
+      return NextResponse.json(
+        { ok: false, error: 'Verificación de seguridad requerida. Recargá la página e intentá de nuevo.' },
+        { status: 400 }
+      )
+    }
+
+    const clientIp = request.headers.get('CF-Connecting-IP')
+    const isHuman = await verifyTurnstile(turnstileToken, clientIp)
+    if (!isHuman) {
+      return NextResponse.json(
+        { ok: false, error: 'No pudimos verificar que sos una persona. Intentá de nuevo.' },
+        { status: 400 }
+      )
     }
 
     // 🎯 VALIDACIÓN QUIRÚRGICA CON CAMPOS DE ELITE (ahora sí, del lado del servidor)
