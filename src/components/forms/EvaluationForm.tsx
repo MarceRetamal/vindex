@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Script from 'next/script'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -8,6 +9,18 @@ import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
 import { Textarea } from '@/components/ui/Textarea'
 import { Label } from '@/components/ui/Label'
+
+// 🔒 Cloudflare Turnstile — captcha invisible anti-abuso
+const TURNSTILE_SITE_KEY = '0x4AAAAAAD4LdTQMif5no3nF'
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, options: Record<string, unknown>) => string
+      reset: (widgetId?: string) => void
+    }
+  }
+}
 
 const formSchema = z.object({
   name: z.string().min(2, 'El nombre es obligatorio y debe ser válido.'),
@@ -27,6 +40,23 @@ export function EvaluationForm() {
   const [isSuccess, setIsSuccess] = useState(false)
   const [serverError, setServerError] = useState('')
   const [warnings, setWarnings] = useState<string[]>([])
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const [turnstileReady, setTurnstileReady] = useState(false)
+  const turnstileContainerRef = useRef<HTMLDivElement>(null)
+  const turnstileWidgetId = useRef<string | null>(null)
+
+  useEffect(() => {
+    if (!turnstileReady || !turnstileContainerRef.current || !window.turnstile || turnstileWidgetId.current) {
+      return
+    }
+
+    turnstileWidgetId.current = window.turnstile.render(turnstileContainerRef.current, {
+      sitekey: TURNSTILE_SITE_KEY,
+      callback: (token: string) => setTurnstileToken(token),
+      'expired-callback': () => setTurnstileToken(''),
+      'error-callback': () => setTurnstileToken(''),
+    })
+  }, [turnstileReady])
 
   const {
     register,
@@ -49,11 +79,16 @@ export function EvaluationForm() {
     setWarnings([])
     setIsSuccess(false)
 
+    if (!turnstileToken) {
+      setServerError('Esperá un instante a que termine la verificación de seguridad e intentá de nuevo.')
+      return
+    }
+
     try {
       const response = await fetch('/api/intake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, turnstileToken }),
       })
 
       const responseData = (await response.json()) as {
@@ -71,33 +106,54 @@ export function EvaluationForm() {
       reset()
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Error interno de comunicación.')
+      setTurnstileToken('')
     }
   }
+
+  // El token de Turnstile se usa una sola vez: si el envío falló, pedimos uno nuevo.
+  useEffect(() => {
+    if (serverError && window.turnstile && turnstileWidgetId.current) {
+      window.turnstile.reset(turnstileWidgetId.current)
+    }
+  }, [serverError])
 
   // 🎯 PANTALLA DE ÉXITO: MODO BÚNKER (Sustituye todo el formulario para generar alta tensión psicológica)
   if (isSuccess) {
     return (
-      <div className="rounded-[20px] border border-[var(--border-strong)] bg-black p-8 md:rounded-[24px] md:p-16 shadow-2xl min-h-[450px] flex flex-col justify-center items-center text-center relative overflow-hidden animate-fade-in">
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent pointer-events-none" />
-        <div className="max-w-xl space-y-6 relative z-10">
-          <h3 className="text-[22px] font-bold tracking-[0.15em] text-white uppercase sm:text-[26px]">
-            Análisis en ejecución.
-          </h3>
-          <p className="text-[14px] leading-relaxed text-zinc-400 font-light md:text-[15px] text-justify md:text-center">
-            Los datos ingresados han sido derivados al área de estrategia para evaluar la viabilidad de la intervención. 
-            Si el escenario cumple con los criterios de admisibilidad institucional del gabinete, se abrirá un canal 
-            oficial de comunicación en su línea telefónica registrada dentro de los próximos minutos.
-          </p>
+      <>
+        <Script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          strategy="afterInteractive"
+          onLoad={() => setTurnstileReady(true)}
+        />
+        <div className="rounded-[20px] border border-[var(--border-strong)] bg-black p-8 md:rounded-[24px] md:p-16 shadow-2xl min-h-[450px] flex flex-col justify-center items-center text-center relative overflow-hidden animate-fade-in">
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent pointer-events-none" />
+          <div className="max-w-xl space-y-6 relative z-10">
+            <h3 className="text-[22px] font-bold tracking-[0.15em] text-white uppercase sm:text-[26px]">
+              Análisis en ejecución.
+            </h3>
+            <p className="text-[14px] leading-relaxed text-zinc-400 font-light md:text-[15px] text-justify md:text-center">
+              Los datos ingresados han sido derivados al área de estrategia para evaluar la viabilidad de la intervención. 
+              Si el escenario cumple con los criterios de admisibilidad institucional del gabinete, se abrirá un canal 
+              oficial de comunicación en su línea telefónica registrada dentro de los próximos minutos.
+            </p>
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="rounded-[20px] border border-[var(--border-strong)] bg-[var(--bg-surface)] p-6 md:rounded-[24px] md:p-10 shadow-2xl relative overflow-hidden"
-    >
+    <>
+      <Script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        strategy="afterInteractive"
+        onLoad={() => setTurnstileReady(true)}
+      />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="rounded-[20px] border border-[var(--border-strong)] bg-[var(--bg-surface)] p-6 md:rounded-[24px] md:p-10 shadow-2xl relative overflow-hidden"
+      >
       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
       
       <div className="grid gap-6 relative z-10">
@@ -158,6 +214,9 @@ export function EvaluationForm() {
         {/* Honey pot */}
         <input type="text" {...register('website')} className="hidden" tabIndex={-1} autoComplete="off" />
 
+        {/* 🔒 Widget de Turnstile (captcha invisible) */}
+        <div ref={turnstileContainerRef} />
+
         {/* 🏛️ DISCLAIMER INSTITUCIONAL DE ADMISIBILIDAD */}
         <div className="text-justify border-t border-white/[0.05] pt-4">
           <p className="text-[12px] text-zinc-500 leading-relaxed font-light">
@@ -193,5 +252,6 @@ export function EvaluationForm() {
         </div>
       </div>
     </form>
+    </>
   )
 }
