@@ -8,6 +8,7 @@ export const legalServiceSchema = {
   name: 'VINDEX LEGAL',
   alternateName: 'VINDEX | Estrategia Jurídica',
   url: 'https://vindexlegal.com.ar',
+  image: 'https://vindexlegal.com.ar/og-image.jpg',
   description:
     'Estudio jurídico en La Plata, Buenos Aires, especializado en estrategia jurídica para conflictos complejos: derecho de familia, laboral, penal, daños y perjuicios, administrativo y ambiental.',
   telephone: '+5491141743745',

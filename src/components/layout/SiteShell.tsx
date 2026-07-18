@@ -1,5 +1,6 @@
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp'
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
@@ -13,12 +14,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="absolute bottom-[-12%] left-[18%] h-[320px] w-[320px] rounded-full bg-[var(--accent)]/5 blur-3xl opacity-50" />
       </div>
 
-      {/* Renderizado de Estructura Principal */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />
       </div>
+
+      <FloatingWhatsApp />
     </div>
   )
 }
