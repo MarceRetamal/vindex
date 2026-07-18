@@ -219,7 +219,7 @@ export function EvaluationForm() {
 
         {/* 🏛️ DISCLAIMER INSTITUCIONAL DE ADMISIBILIDAD */}
         <div className="text-justify border-t border-white/[0.05] pt-4">
-          <p className="text-[12px] text-zinc-500 leading-relaxed font-light">
+          <p className="text-[12px] text-[var(--text-muted)] leading-relaxed font-light">
             La transmisión de estos datos inicia el protocolo preliminar de análisis de admisibilidad técnica de VINDEX LEGAL. 
             El envío del formulario no constituye la aceptación del caso ni genera relación profesional alguna hasta tanto 
             la firma emita un dictamen de viabilidad estratégica formal e informe las condiciones de contratación.

@@ -60,8 +60,8 @@ export function MobileMenu({
 
         {/* 🏛️ DETALLE DE ÉLITE: Cierre protocolar al fondo del viewport móvil */}
         <div className="mt-auto px-4 text-center">
-          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-zinc-600">
-            VINDEX — Protocolo de Admisión Activo
+          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--text-muted)]">
+            VINDEX LEGAL — Protocolo de Admisión Activo
           </p>
         </div>
       </div>
