@@ -14,7 +14,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="absolute bottom-[-12%] left-[18%] h-[320px] w-[320px] rounded-full bg-[var(--accent)]/5 blur-3xl opacity-50" />
       </div>
 
-      <div className="relative z-10 flex flex-col min-h-screen">
+      <div className="relative z-10 flex flex-col min-h-dvh">
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />
