@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer'
 import { NextResponse } from 'next/server'
-
+import { z } from 'zod'
 export const runtime = 'nodejs'
 
 type IntakePayload = {
@@ -12,6 +12,17 @@ type IntakePayload = {
   message: string
   website?: string
 }
+// 🛡️ VALIDACIÓN SERVER-SIDE — espejo del esquema del formulario, pero acá es
+// la que realmente importa: el navegador se puede saltear, esto no.
+const intakeSchema = z.object({
+  name: z.string().trim().min(2, 'El nombre es obligatorio.').max(120, 'El nombre es demasiado largo.'),
+  email: z.string().trim().email('Email inválido.').max(200, 'El email es demasiado largo.'),
+  phone: z.string().trim().min(6, 'El teléfono es obligatorio.').max(30, 'El teléfono es demasiado largo.'),
+  jurisdiction: z.string().trim().min(2, 'La jurisdicción es obligatoria.').max(200, 'La jurisdicción es demasiado larga.'),
+  urgency: z.enum(['plazo_corriendo', 'medida_notificada', 'conflicto_preventivo', 'auditoria_estrategia']),
+  message: z.string().trim().min(10, 'La descripción requiere mayor detalle.').max(800, 'La síntesis no debe superar los 800 caracteres.'),
+  website: z.string().optional(),
+})
 
 function getEnv(name: string): string {
   const value = process.env[name]
@@ -253,24 +264,22 @@ export async function POST(request: Request) {
   try {
     const body = (await request.json()) as Partial<IntakePayload>
 
-    const payload: IntakePayload = {
-      name: String(body.name ?? '').trim(),
-      email: String(body.email ?? '').trim(),
-      phone: String(body.phone ?? '').trim(),
-      jurisdiction: String(body.jurisdiction ?? '').trim(),
-      urgency: String(body.urgency ?? '').trim(),
-      message: String(body.message ?? '').trim(),
-      website: String(body.website ?? '').trim(),
-    }
-
-    if (payload.website) {
+    // Honeypot: si el campo oculto viene completo, es un bot. Respondemos
+    // "éxito" sin procesar nada, para no revelarle que fue detectado.
+    if (String(body.website ?? '').trim()) {
       return NextResponse.json({ ok: true, warnings: [] })
     }
 
-    // 🎯 VALIDACIÓN QUIRÚRGICA CON CAMPOS DE ELITE
-    if (!payload.name || !payload.email || !payload.phone || !payload.jurisdiction || !payload.urgency || !payload.message) {
-      return NextResponse.json({ ok: false, error: 'Faltan campos obligatorios.' }, { status: 400 })
+    // 🎯 VALIDACIÓN QUIRÚRGICA CON CAMPOS DE ELITE (ahora sí, del lado del servidor)
+    const parsed = intakeSchema.safeParse(body)
+    if (!parsed.success) {
+      return NextResponse.json(
+        { ok: false, error: 'Datos inválidos. Revisá los campos del formulario.' },
+        { status: 400 }
+      )
     }
+
+    const payload: IntakePayload = parsed.data
 
     const requestID = `VX-${Math.floor(1000 + Math.random() * 9000)}`
 
