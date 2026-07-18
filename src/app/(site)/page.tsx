@@ -8,10 +8,18 @@ import { System } from '@/components/sections/home/System'
 import { buildMetadata } from '@/lib/metadata'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = buildMetadata({
-  title: 'Inicio',
-  description: 'Estrategia jurídica para conflictos complejos.',
-})
+export const metadata: Metadata = {
+  ...buildMetadata({
+    title: 'VINDEX LEGAL | Estudio Jurídico en La Plata, Buenos Aires',
+    description: 'Estrategia jurídica para conflictos complejos.',
+  }),
+  // El título de Inicio va completo (sin el sufijo "| VINDEX LEGAL" que se
+  // agrega automáticamente al resto de las páginas), porque acá el nombre y
+  // la ubicación tienen que ir al principio del título.
+  title: {
+    absolute: 'VINDEX LEGAL | Estudio Jurídico en La Plata, Buenos Aires',
+  },
+}
 
 export default function HomePage() {
   return (
