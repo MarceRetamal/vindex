@@ -26,7 +26,7 @@ export function buildMetadata({
       title,
       description,
       url: `${siteUrl}${path}`,
-      siteName: 'VINDEX',
+      siteName: 'VINDEX LEGAL',
       locale: 'es_AR',
       type: 'website',
       images: [
