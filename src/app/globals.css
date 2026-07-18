@@ -32,11 +32,9 @@
 }
 
 /* ─── Tailwind 4 Registration ─── */
-@theme inline {
+:root {
   --color-background: var(--bg-main);
   --color-foreground: var(--text-primary);
-  --font-body: var(--font-body);
-  --font-heading: var(--font-heading);
 }
 
 /* ─── Premium Base Styles ─── */
