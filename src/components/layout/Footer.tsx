@@ -60,9 +60,17 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t border-[var(--border-strong)] pt-5 md:mt-10 md:pt-6">
-          <p className="text-[11px] leading-6 text-[var(--text-muted)] md:text-xs">
-            VINDEX — estrategia jurídica para conflictos complejos.
-          </p>
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <p className="text-[11px] leading-6 text-[var(--text-muted)] md:text-xs">
+              VINDEX — estrategia jurídica para conflictos complejos.
+            </p>
+            <Link
+              href="/politica-de-privacidad"
+              className="text-[11px] leading-6 text-[var(--text-muted)] underline decoration-dashed underline-offset-4 transition-colors hover:text-white md:text-xs"
+            >
+              Política de Privacidad
+            </Link>
+          </div>
         </div>
       </Container>
     </footer>
