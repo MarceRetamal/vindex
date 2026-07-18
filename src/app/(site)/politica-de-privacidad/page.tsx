@@ -66,7 +66,7 @@ const sections = [
     title: 'Compartición con Terceros',
     content: [
       'VINDEX LEGAL no comercializa ni cede datos personales a terceros con fines comerciales. Los datos podrán ser compartidos únicamente con proveedores tecnológicos que actúan como encargados del tratamiento (plataformas de gestión, servicios en la nube, herramientas de automatización), bajo acuerdos de confidencialidad y seguridad; con organismos judiciales o administrativos cuando sea requerido por mandato legal o resolución judicial; y con peritos, mediadores u otros profesionales intervinientes en el proceso, cuando resulte necesario para la defensa del cliente.',
-      'Los proveedores tecnológicos utilizados incluyen, entre otros: Meta Platforms Inc. (WhatsApp Business API), Google LLC (servicios de inteligencia artificial), HubSpot Inc. (gestión de contactos y análisis de navegación mediante cookies) y servicios de infraestructura en la nube. Todos ellos operan bajo marcos de protección de datos reconocidos internacionalmente.',
+      'Los proveedores tecnológicos utilizados incluyen, entre otros: Meta Platforms Inc. (WhatsApp Business API), Google LLC (servicios de inteligencia artificial), Cloudflare Inc. (infraestructura, seguridad y analítica web) y servicios de infraestructura en la nube. Todos ellos operan bajo marcos de protección de datos reconocidos internacionalmente.',
     ],
   },
   {

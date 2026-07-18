@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next'
-import Script from 'next/script'
 import './globals.css'
 import { fontBody, fontHeading } from '@/lib/fonts'
 import { legalServiceSchema } from '@/lib/schema'
@@ -48,13 +47,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }}
         />
         {children}
-        
-        {/* HubSpot Embed Code */}
-        <Script
-          id="hs-script-loader"
-          src="//js-na1.hs-scripts.com/51328372.js"
-          strategy="afterInteractive"
-        />
+
       </body>
     </html>
   )
