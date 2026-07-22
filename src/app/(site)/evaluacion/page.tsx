@@ -12,6 +12,7 @@ export const metadata: Metadata = buildMetadata({
   title: 'Evaluación jurídica',
   description:
     'Revisión preliminar de admisibilidad y encuadre del conflicto.',
+  path: '/evaluacion',
 })
 
 const steps = [
@@ -41,7 +42,7 @@ export default function EvaluacionPage() {
       <PageIntro
         eyebrow="Evaluación jurídica"
         title="El primer paso no es actuar. Es ordenar el escenario táctico."
-        description="VINDEX procesa este intake preliminar asegurando confidencialidad absoluta para determinar vías de asedio legal o contención defensiva."
+        description="VINDEX procesa este intake preliminar asegurando confidencialidad absoluta para determinar la vía de presión procesal legítima o la estrategia de contención defensiva más adecuada."
       />
 
       <div className="mt-16 md:mt-24 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] items-start">
@@ -63,12 +64,12 @@ export default function EvaluacionPage() {
           <div className="space-y-5">
             <div className="rounded-[20px] border border-[var(--accent)]/10 bg-[var(--accent)]/5 p-6 mb-6">
               <p className="text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--accent-bright)] mb-3 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
-                Requerimiento Crítico
-              </p>
-              <p className="text-[14px] leading-relaxed text-[var(--text-secondary)]">
-                Todo campo del formulario es auditable. La veracidad en la descripción del "Statu Quo" define la precisión de nuestra arquitectura probatoria. Sea sintético pero directo.
-              </p>
+  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
+  Confidencialidad y secreto profesional
+</p>
+<p className="text-[14px] leading-relaxed text-[var(--text-secondary)]">
+  La información que comparta está protegida por secreto profesional (Ley 5177, art. 6). Cuanto más precisa sea la descripción del estado actual del conflicto, más preciso será el análisis preliminar. Sea sintético pero concreto.
+</p>
             </div>
             <EvaluationForm />
           </div>
@@ -76,4 +77,4 @@ export default function EvaluacionPage() {
       </div>
     </PageShell>
   )
-}
+}

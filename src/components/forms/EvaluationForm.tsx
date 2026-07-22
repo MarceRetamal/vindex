@@ -130,12 +130,11 @@ export function EvaluationForm() {
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent pointer-events-none" />
           <div className="max-w-xl space-y-6 relative z-10">
             <h3 className="text-[22px] font-bold tracking-[0.15em] text-white uppercase sm:text-[26px]">
-              Análisis en ejecución.
+              Consulta recibida.
             </h3>
             <p className="text-[14px] leading-relaxed text-zinc-400 font-light md:text-[15px] text-justify md:text-center">
-              Los datos ingresados han sido derivados al área de estrategia para evaluar la viabilidad de la intervención. 
-              Si el escenario cumple con los criterios de admisibilidad institucional del gabinete, se abrirá un canal 
-              oficial de comunicación en su línea telefónica registrada dentro de los próximos minutos.
+              El equipo de VINDEX LEGAL está revisando el caso. Se va a comunicar a su teléfono registrado dentro de las
+              próximas 24 horas hábiles para definir los próximos pasos.
             </p>
           </div>
         </div>
@@ -155,7 +154,7 @@ export function EvaluationForm() {
         className="rounded-[20px] border border-[var(--border-strong)] bg-[var(--bg-surface)] p-6 md:rounded-[24px] md:p-10 shadow-2xl relative overflow-hidden"
       >
       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
-      
+
       <div className="grid gap-6 relative z-10">
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
@@ -193,9 +192,9 @@ export function EvaluationForm() {
 
         <div className="space-y-2">
           <Label htmlFor="jurisdiction">Jurisdicción Principal del Conflicto *</Label>
-          <Input 
-            id="jurisdiction" 
-            {...register('jurisdiction')} 
+          <Input
+            id="jurisdiction"
+            {...register('jurisdiction')}
             placeholder="Ej.: Justicia Federal, Tribunales Ordinarios CABA, PBA, Arbitraje Internacional..." 
           />
           {errors.jurisdiction && <p className="text-[13px] text-red-400">{errors.jurisdiction.message}</p>}
@@ -203,9 +202,9 @@ export function EvaluationForm() {
 
         <div className="space-y-2">
           <Label htmlFor="message">Descripción Estructural del Escenario *</Label>
-          <Textarea 
-            id="message" 
-            {...register('message')} 
+          <Textarea
+            id="message"
+            {...register('message')}
             placeholder="Describa el núcleo del conflicto, la contraparte y los activos o estructuras comprometidas en forma sintética (máx. 800 caracteres)..." 
           />
           {errors.message && <p className="text-[13px] text-red-400">{errors.message.message}</p>}
@@ -220,10 +219,10 @@ export function EvaluationForm() {
         {/* 🏛️ DISCLAIMER INSTITUCIONAL DE ADMISIBILIDAD */}
         <div className="text-justify border-t border-white/[0.05] pt-4">
           <p className="text-[12px] text-[var(--text-muted)] leading-relaxed font-light">
-            La transmisión de estos datos inicia el protocolo preliminar de análisis de admisibilidad técnica de VINDEX LEGAL. 
-            El envío del formulario no constituye la aceptación del caso ni genera relación profesional alguna hasta tanto 
-            la firma emita un dictamen de viabilidad estratégica formal e informe las condiciones de contratación.
-          </p>
+          El envío de este formulario no constituye aceptación del caso ni genera relación profesional hasta que VINDEX LEGAL 
+          emita un dictamen de viabilidad formal e informe las condiciones de contratación. Respuesta en un plazo máximo de 
+          24 horas hábiles.
+</p>
         </div>
 
         <div className="pt-2 space-y-4">
@@ -232,7 +231,7 @@ export function EvaluationForm() {
             disabled={isSubmitting}
             className="inline-flex w-full items-center justify-center rounded-[8px] bg-[var(--accent)] px-8 py-4 text-[15px] font-bold text-[var(--bg-deep)] transition-all duration-300 hover:-translate-y-[2px] hover:bg-[var(--accent-bright)] hover:shadow-lg hover:shadow-[var(--accent-mute)] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
-            {isSubmitting ? 'Cifrando envío...' : 'Someter Caso a Evaluación Estricta'}
+            {isSubmitting ? 'Enviando...' : 'Solicitar Evaluación del Caso'}
           </button>
 
           {warnings.length > 0 && (

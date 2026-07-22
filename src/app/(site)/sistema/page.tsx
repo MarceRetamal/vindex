@@ -7,8 +7,8 @@ import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Sistema VINDEX',
-  description:
-    'Método de intervención jurídica: Lectura técnica, Evaluación táctica, Diseño y Ejecución.',
+  description: 'Método de intervención jurídica: Lectura técnica, Evaluación táctica, Diseño y Ejecución.',
+  path: '/sistema',   // ← agregar
 })
 
 const phases = [

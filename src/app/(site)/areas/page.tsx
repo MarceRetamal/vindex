@@ -7,8 +7,8 @@ import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Áreas de Intervención Judicial',
-  description:
-    'Estructuras de defensa, arbitraje y litigio para escenarios patrimonialmente críticos.',
+  description: 'Estructuras de defensa, arbitraje y litigio para escenarios patrimonialmente críticos.',
+  path: '/areas',   // ← agregar
 })
 
 const areas = [
@@ -92,4 +92,4 @@ export default function AreasPage() {
       </div>
     </PageShell>
   )
-}
+}

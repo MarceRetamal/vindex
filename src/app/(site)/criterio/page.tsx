@@ -7,8 +7,8 @@ import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Criterio Institucional',
-  description:
-    'La diferencia no está en reaccionar. Está en posicionarse con autoridad y leer mejor el conflicto.',
+  description: 'La diferencia no está en reaccionar. Está en posicionarse con autoridad y leer mejor el conflicto.',
+  path: '/criterio',   // ← agregar
 })
 
 const principles = [
