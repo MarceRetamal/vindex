@@ -104,9 +104,11 @@ export function EvaluationForm() {
 
       setWarnings(responseData.warnings ?? [])
       setIsSuccess(true)
-      setWarnings(responseData.warnings ?? [])
-setIsSuccess(true)
-reset()
+      reset()
+      window.gtag?.('event', 'generate_lead', {
+        event_category: 'Formulario',
+        event_label: 'Evaluación jurídica',
+      })
 window.gtag?.('event', 'generate_lead', {
   event_category: 'Formulario',
   event_label: 'Evaluación jurídica',

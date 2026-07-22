@@ -27,7 +27,7 @@ export function FloatingWhatsApp() {
         href={whatsappUrl}
   target="_blank"
   rel="noopener noreferrer"
-  className="..."
+  className="relative group flex items-center justify-center w-14 h-14 rounded-full bg-[var(--bg-surface)] border border-[var(--accent)] shadow-[var(--shadow-glow)] transition-all duration-300 hover:scale-105 hover:border-[var(--accent-bright)]"
   onMouseEnter={() => setIsHovered(true)}
   onMouseLeave={() => setIsHovered(false)}
   onClick={() => {
