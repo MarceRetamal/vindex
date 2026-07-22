@@ -1,5 +1,5 @@
 'use client'
-
+import Link from 'next/link'
 import { useEffect, useRef } from 'react'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
@@ -15,22 +15,18 @@ const attributes = [
 ]
 
 export function Hero() {
-  // 🏛️ REF DE ÉLITE: Captura el contenedor del vector para moverlo por hardware
   const visualWrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!visualWrapperRef.current) return
 
-      // Calculamos el centro del viewport como punto de equilibrio (0,0)
       const centerX = window.innerWidth / 2
       const centerY = window.innerHeight / 2
 
-      // Atenuación drástica: el delta del mouse se divide por 120 (Max ~6px de recorrido)
       const moveX = (e.clientX - centerX) / 120
       const moveY = (e.clientY - centerY) / 120
 
-      // Inyección directa en el DOM usando matriz 3D para activar la GPU
       visualWrapperRef.current.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`
     }
 
@@ -52,7 +48,7 @@ export function Hero() {
             </h1>
 
             <p className="max-w-2xl text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base md:text-lg md:leading-8">
-              VINDEX estructura análisis, evaluación e intervención para escenarios
+              VINDEX LEGAL estructura análisis, evaluación e intervención para escenarios
               jurídicos en La Plata y en toda la Provincia de Buenos Aires, donde
               la claridad técnica, la lectura profunda del conflicto y la
               superioridad estratégica modifican el resultado.
@@ -77,14 +73,41 @@ export function Hero() {
                 ))}
               </ul>
             </StaggerFadeIn>
+
+            <FadeIn delay={0.2}>
+              <div className="pt-4">
+                <p className="mb-2.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
+                  Acceso directo según su situación
+                </p>
+                <div className="flex flex-wrap gap-2.5">
+                  <Link
+                    href="/penal-urgente"
+                    className="rounded-full border border-[var(--border-strong)] bg-white/[0.02] px-4 py-2 text-[13px] font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]/50 hover:text-white"
+                  >
+                    Denuncia o causa penal
+                  </Link>
+                  <Link
+                    href="/sucesiones"
+                    className="rounded-full border border-[var(--border-strong)] bg-white/[0.02] px-4 py-2 text-[13px] font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]/50 hover:text-white"
+                  >
+                    Sucesión
+                  </Link>
+                  <Link
+                    href="/evaluacion"
+                    className="rounded-full border border-[var(--border-strong)] bg-white/[0.02] px-4 py-2 text-[13px] font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]/50 hover:text-white"
+                  >
+                    Otro conflicto
+                  </Link>
+                </div>
+              </div>
+            </FadeIn>
           </div>
         </FadeIn>
 
         <div className="w-full mt-8 md:mt-0">
           <FadeIn delay={0.15}>
-            {/* 🛡️ CONTENEDOR REACTIVO: Aplica la física del cursor de forma ultra suavizada */}
-            <div 
-              ref={visualWrapperRef} 
+            <div
+              ref={visualWrapperRef}
               className="transition-transform duration-500 ease-out will-change-transform"
             >
               <HeroVisual />
