@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
-import { Card } from '@/components/ui/Card'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
@@ -18,7 +17,7 @@ const credentials = {
   fullName: 'Dr. Marcelo Fabián Retamal',
   barNumber: 'Tomo LXVI, Folio 263 — Colegio de Abogados de La Plata (CALP)',
   university: 'Universidad Nacional de La Plata (UNLP)',
-  photoSrc: '/marcelo-retamal.jpg', // ← reemplazar cuando subas la foto definitiva
+  photoSrc: '/marcelo-retamal.jpg',
 }
 
 const appointments = [
@@ -47,55 +46,73 @@ export default function DireccionPage() {
         description="VINDEX LEGAL no es una firma anónima: cada caso es evaluado y dirigido por el Dr. Marcelo F. Retamal, abogado matriculado en el Colegio de Abogados de La Plata."
       />
 
-      <div className="mt-16 md:mt-24 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] items-start">
+      <div className="mt-16 md:mt-24">
         <FadeIn>
-          <div className="rounded-[20px] border border-[var(--border-strong)] overflow-hidden bg-[var(--surface-1)]">
+          <div className="flex flex-col items-center gap-6 rounded-[20px] border border-[var(--border-strong)] bg-[var(--surface-1)] p-6 text-center sm:flex-row sm:items-center sm:text-left md:p-8">
             <img
               src={credentials.photoSrc}
               alt={credentials.fullName}
-              className="w-full aspect-[4/5] object-cover grayscale-[15%] contrast-[1.05]"
+              className="h-28 w-28 shrink-0 rounded-full border border-[var(--border-strong)] object-cover grayscale-[10%] contrast-[1.05] md:h-36 md:w-36"
             />
-            <div className="p-6 space-y-1">
-              <p className="text-white font-bold text-lg">{credentials.fullName}</p>
-              <p className="text-[var(--text-secondary)] text-sm">Abogado — {credentials.barNumber}</p>
-              <p className="text-[var(--text-secondary)] text-sm">{credentials.university}</p>
+            <div className="space-y-1.5">
+              <p className="text-xl font-bold text-white md:text-2xl">{credentials.fullName}</p>
+              <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
+                Abogado
+              </p>
+              <p className="text-[14px] text-[var(--text-secondary)]">{credentials.barNumber}</p>
+              <p className="text-[14px] text-[var(--text-secondary)]">{credentials.university}</p>
             </div>
           </div>
         </FadeIn>
 
-        <StaggerFadeIn delay={0.1}>
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-4">
-                Nombramientos judiciales
-              </h3>
-              <div className="grid gap-3 sm:grid-cols-2">
+        <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h3 className="mb-5 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+              Nombramientos judiciales
+            </h3>
+            <StaggerFadeIn stagger={0.06}>
+              <div className="overflow-hidden rounded-[20px] border border-[var(--border-strong)] divide-y divide-[var(--border-strong)]">
                 {appointments.map((a) => (
-                  <Card key={a.jurisdiction} title={a.jurisdiction} description={a.role} />
+                  <div
+                    key={a.jurisdiction}
+                    className="flex items-center justify-between gap-4 px-6 py-4 transition-colors hover:bg-[var(--bg-elevated)]"
+                  >
+                    <span className="text-[15px] font-bold text-white">{a.jurisdiction}</span>
+                    <span className="text-right text-[13px] text-[var(--text-secondary)]">{a.role}</span>
+                  </div>
                 ))}
               </div>
-            </div>
-
-            <div>
-              <h3 className="text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-4">
-                Áreas de actuación
-              </h3>
-              <p className="text-[15px] leading-relaxed text-[var(--text-secondary)]">
-                {areasOfPractice.join(' · ')}
-              </p>
-            </div>
+            </StaggerFadeIn>
           </div>
-        </StaggerFadeIn>
+
+          <div>
+            <h3 className="mb-5 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+              Áreas de actuación
+            </h3>
+            <FadeIn delay={0.1}>
+              <div className="flex flex-wrap gap-2">
+                {areasOfPractice.map((area) => (
+                  <span
+                    key={area}
+                    className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3.5 py-1.5 text-xs font-semibold text-[var(--text-muted)]"
+                  >
+                    {area}
+                  </span>
+                ))}
+              </div>
+            </FadeIn>
+          </div>
+        </div>
       </div>
 
       <div className="mt-20 md:mt-32">
         <PageCta
-        title="Un caso mal dirigido no se corrige con una mejor estrategia después."
-        description="Se decide ahora, con quién lo confía."
-        buttonHref="/evaluacion"
-        buttonLabel="Solicitar Evaluación del Caso"
+          title="Un caso mal dirigido no se corrige con una mejor estrategia después."
+          description="Se decide ahora, con quién lo confía."
+          buttonHref="/evaluacion"
+          buttonLabel="Solicitar Evaluación del Caso"
         />
-        </div>
+      </div>
     </PageShell>
-    )
+  )
 }

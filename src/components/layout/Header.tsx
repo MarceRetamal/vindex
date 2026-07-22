@@ -14,9 +14,6 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [lastPathname, setLastPathname] = useState(pathname)
 
-  // Cierra el menú móvil al cambiar de ruta. Se ajusta durante el render
-  // (no dentro de un efecto) siguiendo el patrón recomendado por React para
-  // resetear estado cuando cambia un valor externo, evitando renders en cascada.
   if (pathname !== lastPathname) {
     setLastPathname(pathname)
     setIsOpen(false)
@@ -37,12 +34,7 @@ export function Header() {
     <>
       <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--bg-main)]/80 backdrop-blur-xl">
         <Container className="flex h-[72px] items-center">
-          
-          {/* 🏛️ IDENTIDAD DE ÉLITE: Tipografía Desnuda, Nítida y Expansiva */}
-          <Link
-            href="/"
-            className="group relative z-50 shrink-0 py-2"
-          >
+          <Link href="/" className="group relative z-50 shrink-0 py-2">
             <span className="text-base font-extrabold tracking-[0.35em] text-white uppercase transition-colors group-hover:text-[var(--accent)] sm:text-lg md:text-xl font-heading">
               VINDEX
               <span className="ml-1.5 text-[0.55em] font-semibold tracking-[0.25em] text-[var(--accent)] align-middle">
@@ -51,7 +43,7 @@ export function Header() {
             </span>
           </Link>
 
-          <nav className="ml-12 hidden items-center gap-8 md:flex">
+          <nav className="ml-14 hidden items-center gap-9 md:flex">
             {navigation.map((item) => {
               const isActive = pathname === item.href
 
@@ -60,18 +52,13 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={`group relative whitespace-nowrap py-1 text-[15px] leading-none font-medium transition-colors hover:text-white ${
-                    isActive
-                      ? 'text-[var(--accent)]'
-                      : 'text-[var(--text-secondary)]'
+                    isActive ? 'text-[var(--accent)]' : 'text-[var(--text-secondary)]'
                   }`}
                 >
                   <span>{item.label}</span>
-
                   <span
                     className={`absolute -bottom-2 left-0 h-px bg-[var(--accent)] transition-all duration-300 ${
-                      isActive
-                        ? 'w-full opacity-100'
-                        : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                      isActive ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
                     }`}
                   />
                 </Link>
@@ -79,7 +66,8 @@ export function Header() {
             })}
           </nav>
 
-          <div className="ml-auto hidden md:block">
+          <div className="ml-auto hidden items-center gap-6 md:flex">
+            <div className="h-6 w-px bg-[var(--border-strong)]" />
             <Button href={siteConfig.cta.href}>{siteConfig.cta.label}</Button>
           </div>
 
@@ -104,11 +92,7 @@ export function Header() {
         </Container>
       </header>
 
-      <MobileMenu
-        isOpen={isOpen}
-        pathname={pathname}
-        onClose={() => setIsOpen(false)}
-      />
+      <MobileMenu isOpen={isOpen} pathname={pathname} onClose={() => setIsOpen(false)} />
     </>
   )
 }
