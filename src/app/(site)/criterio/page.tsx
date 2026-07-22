@@ -44,7 +44,7 @@ export default function CriterioPage() {
       <PageIntro
         eyebrow="Manifiesto Estratégico VINDEX"
         title="La diferencia no está en reaccionar. Está en leer el conflicto."
-        description="Nuestro criterio operativo parte de un axioma brutal: cuando el patrimonio real está bajo amenaza, la mera improvisación penaliza de igual forma a la desidia. Construimos estructuras de asedio legal con timing de precisión."
+        description="Nuestro criterio operativo parte de un axioma brutal: cuando el patrimonio real está bajo amenaza, la mera improvisación penaliza de igual forma a la desidia. Construimos la estrategia de presión procesal legítima con timing de precisión."
       />
 
       <div className="mt-16 md:mt-24">
@@ -67,14 +67,14 @@ export default function CriterioPage() {
          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
          <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-8 items-center">
             <div>
-              <h3 className="text-2xl font-bold text-white tracking-tight mb-2">Evaluamos antes del primer escrito.</h3>
-              <p className="text-[var(--text-secondary)] m-0">No acepte defensas genéricas de modelos descargados de internet. Su caso requiere análisis de fondo.</p>
+              <h3 className="text-2xl font-bold text-white tracking-tight mb-2">Un primer escrito improvisado no se corrige después.</h3>
+              <p className="text-[var(--text-secondary)] m-0">Se decide antes de escribir, no durante.</p>
             </div>
             <a href="/evaluacion" className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] text-[var(--bg-deep)] px-8 py-3.5 font-bold transition-all hover:bg-[var(--accent-bright)] hover:scale-[1.02]">
-              Someter caso a Auditoría
+                Solicitar Evaluación del Caso
             </a>
          </div>
       </div>
     </PageShell>
   )
-}                                                                    
+}

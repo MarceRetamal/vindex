@@ -14,7 +14,7 @@ export const metadata: Metadata = buildMetadata({
 const areas = [
   {
     category: 'Litigio Civil y Comercial',
-    subTitle: 'Asedio y Defensa Integral',
+    subTitle: 'Defensa y Ejecución Integral',
     description:
       'Intervención en disputas contractuales complejas, ejecución de garantías, embargos y levantamientos cautelares. Estructuramos la demanda o la resistencia con precisión probatoria, asumiendo la dirección total de la controversia hasta la sentencia o el acuerdo judicial forzado.',
     tags: ['Ejecuciones', 'Incumplimientos', 'Daños Patrimoniales'],
