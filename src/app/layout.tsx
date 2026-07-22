@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { fontBody, fontHeading } from '@/lib/fonts'
 import { legalServiceSchema } from '@/lib/schema'
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 export const metadata: Metadata = {
   // 1. CORREGIDO: Actualizamos la base del dominio para indexación real de Google
   metadataBase: new URL('https://vindexlegal.com.ar'), 
@@ -41,7 +42,8 @@ export default function RootLayout({
       {/* 3. OPTIMIZADO: Aseguramos una altura mínima estructural y suavizado de fuentes */}
       {/* 3. OPTIMIZADO: Aseguramos una altura mínima estructural y suavizado de fuentes */}
       <body className="min-h-dvh bg-[#07090C] antialiased">
-        {/* 🏛️ Datos estructurados (Schema.org) — identidad del estudio para Google */}
+      <GoogleAnalytics />
+              {/* 🏛️ Datos estructurados (Schema.org) — identidad del estudio para Google */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }}

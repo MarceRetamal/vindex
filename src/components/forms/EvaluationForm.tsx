@@ -19,6 +19,7 @@ declare global {
       render: (container: HTMLElement, options: Record<string, unknown>) => string
       reset: (widgetId?: string) => void
     }
+    gtag?: (...args: unknown[]) => void
   }
 }
 
@@ -103,6 +104,13 @@ export function EvaluationForm() {
 
       setWarnings(responseData.warnings ?? [])
       setIsSuccess(true)
+      setWarnings(responseData.warnings ?? [])
+setIsSuccess(true)
+reset()
+window.gtag?.('event', 'generate_lead', {
+  event_category: 'Formulario',
+  event_label: 'Evaluación jurídica',
+})
       reset()
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Error interno de comunicación.')

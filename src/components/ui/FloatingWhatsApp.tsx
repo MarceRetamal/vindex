@@ -25,13 +25,21 @@ export function FloatingWhatsApp() {
 
       <a
         href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="relative group flex items-center justify-center w-14 h-14 rounded-full bg-[var(--bg-surface)] border border-[var(--accent)] shadow-[var(--shadow-glow)] transition-all duration-300 hover:scale-105 hover:border-[var(--accent-bright)]"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        aria-label="Contactar por WhatsApp"
-      >
+  target="_blank"
+  rel="noopener noreferrer"
+  className="..."
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+  onClick={() => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'contact_whatsapp', {
+        event_category: 'WhatsApp',
+        event_label: 'Botón flotante',
+      })
+    }
+  }}
+  aria-label="Contactar por WhatsApp"
+>
         <div className="absolute inset-0 rounded-full bg-[var(--accent)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <svg
