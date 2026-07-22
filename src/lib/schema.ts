@@ -25,10 +25,12 @@ export const legalServiceSchema = {
     { '@type': 'City', name: 'La Plata' },
     { '@type': 'AdministrativeArea', name: 'Provincia de Buenos Aires' },
   ],
-  founder: {
+  attorney: {
     '@type': 'Person',
-    name: 'Dr. Marcelo F. Retamal',
+    name: 'Marcelo Fabián Retamal',
     jobTitle: 'Abogado',
+    url: 'https://vindexlegal.com.ar/direccion',
+    alumniOf: 'Universidad Nacional de La Plata',
   },
   knowsAbout: [
     'Derecho de Familia',
