@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
 import { FadeIn } from '@/components/motion/FadeIn'
-import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
@@ -9,7 +8,7 @@ import { PageShell } from '@/components/ui/PageShell'
 export const metadata: Metadata = buildMetadata({
   title: 'Dirección del Estudio',
   description:
-    'Dr. Marcelo F. Retamal — abogado matriculado CALP, La Plata. Trayectoria, matrícula y jurisdicciones de actuación.',
+    'Dr. Marcelo F. Retamal — abogado matriculado CALP, La Plata. Trayectoria y áreas de actuación.',
   path: '/direccion',
 })
 
@@ -19,14 +18,6 @@ const credentials = {
   university: 'Universidad Nacional de La Plata (UNLP)',
   photoSrc: '/marcelo-retamal.jpg',
 }
-
-const appointments = [
-  { jurisdiction: 'Ensenada', role: 'Defensor / asesor sistema DEAS' },
-  { jurisdiction: 'Berisso', role: 'Defensor / asesor sistema DEAS' },
-  { jurisdiction: 'Punta Indio', role: 'Defensor / asesor de oficio sistema DEAS' },
-  { jurisdiction: 'Magdalena', role: 'Defensor / asesor de oficio sistema DEAS' },
-  { jurisdiction: 'Coronel Brandsen', role: 'Defensor / asesor de oficio sistema DEAS' },
-]
 
 const areasOfPractice = [
   'Derecho de Familia',
@@ -52,7 +43,7 @@ export default function DireccionPage() {
             <img
               src={credentials.photoSrc}
               alt={credentials.fullName}
-              className="h-28 w-28 shrink-0 rounded-full border border-[var(--border-strong)] object-cover grayscale-[10%] contrast-[1.05] md:h-36 md:w-36"
+              className="h-28 w-28 shrink-0 rounded-full border border-[var(--border-strong)] object-cover object-top grayscale-[10%] contrast-[1.05] md:h-36 md:w-36"
             />
             <div className="space-y-1.5">
               <p className="text-xl font-bold text-white md:text-2xl">{credentials.fullName}</p>
@@ -65,43 +56,22 @@ export default function DireccionPage() {
           </div>
         </FadeIn>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
-            <h3 className="mb-5 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
-              Nombramientos judiciales
-            </h3>
-            <StaggerFadeIn stagger={0.06}>
-              <div className="overflow-hidden rounded-[20px] border border-[var(--border-strong)] divide-y divide-[var(--border-strong)]">
-                {appointments.map((a) => (
-                  <div
-                    key={a.jurisdiction}
-                    className="flex items-center justify-between gap-4 px-6 py-4 transition-colors hover:bg-[var(--bg-elevated)]"
-                  >
-                    <span className="text-[15px] font-bold text-white">{a.jurisdiction}</span>
-                    <span className="text-right text-[13px] text-[var(--text-secondary)]">{a.role}</span>
-                  </div>
-                ))}
-              </div>
-            </StaggerFadeIn>
-          </div>
-
-          <div>
-            <h3 className="mb-5 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
-              Áreas de actuación
-            </h3>
-            <FadeIn delay={0.1}>
-              <div className="flex flex-wrap gap-2">
-                {areasOfPractice.map((area) => (
-                  <span
-                    key={area}
-                    className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3.5 py-1.5 text-xs font-semibold text-[var(--text-muted)]"
-                  >
-                    {area}
-                  </span>
-                ))}
-              </div>
-            </FadeIn>
-          </div>
+        <div className="mt-14">
+          <h3 className="mb-5 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+            Áreas de actuación
+          </h3>
+          <FadeIn delay={0.1}>
+            <div className="flex flex-wrap gap-2">
+              {areasOfPractice.map((area) => (
+                <span
+                  key={area}
+                  className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3.5 py-1.5 text-xs font-semibold text-[var(--text-muted)]"
+                >
+                  {area}
+                </span>
+              ))}
+            </div>
+          </FadeIn>
         </div>
       </div>
 
