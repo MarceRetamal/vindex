@@ -58,6 +58,31 @@ export default function DireccionPage() {
 
         <div className="mt-14">
           <h3 className="mb-5 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+            Dónde estamos
+          </h3>
+          <FadeIn delay={0.05}>
+            <div className="overflow-hidden rounded-[20px] border border-[var(--border-strong)]">
+              <iframe
+                title="Ubicación de VINDEX LEGAL — Av. 13 N° 821, La Plata"
+                src="https://www.google.com/maps?q=Av.+13+821,+La+Plata,+Buenos+Aires,+Argentina&output=embed"
+                width="100%"
+                height="320"
+                style={{ border: 0, filter: 'grayscale(15%) contrast(1.05)' }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <div className="flex flex-col gap-1 border-t border-[var(--border-strong)] bg-[var(--surface-1)] p-5 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-[14px] text-[var(--text-secondary)]">
+                  Av. 13 N° 821, La Plata, Provincia de Buenos Aires.
+                </p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Av.+13+821,+La+Plata,+Buenos+Aires,+Argentina" target="_blank" rel="noopener noreferrer" className="text-[13px] font-semibold text-[var(--accent)] transition-colors hover:text-[var(--accent-bright)]">Cómo llegar →</a>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+
+        <div className="mt-14">
+          <h3 className="mb-5 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
             Áreas de actuación
           </h3>
           <FadeIn delay={0.1}>
