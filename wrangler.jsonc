@@ -1,5 +1,5 @@
 {
-  "name": "vindex",
+  "name": "vindex Legal",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-06-03",
   "compatibility_flags": [
@@ -20,11 +20,11 @@
     }
   },
   "vars": {
-    "SMTP_HOST": "c2751146.ferozo.com",
+    "SMTP_HOST": "smtp.gmail.com",
     "SMTP_PORT": "465",
     "SMTP_SECURE": "true",
-    "SMTP_USER": "vindex@estudioretamal.com.ar",
-    "MAIL_FROM": "VINDEX <vindex@estudioretamal.com.ar>",
+    "SMTP_USER": "info@vindexlegal.com.ar",
+    "MAIL_FROM": "VINDEX LEGAL <info@vindexlegal.com.ar>",
     "MAIL_TO": "info@vindexlegal.com.ar"
   }
 }
