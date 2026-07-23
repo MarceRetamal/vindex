@@ -1,5 +1,5 @@
 {
-  "name": "vindex Legal",
+  "name": "vindex",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-06-03",
   "compatibility_flags": [
