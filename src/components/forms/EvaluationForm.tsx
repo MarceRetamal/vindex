@@ -18,6 +18,7 @@ declare global {
     turnstile?: {
       render: (container: HTMLElement, options: Record<string, unknown>) => string
       reset: (widgetId?: string) => void
+      remove: (widgetId: string) => void
     }
     gtag?: (...args: unknown[]) => void
   }
@@ -57,6 +58,13 @@ export function EvaluationForm() {
       'expired-callback': () => setTurnstileToken(''),
       'error-callback': () => setTurnstileToken(''),
     })
+
+    return () => {
+      if (window.turnstile && turnstileWidgetId.current) {
+        window.turnstile.remove(turnstileWidgetId.current)
+        turnstileWidgetId.current = null
+      }
+    }
   }, [turnstileReady])
 
   const {
@@ -109,11 +117,6 @@ export function EvaluationForm() {
         event_category: 'Formulario',
         event_label: 'Evaluación jurídica',
       })
-window.gtag?.('event', 'generate_lead', {
-  event_category: 'Formulario',
-  event_label: 'Evaluación jurídica',
-})
-      reset()
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Error interno de comunicación.')
       setTurnstileToken('')
@@ -127,7 +130,7 @@ window.gtag?.('event', 'generate_lead', {
     }
   }, [serverError])
 
-  // 🎯 PANTALLA DE ÉXITO: MODO BÚNKER (Sustituye todo el formulario para generar alta tensión psicológica)
+  // 🎯 PANTALLA DE ÉXITO
   if (isSuccess) {
     return (
       <>
