@@ -8,7 +8,7 @@ import { PageShell } from '@/components/ui/PageShell'
 export const metadata: Metadata = buildMetadata({
   title: 'Criterio Institucional',
   description: 'La diferencia no está en reaccionar. Está en posicionarse con autoridad y leer mejor el conflicto.',
-  path: '/criterio',   // ← agregar
+  path: '/criterio',
 })
 
 const principles = [
@@ -16,25 +16,25 @@ const principles = [
     num: 'I.',
     title: 'Lectura Pericial, No Emocional',
     description:
-      'La primera ventaja estructural en un conflicto judicializado no surge de la agresión escrita ni del volumen de actuaciones procesales, sino de una comprensión puramente matemática del encuadre legal. Despejamos el ruido emocional y destilamos el conflicto a contingencias, pasivos, probabilidades y tiempos judiciales medibles.',
+      'La primera ventaja estructural en un conflicto judicializado no surge de la agresión escrita ni del volumen de actuaciones procesales, sino de una comprensión puramente técnica del encuadre legal. Despejamos el ruido emocional y destilamos el conflicto a contingencias, pasivos, probabilidades y tiempos judiciales medibles.',
   },
   {
     num: 'II.',
     title: 'Ingeniería Inversa del Conflicto',
     description:
-      'Comenzamos visualizando the "worst-case scenario" (el peor escenario posible) para el cliente y para la contraparte judicial. A partir del resultado final dictado por la jurisprudencia imperante, estructuramos paso a paso cada carta documento, notificación y demanda de forma inversa para forzar ese resultado natural.',
+      'Comenzamos visualizando el peor escenario posible para el cliente y para la contraparte. A partir del resultado más probable según la jurisprudencia imperante, estructuramos paso a paso cada carta documento, notificación y demanda de forma inversa, para conducir el caso hacia ese desenlace desde el primer movimiento.',
   },
   {
     num: 'III.',
     title: 'Presión Táctica Controlada',
     description:
-      'La presión no significa enviar la mayor cantidad de papeles al tribunal. Presionar en nuestro criterio significa cerrar las válvulas de escape argumentales del adversario. Es acorralar mediante pruebas irrefutables e intimidación puramente intelectual. Nunca amenazamos; notificamos consecuencias inevitables.',
+      'La presión no significa enviar la mayor cantidad de papeles al tribunal. Presionar, en nuestro criterio, significa cerrar las vías de escape argumentales de la contraparte con prueba sólida y fundamentos jurídicos precisos. Nunca amenazamos: notificamos consecuencias jurídicas previsibles.',
   },
   {
     num: 'IV.',
-    title: 'Destrucción de la Improvisación',
+    title: 'Cero Improvisación',
     description:
-      'Una carta documento enviada en un estado de nerviosismo detona las defensas futuras de manera irreparable. Cuando el escenario compromete patrimonio o reputación, una decisión táctica errática al inicio del intercambio no puede revertirse ni con la mejor estrategia probatoria posterior.',
+      'Una carta documento enviada en un estado de nerviosismo compromete las defensas futuras de manera difícil de reparar. Cuando el escenario involucra patrimonio o reputación, una decisión errática al inicio del intercambio condiciona toda la estrategia probatoria posterior.',
   },
 ]
 
@@ -44,7 +44,7 @@ export default function CriterioPage() {
       <PageIntro
         eyebrow="Manifiesto Estratégico VINDEX"
         title="La diferencia no está en reaccionar. Está en leer el conflicto."
-        description="Nuestro criterio operativo parte de un axioma brutal: cuando el patrimonio real está bajo amenaza, la mera improvisación penaliza de igual forma a la desidia. Construimos la estrategia de presión procesal legítima con timing de precisión."
+        description="Nuestro criterio operativo parte de un principio simple: cuando el patrimonio real está en riesgo, la improvisación cuesta tan caro como la desidia. Construimos la estrategia de presión procesal legítima con timing de precisión."
       />
 
       <div className="mt-16 md:mt-24">

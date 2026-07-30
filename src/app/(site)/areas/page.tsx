@@ -7,8 +7,8 @@ import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Áreas de Intervención Judicial',
-  description: 'Estructuras de defensa, arbitraje y litigio para escenarios patrimonialmente críticos.',
-  path: '/areas',   // ← agregar
+  description: 'Estructuras de defensa, negociación y litigio para escenarios patrimonialmente críticos.',
+  path: '/areas',
 })
 
 const areas = [
@@ -16,29 +16,29 @@ const areas = [
     category: 'Litigio Civil y Comercial',
     subTitle: 'Defensa y Ejecución Integral',
     description:
-      'Intervención en disputas contractuales complejas, ejecución de garantías, embargos y levantamientos cautelares. Estructuramos la demanda o la resistencia con precisión probatoria, asumiendo la dirección total de la controversia hasta la sentencia o el acuerdo judicial forzado.',
+      'Intervención en disputas contractuales complejas, ejecución de garantías, embargos y levantamientos cautelares. Estructuramos la demanda o la defensa con precisión probatoria, asumiendo la dirección total de la controversia hasta la sentencia o el acuerdo homologado judicialmente.',
     tags: ['Ejecuciones', 'Incumplimientos', 'Daños Patrimoniales'],
   },
   {
     category: 'Conflicto Societario',
     subTitle: 'Control y Disolución',
     description:
-      'Lectura de posiciones accionarias, administración fraudulenta y remoción de directores. Protegemos al socio minoritario del abuso legal, o blindamos la gestión mayoritaria frente a embates extorsivos, preparando el terreno para escisiones corporativas seguras.',
-    tags: ['Remoción Directiva', 'Rendición de Cuentas', 'Blindaje'],
+      'Lectura de posiciones accionarias, administración irregular y remoción de directores. Protegemos al socio minoritario frente al abuso de la posición de control, o defendemos la gestión mayoritaria frente a reclamos infundados, preparando el terreno para escisiones corporativas ordenadas y seguras.',
+    tags: ['Remoción Directiva', 'Rendición de Cuentas', 'Blindaje Societario'],
   },
   {
     category: 'Estructuración Sucesoria',
     subTitle: 'Intervención Patrimonial',
     description:
-      'El patrimonio hereditario es una zona de guerra latente. No gestionamos meros trámites, bloqueamos la dilapidación de bienes, auditamos inventarios ocultos y forzamos particiones equitativas enfrentando la colusión entre herederos hostiles.',
+      'El patrimonio hereditario concentra los conflictos familiares más sensibles y de mayor riesgo económico. No gestionamos meros trámites: prevenimos la dilapidación de bienes, auditamos inventarios incompletos y promovemos particiones equitativas, incluso cuando otros herederos obstruyen, dilatan o actúan de manera coordinada en perjuicio de nuestro cliente.',
     tags: ['Fraude Hereditario', 'Partición', 'Inventario'],
   },
   {
-    category: 'Arbitraje y Fricción Privada',
-    subTitle: 'Extracción de Valor Rápida',
+    category: 'Negociación y Arbitraje',
+    subTitle: 'Resolución Anticipada del Conflicto',
     description:
-      'Negociaciones al borde de la judicialización. Desarmamos estrategias de coerción de la contraparte aislando los riesgos financieros. Construimos acuerdos asimétricos validados ante notario para finiquitar la disputa de raíz, bloqueando vías de reclamo futuro.',
-    tags: ['Negociación Asimétrica', 'Arbitraje', 'Cláusulas Penales'],
+      'Negociaciones al borde de la judicialización. Neutralizamos presiones indebidas de la contraparte y aislamos los riesgos financieros del escenario. Construimos acuerdos sólidos, con la instrumentación y el respaldo documental adecuados, que cierran la disputa de raíz y previenen reclamos futuros.',
+    tags: ['Negociación Estratégica', 'Arbitraje', 'Cláusulas Penales'],
   },
 ]
 
@@ -48,7 +48,7 @@ export default function AreasPage() {
       <PageIntro
         eyebrow="Áreas de Práctica Exponencial"
         title="Escenarios de alta fricción. Resoluciones contundentes."
-        description="VINDEX no es una clínica generalista. Solo intervenimos en disputas donde el impacto patrimonial, societario o estructural exige técnica incisiva, control férreo del riesgo y una asimetría táctica a nuestro favor."
+        description="VINDEX no es una clínica generalista. Solo intervenimos en disputas donde el impacto patrimonial, societario o estructural exige técnica rigurosa, control estricto del riesgo y planificación estratégica de cada movimiento."
       />
       
       <div className="mt-16 md:mt-24">
@@ -87,7 +87,7 @@ export default function AreasPage() {
       <div className="mt-24 md:mt-32">
         <PageCta
           title="No dilapide recursos en enfoques genéricos."
-          description="Una evaluación preliminar del caso blindará sus movimientos futuros, evitando que su posición de negociación sea destruida antes del primer cara a cara."
+          description="Una evaluación preliminar del caso ordena sus movimientos futuros y protege su posición de negociación desde el primer intercambio."
         />
       </div>
     </PageShell>
