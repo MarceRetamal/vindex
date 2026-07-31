@@ -46,7 +46,7 @@ export default function BlogPage() {
                     href={`/blog/${a.slug}`}
                     className="text-[14px] font-semibold text-[var(--accent)] underline-offset-4 hover:underline"
                   >
-                    Leer la guía completa →
+                    Leer la guía completa
                   </Link>
                 }
               />

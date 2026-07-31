@@ -15,6 +15,54 @@ export type Article = {
 // El índice del blog y el sitemap se actualizan solos a partir de esta lista.
 export const articles: Article[] = [
   {
+    slug: 'estafa-virtual-banco-devolucion-fallos-la-plata',
+    title: 'Le vaciaron la cuenta en una estafa virtual: los fallos de La Plata que obligan a los bancos a devolver el dinero',
+    description:
+      'La justicia de La Plata condenó a bancos a devolver lo robado en estafas virtuales, con daño punitivo incluido. Cuándo responde el banco, cuándo no, y los pasos que hay que dar en las primeras horas.',
+    excerpt:
+      'Dos sentencias recientes de juzgados platenses ordenaron a bancos devolver hasta el último peso de cuentas vaciadas por estafadores. Pero no todos los casos terminan igual. La diferencia está en los detalles.',
+    pillarLabel: 'Consumidor',
+    datePublished: '2026-07-31',
+    dateModified: '2026-07-31',
+    readingMinutes: 8,
+  },
+  {
+    slug: 'pension-discapacidad-andis-suspendida-amparo',
+    title: 'ANDIS le suspendió o no le otorga la pensión por discapacidad: qué está pasando en la justicia y qué puede hacer',
+    description:
+      'El estado real de los reclamos contra ANDIS: qué pasó con el amparo colectivo, por qué los amparos individuales siguen ganando en la justicia federal y qué documentación hay que reunir para reclamar.',
+    excerpt:
+      'Entre auditorías, suspensiones masivas y una ley de emergencia, miles de personas quedaron sin cobrar. El mapa judicial cambió varias veces en pocos meses. Esto es lo que está pasando de verdad, y el camino que sigue abierto.',
+    pillarLabel: 'Discapacidad',
+    datePublished: '2026-07-31',
+    dateModified: '2026-07-31',
+    readingMinutes: 9,
+  },
+  {
+    slug: 'canasta-crianza-cuota-alimentaria-fallos',
+    title: 'La canasta de crianza cambió las cuotas alimentarias: qué están fallando los jueces (y qué pasa con los abuelos)',
+    description:
+      'Los tribunales usan la canasta de crianza del INDEC como piso de la cuota alimentaria, no como techo. Fallos recientes fijaron cuotas superiores y extendieron la obligación a los abuelos. Qué significa para su caso.',
+    excerpt:
+      'Un número publicado todos los meses por el INDEC está reordenando los juicios de alimentos en todo el país. Y los fallos recientes dejaron dos cosas claras: es un piso, no un techo. Y la cadena de obligados no termina en los padres.',
+    pillarLabel: 'Familia',
+    datePublished: '2026-07-31',
+    dateModified: '2026-07-31',
+    readingMinutes: 8,
+  },
+  {
+    slug: 'no-me-dejan-ver-a-mis-hijos-impedimento-contacto',
+    title: 'No me dejan ver a mis hijos: las tres vías legales cuando cortan el contacto',
+    description:
+      'El régimen de comunicación es un derecho del hijo, no un favor entre adultos. Qué herramientas da la ley ante el impedimento de contacto: medidas judiciales del art. 557 CCyC, la vía penal y el reclamo de daños.',
+    excerpt:
+      'El teléfono que no contesta, los fines de semana que se cancelan a último momento, las excusas que se acumulan. La ley tiene nombre para eso, y también tiene herramientas. Ninguna de las tres empieza por pelearse.',
+    pillarLabel: 'Familia',
+    datePublished: '2026-07-31',
+    dateModified: '2026-07-31',
+    readingMinutes: 8,
+  },
+  {
     slug: 'divorcio-sin-acuerdo-como-funciona-argentina',
     title: 'Divorcio sin acuerdo: por qué "no te doy el divorcio" ya no significa nada',
     description:
