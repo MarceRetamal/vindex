@@ -15,6 +15,42 @@ export type Article = {
 // El índice del blog y el sitemap se actualizan solos a partir de esta lista.
 export const articles: Article[] = [
   {
+    slug: 'divorcio-sin-acuerdo-como-funciona-argentina',
+    title: 'Divorcio sin acuerdo: por qué "no te doy el divorcio" ya no significa nada',
+    description:
+      'Desde 2015 el divorcio en Argentina es incausado: nadie puede oponerse ni frenarlo. Qué exige el Código Civil y Comercial, cómo se dividen los bienes y el plazo de 6 meses que casi nadie conoce.',
+    excerpt:
+      'La frase "no te voy a dar el divorcio" sigue funcionando como amenaza — pero jurídicamente está vacía desde hace más de una década. Cómo funciona de verdad, qué se divide y qué no, y el derecho que caduca a los 6 meses.',
+    pillarLabel: 'Familia',
+    datePublished: '2026-07-31',
+    dateModified: '2026-07-31',
+    readingMinutes: 8,
+  },
+  {
+    slug: 'cuota-alimentaria-cuanto-corresponde-hasta-cuando',
+    title: 'Cuota alimentaria: cuánto corresponde, hasta cuándo se paga y qué hacer si no pagan',
+    description:
+      'Los alimentos de los hijos no terminan a los 18: rigen hasta los 21 y hasta los 25 si estudian (arts. 658 y 663 CCyC). Cómo se calcula la cuota, desde cuándo se debe y las herramientas reales contra el incumplimiento.',
+    excerpt:
+      'Tres preguntas concentran casi todas las consultas: cuánto, hasta cuándo y qué pasa si no paga. Las tres tienen respuesta legal precisa — y varias desmienten lo que se repite en las charlas de WhatsApp.',
+    pillarLabel: 'Familia',
+    datePublished: '2026-07-31',
+    dateModified: '2026-07-31',
+    readingMinutes: 9,
+  },
+  {
+    slug: 'fallecio-sin-testamento-quien-hereda',
+    title: 'Falleció sin testamento: quién hereda (y quién se queda sin nada) según la ley',
+    description:
+      'Sin testamento, el Código Civil y Comercial define quién hereda: hijos, cónyuge, padres, hermanos. La regla de los gananciales que confunde a todos y por qué el conviviente no hereda aunque hayan pasado 20 años juntos.',
+    excerpt:
+      'Cuando no hay testamento, la ley ya escribió uno. A veces coincide con lo que la familia espera; otras veces deja afuera justamente a quien compartió la vida con el fallecido. Los escenarios, uno por uno.',
+    pillarLabel: 'Sucesiones',
+    datePublished: '2026-07-31',
+    dateModified: '2026-07-31',
+    readingMinutes: 9,
+  },
+  {
     slug: 'citacion-penal-provincia-buenos-aires-que-hacer',
     title: 'Citación penal en la Provincia de Buenos Aires: qué hacer en las primeras 48 horas',
     description:
