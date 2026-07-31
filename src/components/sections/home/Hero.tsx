@@ -43,8 +43,8 @@ export function Hero() {
           <div className="space-y-5 md:space-y-7">
             <Eyebrow>Intervención jurídica de alta precisión</Eyebrow>
 
-            <h1 className="max-w-[14ch] text-[2rem] font-extrabold leading-[1.05] sm:text-4xl md:text-6xl lg:text-7xl">
-              Estrategia jurídica para conflictos complejos
+            <h1 className="max-w-[16ch] text-[2rem] font-extrabold leading-[1.05] sm:text-4xl md:text-6xl lg:text-7xl">
+              Abogados en La Plata para conflictos complejos
             </h1>
 
             <p className="max-w-2xl text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base md:text-lg md:leading-8">

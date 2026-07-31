@@ -3,5 +3,6 @@ export const navigation = [
   { label: 'Áreas', href: '/areas' },
   { label: 'Dirección', href: '/direccion' },
   { label: 'Criterio', href: '/criterio' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Evaluación', href: '/evaluacion' },
 ]

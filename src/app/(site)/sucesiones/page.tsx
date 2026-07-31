@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
+import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
 import { Card } from '@/components/ui/Card'
 import { PageCta } from '@/components/ui/PageCta'
@@ -79,8 +80,8 @@ export default function SucesionesPage() {
 
       <PageIntro
         eyebrow="Sucesiones — La Plata y Provincia de Buenos Aires"
-        title="El patrimonio parado no se cuida solo. Se devalúa, o se disputa."
-        description="VINDEX LEGAL lleva sucesiones simples de punta a punta y particiones donde los herederos no logran un acuerdo. Relevamiento patrimonial y evaluación confidencial del caso."
+        title="Abogado de sucesiones en La Plata"
+        description="El patrimonio parado no se cuida solo: se devalúa, o se disputa. VINDEX LEGAL lleva sucesiones simples de punta a punta y particiones donde los herederos no logran un acuerdo. Relevamiento patrimonial y evaluación confidencial del caso."
       />
 
       <div className="mt-16 md:mt-24">
@@ -117,6 +118,15 @@ export default function SucesionesPage() {
           </div>
         </StaggerFadeIn>
       </div>
+
+      <FadeIn>
+        <p className="mt-10 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+          Guía relacionada:{' '}
+          <a href="/blog/cuanto-cuesta-tarda-sucesion-provincia-buenos-aires" className="font-medium text-[var(--accent)] underline-offset-4 hover:underline">
+            Cuánto cuesta y cuánto tarda una sucesión en la Provincia de Buenos Aires →
+          </a>
+        </p>
+      </FadeIn>
 
       <div className="mt-20 md:mt-32">
         <PageCta

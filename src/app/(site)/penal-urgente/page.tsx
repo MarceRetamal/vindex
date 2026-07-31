@@ -82,8 +82,8 @@ export default function PenalUrgentePage() {
 
       <PageIntro
         eyebrow="Defensa Penal — Denuncias y Medidas Urgentes"
-        title="Lo urgente no es explicar lo que pasó. Es ordenar lo que sigue."
-        description="VINDEX LEGAL interviene en causas penales en toda la Provincia de Buenos Aires, con base en La Plata. Evaluación confidencial del expediente, sin costo, en menos de 24 hs hábiles."
+        title="Abogado penal urgente en La Plata"
+        description="Lo urgente no es explicar lo que pasó: es ordenar lo que sigue. VINDEX LEGAL interviene en causas penales en toda la Provincia de Buenos Aires, con base en La Plata. Evaluación confidencial del expediente, sin costo, en menos de 24 hs hábiles."
       />
 
       <div className="mt-16 md:mt-24">
@@ -133,6 +133,15 @@ export default function PenalUrgentePage() {
           </div>
         </StaggerFadeIn>
       </div>
+
+      <FadeIn>
+        <p className="mt-10 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+          Guía relacionada:{' '}
+          <a href="/blog/citacion-penal-provincia-buenos-aires-que-hacer" className="font-medium text-[var(--accent)] underline-offset-4 hover:underline">
+            Citación penal en la Provincia de Buenos Aires: qué hacer en las primeras 48 horas →
+          </a>
+        </p>
+      </FadeIn>
 
       <div className="mt-20 md:mt-32">
         <PageCta
