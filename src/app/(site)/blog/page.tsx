@@ -6,44 +6,40 @@ import { Card } from '@/components/ui/Card'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
-import { articles } from '@/data/articles'
+import { formatearFecha, obtenerNotas } from '@/lib/blog'
+
+export const dynamic = 'force-static'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Blog Jurídico — Guías legales claras',
   description:
-    'Guías sobre derecho penal, sucesiones y derecho laboral en La Plata y la Provincia de Buenos Aires, escritas por un abogado matriculado. Sin jerga innecesaria.',
+    'Guías sobre derecho penal, sucesiones, familia, consumidor y discapacidad en La Plata y la Provincia de Buenos Aires, escritas por un abogado matriculado. Sin jerga innecesaria.',
   path: '/blog',
 })
 
-function formatDate(iso: string) {
-  return new Date(`${iso}T12:00:00-03:00`).toLocaleDateString('es-AR', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
-}
-
 export default function BlogPage() {
+  const notas = obtenerNotas()
+
   return (
     <PageShell>
       <PageIntro
         eyebrow="Blog Jurídico VINDEX"
         title="Respuestas claras a problemas legales reales."
-        description="Guías escritas por un abogado matriculado sobre las situaciones que más consultas generan en La Plata y la Provincia de Buenos Aires: causas penales, sucesiones y conflictos laborales. Información general para orientarse antes de decidir."
+        description="Guías escritas por un abogado matriculado sobre las situaciones que más consultas generan en La Plata y la Provincia de Buenos Aires. Información general para orientarse antes de decidir."
       />
 
       <div className="mt-16 md:mt-24">
         <StaggerFadeIn stagger={0.1}>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {articles.map((a) => (
+            {notas.map((nota) => (
               <Card
-                key={a.slug}
-                eyebrow={`${a.pillarLabel} · ${formatDate(a.datePublished)}`}
-                title={a.title}
-                description={a.excerpt}
+                key={nota.slug}
+                eyebrow={`${nota.materia} · ${formatearFecha(nota.fecha)}`}
+                title={nota.titulo}
+                description={nota.copete}
                 footer={
                   <Link
-                    href={`/blog/${a.slug}`}
+                    href={`/blog/${nota.slug}`}
                     className="text-[14px] font-semibold text-[var(--accent)] underline-offset-4 hover:underline"
                   >
                     Leer la guía completa

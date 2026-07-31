@@ -1,0 +1,116 @@
+CÓMO PUBLICAR UNA NOTA NUEVA EN EL BLOG
+=======================================
+
+1. Copiá este archivo dentro de la misma carpeta (src/content/blog).
+2. Renombrá la copia con el nombre que va a tener la nota en la dirección web,
+   en minúsculas, sin acentos, con guiones en lugar de espacios, y terminado
+   en .md   Por ejemplo:
+
+        divorcio-express-la-plata.md
+
+   Esa nota va a quedar publicada en:
+        https://vindexlegal.com.ar/blog/divorcio-express-la-plata
+
+3. Completá los datos de arriba y escribí el texto abajo.
+4. Guardá, andá a Source Control, commit y sync. Nada más.
+   El listado del blog, la página de la nota y el sitemap se actualizan solos.
+
+IMPORTANTE: este archivo termina en .txt, así que el sitio lo ignora.
+No lo borres: es la plantilla.
+
+-------------------------------------------------------------------
+DE ACÁ PARA ABAJO ES LO QUE VA EN EL ARCHIVO .md
+(copiá desde la línea de guiones que sigue)
+-------------------------------------------------------------------
+
+---
+titulo: "Título de la nota, con la búsqueda que hace el lector"
+descripcion: "Resumen de 150 a 160 caracteres. Es lo que se lee en Google debajo del título."
+copete: "Dos o tres frases que aparecen en la tarjeta del listado del blog. Tienen que dar ganas de entrar."
+materia: "Familia"
+fecha: "2026-08-15"
+actualizado: "2026-08-15"
+borrador: "no"
+resumen:
+  - Primer punto clave, la idea más importante de la nota en una frase.
+  - Segundo punto clave.
+  - Tercer punto clave.
+---
+
+Primer párrafo. Acá va el gancho: la escena concreta que vive el lector, no una
+definición. Este primer párrafo sale más grande que el resto en la página:
+aprovechalo para captar la atención desde el primer segundo.
+
+## Así se escribe un subtítulo
+
+Otro párrafo. Para poner algo en **negrita** se usan dos asteriscos de cada lado.
+Para *cursiva*, uno solo. Para enlazar a otra página del sitio se escribe así:
+[texto del enlace](/evaluacion). Y para enlazar a otra nota del blog:
+[texto del enlace](/blog/nombre-de-la-otra-nota).
+
+!! Esto es un dato clave. Una línea que empieza con dos signos de exclamación
+se destaca sola en un recuadro, para que el ojo la capture de un vistazo.
+Usalo con un número, un plazo o el dato más fuerte de la sección: no más de
+dos o tres por nota, para que conserve fuerza.
+
+> Esto es una cita textual de un fallo o de una norma. Se usa cuando querés
+> transcribir literalmente lo que dijo un juez o lo que dice un artículo.
+> Aparece en un recuadro distinto, para que quede claro que ahí habla el
+> expediente y no quien escribe la nota.
+
+## Listas
+
+Cuando quieras una lista con viñetas:
+
+- Primer punto de la lista.
+- Segundo punto.
+- Tercero.
+
+Y cuando quieras una lista numerada:
+
+1. Primer paso.
+2. Segundo paso.
+3. Tercero.
+
+## Cierre
+
+Último párrafo con la invitación a consultar, enlazando a la
+[evaluación confidencial](/evaluacion).
+
+-------------------------------------------------------------------
+AYUDAS
+-------------------------------------------------------------------
+
+materia:      etiqueta que aparece arriba del título y en la tarjeta.
+              Usá siempre las mismas: Penal, Familia, Sucesiones, Laboral,
+              Consumidor, Discapacidad.
+
+fecha:        cuándo se publicó. Formato año-mes-día. Las notas se ordenan
+              de más nueva a más vieja según este dato.
+
+actualizado:  si más adelante corregís la nota (cambió una ley, salió un fallo
+              nuevo), cambiá SOLO esta fecha. Google entiende que el contenido
+              se revisó.
+
+borrador:     poné "si" para escribir tranquilo sin que la nota se publique.
+              Cuando esté lista, cambiá a "no" y volvé a hacer commit.
+
+resumen:      tres frases cortas con lo más importante de la nota. Aparecen
+              arriba de todo, en un recuadro destacado, antes de que el
+              lector empiece a leer el cuerpo. Es lo primero que ve: elegilas
+              pensando en alguien que solo tiene diez segundos.
+
+!! (dato clave):  una línea que arranca con dos signos de exclamación y un
+              espacio se convierte en un recuadro destacado dentro del
+              cuerpo. Usalo para un número, un plazo o un dato puntual que
+              merezca saltar a la vista en medio del texto.
+
+> (cita):     una línea que arranca con ">" se muestra como una cita textual
+              de un fallo o una norma, en un recuadro distinto al del texto
+              normal.
+
+Los subtítulos (##) salen numerados solos, y arriba de la nota aparece
+automáticamente un índice con los subtítulos que hayas puesto — no hace
+falta escribir ninguno de los dos a mano.
+
+Los minutos de lectura también se calculan solos según el largo del texto.

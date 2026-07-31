@@ -1,7 +1,9 @@
 import { MetadataRoute } from 'next'
-import { articles } from '@/data/articles'
+import { obtenerNotas } from '@/lib/blog'
 
 const baseUrl = 'https://vindexlegal.com.ar'
+
+export const dynamic = 'force-static'
 
 const lastModified = {
   home: new Date('2026-07-31T12:00:00-03:00'),
@@ -17,9 +19,9 @@ const lastModified = {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const articleEntries: MetadataRoute.Sitemap = articles.map((a) => ({
-    url: `${baseUrl}/blog/${a.slug}`,
-    lastModified: new Date(`${a.dateModified}T12:00:00-03:00`),
+  const notas: MetadataRoute.Sitemap = obtenerNotas().map((nota) => ({
+    url: `${baseUrl}/blog/${nota.slug}`,
+    lastModified: new Date(`${nota.actualizado}T12:00:00-03:00`),
     changeFrequency: 'monthly',
     priority: 0.7,
   }))
@@ -34,7 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/penal-urgente`, lastModified: lastModified.penalUrgente, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/sucesiones`, lastModified: lastModified.sucesiones, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/blog`, lastModified: lastModified.blog, changeFrequency: 'weekly', priority: 0.8 },
-    ...articleEntries,
+    ...notas,
     { url: `${baseUrl}/politica-de-privacidad`, lastModified: lastModified.politicaDePrivacidad, changeFrequency: 'yearly', priority: 0.3 },
   ]
 }
