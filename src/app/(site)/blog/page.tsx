@@ -40,7 +40,7 @@ export default function BlogPage() {
                 footer={
                   <Link
                     href={`/blog/${nota.slug}`}
-                    className="text-[14px] font-semibold text-[var(--accent)] underline-offset-4 hover:underline"
+                    className="text-[14px] font-semibold text-(--accent) underline-offset-4 hover:underline"
                   >
                     Leer la guía completa
                   </Link>
