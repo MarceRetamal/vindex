@@ -42,3 +42,6 @@ next-env.d.ts
 
 # generado automaticamente antes de cada build, no se versiona
 /src/content/blog.generated.json
+
+# resultado de "npm run build:cloudflare" — Cloudflare lo genera de cero en cada deploy
+/.open-next/

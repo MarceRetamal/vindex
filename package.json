@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "node scripts/build-content.mjs && next dev",
     "build": "node scripts/build-content.mjs && next build",
-    "build:cloudflare": "node scripts/build-content.mjs && opennextjs-cloudflare build",
+    "build:cloudflare": "node scripts/build-content.mjs && opennextjs-cloudflare build && node scripts/copy-cache-assets.mjs",
     "start": "next start",
     "lint": "eslint",
-    "preview": "node scripts/build-content.mjs && opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "node scripts/build-content.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "preview": "node scripts/build-content.mjs && opennextjs-cloudflare build && node scripts/copy-cache-assets.mjs && opennextjs-cloudflare preview",
+    "deploy": "node scripts/build-content.mjs && opennextjs-cloudflare build && node scripts/copy-cache-assets.mjs && opennextjs-cloudflare deploy"
   },
   "overrides": {
     "postcss": "^8.5.10"
