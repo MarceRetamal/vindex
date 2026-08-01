@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "build:cloudflare": "opennextjs-cloudflare build",
+    "dev": "node scripts/build-content.mjs && next dev",
+    "build": "node scripts/build-content.mjs && next build",
+    "build:cloudflare": "node scripts/build-content.mjs && opennextjs-cloudflare build",
     "start": "next start",
     "lint": "eslint",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "preview": "node scripts/build-content.mjs && opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "node scripts/build-content.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "overrides": {
     "postcss": "^8.5.10"

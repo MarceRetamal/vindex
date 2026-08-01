@@ -1,4 +1,4 @@
-import type { Heading } from '@/lib/markdown'
+import type { Heading } from '@/lib/blog'
 
 type Props = { headings: Heading[] }
 

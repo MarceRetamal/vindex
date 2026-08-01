@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generado automaticamente antes de cada build, no se versiona
+/src/content/blog.generated.json
