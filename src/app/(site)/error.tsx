@@ -17,7 +17,7 @@ export default function Error({
   return (
     <main className="mx-auto flex min-h-[70vh] max-w-[1200px] items-center px-5 py-24 md:px-8 md:py-32">
       <div className="max-w-3xl space-y-6">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] md:text-xs">
+        <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)] md:text-xs">
           Error de ejecución
         </p>
 

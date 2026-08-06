@@ -51,13 +51,13 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`group relative whitespace-nowrap py-1 text-[15px] leading-none font-medium transition-colors hover:text-white ${
-                    isActive ? 'text-[var(--accent)]' : 'text-[var(--text-secondary)]'
+                  className={`group relative whitespace-nowrap py-1 text-[15px] leading-none font-medium transition-colors duration-300 hover:text-white ${
+                    isActive ? 'text-[var(--vindex-silver)]' : 'text-[var(--text-secondary)]'
                   }`}
                 >
                   <span>{item.label}</span>
                   <span
-                    className={`absolute -bottom-2 left-0 h-px bg-[var(--accent)] transition-all duration-300 ${
+                    className={`absolute -bottom-2 left-0 h-px bg-[var(--vindex-silver)] transition-all duration-300 ${
                       isActive ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
                     }`}
                   />

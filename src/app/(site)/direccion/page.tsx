@@ -47,7 +47,7 @@ export default function DireccionPage() {
             />
             <div className="space-y-1.5">
               <p className="text-xl font-bold text-white md:text-2xl">{credentials.fullName}</p>
-              <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
+              <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-[var(--vindex-silver)]">
                 Abogado
               </p>
               <p className="text-[14px] text-[var(--text-secondary)]">{credentials.barNumber}</p>

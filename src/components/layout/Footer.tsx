@@ -25,7 +25,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-3 md:space-y-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] md:text-xs">
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)] md:text-xs">
               Navegación
             </p>
 
@@ -55,7 +55,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-3 md:space-y-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] md:text-xs">
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)] md:text-xs">
               Evaluación
             </p>
 

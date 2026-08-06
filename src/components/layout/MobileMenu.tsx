@@ -37,14 +37,14 @@ export function MobileMenu({
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
-                className={`relative flex min-h-[48px] items-center rounded-lg px-4 text-base font-medium transition-colors ${
+                className={`relative flex min-h-[48px] items-center rounded-lg px-4 text-base font-medium transition-colors duration-300 ${
                   isActive
-                    ? 'bg-white/[0.04] text-[var(--accent)]'
+                    ? 'bg-white/[0.04] text-[var(--vindex-silver)]'
                     : 'text-[var(--text-secondary)] active:bg-white/[0.02]'
                 }`}
               >
                 {isActive && (
-                  <span className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full bg-[var(--accent)]" />
+                  <span className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full bg-[var(--vindex-silver)]" />
                 )}
                 {item.label}
               </Link>

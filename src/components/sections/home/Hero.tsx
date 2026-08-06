@@ -1,12 +1,17 @@
 'use client'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
 import { HeroVisual } from '@/components/sections/home/HeroVisual'
 import { Button } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Section } from '@/components/ui/Section'
+
+gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const attributes = [
   'Análisis técnico',
@@ -15,9 +20,15 @@ const attributes = [
 ]
 
 export function Hero() {
+  const gridRef = useRef<HTMLDivElement>(null)
+  const depthRef = useRef<HTMLDivElement>(null)
   const visualWrapperRef = useRef<HTMLDivElement>(null)
 
+  // Parallax por mouse-move — pausado bajo prefers-reduced-motion.
   useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) return
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!visualWrapperRef.current) return
 
@@ -36,9 +47,34 @@ export function Hero() {
     }
   }, [])
 
+  // Profundidad atada a scroll: el panel visual se achica y se desvanece
+  // levemente a medida que el hero sale de vista — capa de fondo moviéndose
+  // a otro ritmo que el contenido, no un simple fade de entrada.
+  useGSAP(
+    () => {
+      if (!gridRef.current || !depthRef.current) return
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      if (reduceMotion) return
+
+      gsap.to(depthRef.current, {
+        scale: 0.92,
+        opacity: 0.7,
+        yPercent: 6,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+    },
+    { scope: gridRef }
+  )
+
   return (
     <Section className="pt-12 sm:pt-16 md:pt-28">
-      <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <div ref={gridRef} className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
         <FadeIn>
           <div className="space-y-5 md:space-y-7">
             <Eyebrow>Intervención jurídica de alta precisión</Eyebrow>
@@ -106,11 +142,13 @@ export function Hero() {
 
         <div className="w-full mt-8 md:mt-0">
           <FadeIn delay={0.15}>
-            <div
-              ref={visualWrapperRef}
-              className="transition-transform duration-500 ease-out will-change-transform"
-            >
-              <HeroVisual />
+            <div ref={depthRef} className="will-change-transform">
+              <div
+                ref={visualWrapperRef}
+                className="transition-transform duration-500 ease-out will-change-transform"
+              >
+                <HeroVisual />
+              </div>
             </div>
           </FadeIn>
         </div>

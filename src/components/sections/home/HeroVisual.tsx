@@ -61,16 +61,16 @@ export function HeroVisual() {
 
         {/* Central Focus Rings */}
         <div className="hero-circle absolute left-1/2 top-1/2 h-[75%] w-[75%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.08]" />
-        <div className="hero-circle absolute left-1/2 top-1/2 h-[50%] w-[50%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[var(--accent)]/30 backdrop-blur-sm" />
+        <div className="hero-circle absolute left-1/2 top-1/2 h-[50%] w-[50%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[var(--vindex-silver)]/30 backdrop-blur-sm" />
 
         {/* Intersection Markers */}
-        <div className="v-line absolute left-1/2 top-[10%] h-[80%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[var(--accent-bright)] to-transparent opacity-60" />
-        <div className="h-line absolute bottom-[40%] left-1/2 h-px w-[80%] -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-60" />
+        <div className="v-line absolute left-1/2 top-[10%] h-[80%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[var(--vindex-silver)] to-transparent opacity-60" />
+        <div className="h-line absolute bottom-[40%] left-1/2 h-px w-[80%] -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--vindex-silver)] to-transparent opacity-60" />
 
         {/* Floating Strategic Card */}
         <div className="hero-card absolute inset-x-6 bottom-6 md:inset-x-10 md:bottom-10 rounded-[16px] border border-[var(--border-strong)] bg-[var(--bg-surface)]/80 p-5 md:p-6 backdrop-blur-xl shadow-[var(--shadow-float)]">
           <div className="flex items-center gap-3">
-            <span className="flex h-2 w-2 rounded-full bg-[var(--accent)] shadow-[var(--shadow-glow)]"></span>
+            <span className="flex h-2 w-2 rounded-full bg-[var(--vindex-silver)]"></span>
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
               Marco Táctico
             </p>

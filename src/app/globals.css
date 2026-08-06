@@ -29,12 +29,38 @@
   /* FX */
   --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 40px -10px rgba(212, 175, 55, 0.15);
+
+  /* ─── Brand tokens (manual de marca — redesign) ───
+     Structural Black / White ya coinciden con --bg-main / --text-pure,
+     no se duplican. Graphite y Silver son nuevos: uso exclusivo de
+     estructura/acento (hairlines, bordes de CTA, trazos de ícono,
+     wordmark) — nunca como fondo ni color de texto de cuerpo. */
+  --vindex-graphite: #15181E;
+  --vindex-silver: #C7CCD3;
+  --vindex-silver-deep: #8B929C;
+
+  /* ─── Alias de compatibilidad ───
+     Button, Card, Section, PageCta y SiteShell referencian estas
+     variables pero nunca estuvieron declaradas — resolvían a nada.
+     Se declaran acá, una sola vez, en vez de reescribir cada call site. */
+  --bg: var(--bg-main);
+  --bg-soft: var(--bg-elevated);
+  --surface-1: var(--bg-surface);
+  --border: var(--border-subtle);
+  --accent-hover: var(--accent-bright);
 }
 
 /* ─── Tailwind 4 Registration ─── */
 :root {
   --color-background: var(--bg-main);
   --color-foreground: var(--text-primary);
+}
+
+/* ─── Tailwind 4 theme: registra la utilidad `font-heading` ───
+   Sin este bloque, `font-heading` (usada en el wordmark del Header)
+   no generaba ninguna clase real — Tailwind la ignoraba en silencio. */
+@theme {
+  --font-heading: var(--font-body);
 }
 
 /* ─── Premium Base Styles ─── */
@@ -53,13 +79,25 @@ html {
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
-  font-family: var(--font-body), Inter, system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body), 'Lato', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   /* Premium touch: subtle gradient background for depth */
   background-image: radial-gradient(circle at 50% 0%, var(--bg-elevated) 0%, transparent 60%);
   background-attachment: fixed;
+}
+
+/* ─── Jerarquía de headings ───
+   Peso base Lato Black. Vive en @layer base a propósito: las clases
+   Tailwind por componente (font-extrabold, tracking-*, etc.) tienen
+   que seguir ganando la cascada sin !important. */
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-weight: 900;
+  }
 }
 
 /* ─── Selection ─── */

@@ -57,7 +57,7 @@ export default function AreasPage() {
             {areas.map((area, index) => (
               <div key={index} className="bg-[var(--bg)] grid md:grid-cols-[1fr_2fr] gap-6 p-8 md:p-12 hover:bg-[var(--bg-elevated)] transition-colors duration-300">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--accent)] mb-3">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--vindex-silver)] mb-3">
                     {area.category}
                   </p>
                   <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">

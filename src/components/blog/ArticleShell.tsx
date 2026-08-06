@@ -117,7 +117,7 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
 
       <FadeIn>
         <div className="mt-14 max-w-3xl rounded-[16px] border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-6 md:p-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">Sobre el autor</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">Sobre el autor</p>
           <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
             <strong className="font-semibold text-white">Marcelo Fabián Retamal</strong> es abogado (UNLP), matriculado
             en el Colegio de Abogados de La Plata (T° LXVI, F° 263) y director de VINDEX LEGAL. Ejerce en La Plata y en
