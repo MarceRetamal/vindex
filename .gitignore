@@ -45,3 +45,6 @@ next-env.d.ts
 
 # resultado de "npm run build:cloudflare" — Cloudflare lo genera de cero en cada deploy
 /.open-next/
+
+# estado local de wrangler / simulación de bindings de Cloudflare en dev
+/.wrangler/
