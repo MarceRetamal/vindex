@@ -44,11 +44,7 @@ La lógica vive en `src/lib/whatsapp/`:
 
 ### Configuración necesaria
 
-1. **KV namespace** (memoria de conversaciones):
-   ```bash
-   npx wrangler kv namespace create WHATSAPP_KV
-   ```
-   Reemplazá el `id` de `REPLACE_WITH_KV_NAMESPACE_ID` en `wrangler.jsonc` por el que devuelva el comando.
+1. **KV namespace** (memoria de conversaciones): ya está creado y configurado en `wrangler.jsonc` (`vindex-whatsapp-agent`). Si en algún momento necesitás recrearlo: `npx wrangler kv namespace create WHATSAPP_KV` y reemplazá el `id` en `wrangler.jsonc`.
 
 2. **Secretos** (nunca van en `wrangler.jsonc`, que es público en el repo):
    ```bash

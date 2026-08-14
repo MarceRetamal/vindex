@@ -28,12 +28,12 @@
     "MAIL_TO": "info@vindexlegal.com.ar"
   },
   // Memoria por contacto del agente de WhatsApp (perfil + historial de
-  // conversación). Crear con `wrangler kv namespace create WHATSAPP_KV` y
-  // reemplazar el id de abajo por el que devuelva ese comando — ver README.
+  // conversación). Namespace "vindex-whatsapp-agent" en el mismo Cloudflare
+  // account que el Worker.
   "kv_namespaces": [
     {
       "binding": "WHATSAPP_KV",
-      "id": "REPLACE_WITH_KV_NAMESPACE_ID"
+      "id": "925175688d434128bb1d3647c911cb51"
     }
   ]
 }
