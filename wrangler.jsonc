@@ -26,5 +26,14 @@
     "SMTP_USER": "info@vindexlegal.com.ar",
     "MAIL_FROM": "VINDEX LEGAL <info@vindexlegal.com.ar>",
     "MAIL_TO": "info@vindexlegal.com.ar"
-  }
+  },
+  // Memoria por contacto del agente de WhatsApp (perfil + historial de
+  // conversación). Namespace "vindex-whatsapp-agent" en el mismo Cloudflare
+  // account que el Worker.
+  "kv_namespaces": [
+    {
+      "binding": "WHATSAPP_KV",
+      "id": "925175688d434128bb1d3647c911cb51"
+    }
+  ]
 }
