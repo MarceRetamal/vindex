@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../../design-system/design-tokens.css";
 
 /* ─── VINDEX Design Tokens & Scale ─── */
 :root {
