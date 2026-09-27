@@ -12,13 +12,13 @@ export function Button({
   variant = 'primary',
 }: ButtonProps) {
   const base =
-    'inline-flex w-full whitespace-nowrap items-center justify-center rounded-[8px] px-5 py-[13px] text-sm font-bold transition-all duration-300 ease-out hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-main)] sm:w-auto'
+    'inline-flex w-full whitespace-nowrap items-center justify-center rounded-[var(--button-radius)] px-[var(--button-padding-x)] py-[var(--button-padding-y)] text-[length:var(--button-font-size)] font-[var(--button-font-weight)] transition-all duration-[var(--button-transition-duration)] ease-out hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-main)] sm:w-auto'
 
   const variants = {
     primary:
-      'bg-[var(--accent)] text-[var(--bg-deep)] hover:bg-[var(--accent-hover)] hover:shadow-[0_10px_30px_rgba(212,175,55,0.22)] focus-visible:ring-[var(--accent)]',
+      'bg-[var(--button-primary-bg)] text-[var(--button-primary-fg)] hover:bg-[var(--button-primary-hover-bg)] hover:shadow-[var(--button-primary-hover-shadow)] focus-visible:ring-[var(--button-primary-bg)]',
     secondary:
-      'border border-[var(--vindex-silver)]/25 bg-transparent text-[var(--text-primary)] hover:border-[var(--vindex-silver)]/60 hover:bg-white/[0.03] focus-visible:ring-[var(--vindex-silver)]',
+      'border border-[var(--button-secondary-border)]/25 bg-transparent text-[var(--button-secondary-fg)] hover:border-[var(--button-secondary-border)]/60 hover:bg-[var(--button-secondary-hover-bg)] focus-visible:ring-[var(--button-secondary-border)]',
   }
 
   return (
