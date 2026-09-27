@@ -6,7 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
-import { HeroVisual } from '@/components/sections/home/HeroVisual'
+import { HeroFragments } from '@/components/sections/home/HeroFragments'
+import { HeroParticleField } from '@/components/sections/home/HeroParticleField'
 import { Button } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Section } from '@/components/ui/Section'
@@ -145,9 +146,10 @@ export function Hero() {
             <div ref={depthRef} className="will-change-transform">
               <div
                 ref={visualWrapperRef}
-                className="transition-transform duration-500 ease-out will-change-transform"
+                className="relative transition-transform duration-500 ease-out will-change-transform"
               >
-                <HeroVisual />
+                <HeroParticleField />
+                <HeroFragments />
               </div>
             </div>
           </FadeIn>
