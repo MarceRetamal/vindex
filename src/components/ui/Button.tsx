@@ -16,7 +16,7 @@ export function Button({
 
   const variants = {
     primary:
-      'bg-[var(--button-primary-bg)] text-[var(--button-primary-fg)] hover:bg-[var(--button-primary-hover-bg)] hover:shadow-[var(--button-primary-hover-shadow)] focus-visible:ring-[var(--button-primary-bg)]',
+      'bg-[var(--button-primary-rest-bg)] text-[var(--button-primary-rest-fg)] hover:bg-[var(--button-primary-hover-bg)] hover:text-[var(--button-primary-fg)] hover:shadow-[var(--button-primary-hover-shadow)] focus-visible:bg-[var(--button-primary-bg)] focus-visible:text-[var(--button-primary-fg)] focus-visible:ring-[var(--button-primary-bg)]',
     secondary:
       'border border-[var(--button-secondary-border)]/25 bg-transparent text-[var(--button-secondary-fg)] hover:border-[var(--button-secondary-border)]/60 hover:bg-[var(--button-secondary-hover-bg)] focus-visible:ring-[var(--button-secondary-border)]',
   }

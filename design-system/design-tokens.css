@@ -114,6 +114,8 @@
   --button-padding-y: 0.8125rem;
   --button-font-size: 13px;
   --button-font-weight: 700;
+  --button-primary-rest-bg: #C7CCD3;
+  --button-primary-rest-fg: #020305;
   --button-primary-bg: #D4AF37;
   --button-primary-fg: #020305;
   --button-primary-hover-bg: #E5C158;
