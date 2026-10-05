@@ -58,14 +58,23 @@ export function AreasPreview() {
         </FadeIn>
 
         <StaggerFadeIn delay={0.12}>
-          <div className="grid gap-4 md:grid-cols-2 md:gap-5">
-            {areas.map((area) => (
+          <div className="grid gap-4 md:gap-5 md:grid-cols-[1.3fr_1fr] md:[grid-template-areas:'big_s1'_'big_s2'_'big_s3']">
+            <div className="md:[grid-area:big]">
               <Card
-                key={area.title}
-                title={area.title}
-                description={area.description}
+                title={areas[0].title}
+                description={areas[0].description}
+                className="md:[&_h3]:text-3xl"
               />
-            ))}
+            </div>
+            <div className="md:[grid-area:s1]">
+              <Card title={areas[1].title} description={areas[1].description} />
+            </div>
+            <div className="md:[grid-area:s2]">
+              <Card title={areas[2].title} description={areas[2].description} />
+            </div>
+            <div className="md:[grid-area:s3]">
+              <Card title={areas[3].title} description={areas[3].description} />
+            </div>
           </div>
         </StaggerFadeIn>
       </div>
