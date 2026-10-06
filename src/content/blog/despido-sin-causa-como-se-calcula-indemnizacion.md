@@ -1,6 +1,7 @@
 ---
 titulo: "Despido sin causa: cómo se calcula la indemnización (guía actualizada)"
-descripcion: "Rubros que integran la indemnización por despido sin causa tras la reforma laboral: antigüedad, preaviso, integración, SAC y vacaciones. Qué cambió y qué sigue vigente."
+titulo_seo: "Indemnización por despido sin causa: cálculo"
+descripcion: "Rubros de la indemnización por despido sin causa tras la reforma laboral: antigüedad, preaviso, integración, SAC y vacaciones."
 copete: "La reforma laboral de 2024 eliminó varias multas, pero la indemnización por antigüedad sigue plenamente vigente. Cómo se calcula cada rubro y qué pasos dar antes de reclamar."
 materia: "Laboral"
 fecha: "2026-07-31"

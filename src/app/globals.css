@@ -89,6 +89,12 @@ body {
   background-attachment: fixed;
 }
 
+/* Cursiva real (Lato Italic 400) solo donde se usa: sin ella el navegador la sintetiza. */
+em,
+i {
+  font-family: var(--font-body-italic), var(--font-body), 'Lato', system-ui, -apple-system, sans-serif;
+}
+
 /* ─── Jerarquía de headings ───
    Peso base Lato Black. Vive en @layer base a propósito: las clases
    Tailwind por componente (font-extrabold, tracking-*, etc.) tienen

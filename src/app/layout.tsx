@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import { fontBody, fontHeading } from '@/lib/fonts'
+import { fontBody, fontHeading, fontItalic } from '@/lib/fonts'
 import { legalServiceSchema } from '@/lib/schema'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 export const metadata: Metadata = {
@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" data-scroll-behavior="smooth" className={`${fontBody.variable} ${fontHeading.variable}`}>
+    <html lang="es-AR" data-scroll-behavior="smooth" className={`${fontBody.variable} ${fontHeading.variable} ${fontItalic.variable}`}>
       {/* 3. OPTIMIZADO: Aseguramos una altura mínima estructural y suavizado de fuentes */}
       {/* 3. OPTIMIZADO: Aseguramos una altura mínima estructural y suavizado de fuentes */}
       <body className="min-h-dvh bg-[#07090C] antialiased">

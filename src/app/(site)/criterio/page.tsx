@@ -6,8 +6,9 @@ import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Criterio Institucional',
-  description: 'La diferencia no está en reaccionar. Está en posicionarse con autoridad y leer mejor el conflicto.',
+  title: 'Criterio jurídico del estudio en La Plata',
+  description:
+    'Los principios con los que VINDEX LEGAL analiza cada conflicto: lectura técnica del caso, estrategia y decisiones sostenidas en derecho. La Plata.',
   path: '/criterio',
 })
 

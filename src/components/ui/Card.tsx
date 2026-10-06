@@ -7,9 +7,10 @@ type CardProps = {
   eyebrow?: string
   className?: string
   footer?: ReactNode
+  as?: 'h2' | 'h3'
 }
 
-export function Card({ title, description, eyebrow, className = '', footer }: CardProps) {
+export function Card({ title, description, eyebrow, className = '', footer, as: Heading = 'h3' }: CardProps) {
   return (
     <article
       data-glass
@@ -23,7 +24,7 @@ export function Card({ title, description, eyebrow, className = '', footer }: Ca
           {eyebrow}
         </p>
       ) : null}
-      <h3 className="text-xl font-bold leading-tight text-white md:text-2xl">{title}</h3>
+      <Heading className="text-xl font-bold leading-tight text-white md:text-2xl">{title}</Heading>
       <p className="mt-3 text-[15px] leading-7 text-[var(--text-secondary)] md:mt-4 md:text-base">
         {description}
       </p>

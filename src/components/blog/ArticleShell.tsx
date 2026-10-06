@@ -5,9 +5,31 @@ import { PageCta } from '@/components/ui/PageCta'
 import { PageShell } from '@/components/ui/PageShell'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { TableOfContentsDesktop, TableOfContentsMobile } from '@/components/blog/TableOfContents'
-import { formatearFecha, type NotaCompleta } from '@/lib/blog'
+import { formatearFecha, obtenerNotas, type NotaCompleta } from '@/lib/blog'
 
 const baseUrl = 'https://vindexlegal.com.ar'
+
+// Páginas de servicio que ya existen. Los artículos de otras materias
+// (familia, laboral, consumidor, discapacidad) no tienen página propia todavía.
+const SERVICIOS: Record<string, { href: string; titulo: string; texto: string }> = {
+  Penal: {
+    href: '/penal-urgente',
+    titulo: 'Abogado penal urgente en La Plata',
+    texto: 'Defensa ante denuncias, medidas cautelares y citaciones en la Provincia de Buenos Aires.',
+  },
+  Sucesiones: {
+    href: '/sucesiones',
+    titulo: 'Abogado de sucesiones en La Plata',
+    texto: 'Sucesiones simples y particiones con herederos en desacuerdo.',
+  },
+}
+
+function notasRelacionadas(nota: NotaCompleta) {
+  const otras = obtenerNotas().filter((n) => n.slug !== nota.slug)
+  const mismaMateria = otras.filter((n) => n.materia === nota.materia)
+  const resto = otras.filter((n) => n.materia !== nota.materia)
+  return [...mismaMateria, ...resto].slice(0, 3)
+}
 
 export function ArticleShell({ nota }: { nota: NotaCompleta }) {
   return (
@@ -25,6 +47,7 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
             datePublished: nota.fecha,
             dateModified: nota.actualizado,
             inLanguage: 'es-AR',
+            image: `${baseUrl}/og-image.jpg`,
             mainEntityOfPage: `${baseUrl}/blog/${nota.slug}`,
             author: {
               '@type': 'Person',
@@ -34,6 +57,7 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
             },
             publisher: {
               '@type': 'LegalService',
+              '@id': `${baseUrl}/#estudio`,
               name: 'VINDEX LEGAL',
               url: baseUrl,
             },
@@ -128,6 +152,47 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
           </p>
         </div>
       </FadeIn>
+
+      {SERVICIOS[nota.materia] || notasRelacionadas(nota).length > 0 ? (
+        <FadeIn>
+          <aside className="mt-10 max-w-3xl space-y-8" aria-label="Contenido relacionado">
+            {SERVICIOS[nota.materia] ? (
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+                  Servicio relacionado
+                </p>
+                <Link
+                  href={SERVICIOS[nota.materia].href}
+                  className="glass glass-lift mt-3 block rounded-[24px] p-5 md:p-6"
+                >
+                  <span className="block text-lg font-bold text-white">{SERVICIOS[nota.materia].titulo}</span>
+                  <span className="mt-1 block text-[15px] leading-relaxed text-[var(--text-secondary)]">
+                    {SERVICIOS[nota.materia].texto}
+                  </span>
+                </Link>
+              </div>
+            ) : null}
+
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+                Lecturas relacionadas
+              </p>
+              <ul className="mt-3 space-y-2">
+                {notasRelacionadas(nota).map((n) => (
+                  <li key={n.slug}>
+                    <Link
+                      href={`/blog/${n.slug}`}
+                      className="text-[15px] font-medium text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
+                    >
+                      {n.titulo}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </FadeIn>
+      ) : null}
 
       <FadeIn>
         <p className="mt-8 max-w-3xl text-[12.5px] leading-relaxed text-[var(--text-muted)]">

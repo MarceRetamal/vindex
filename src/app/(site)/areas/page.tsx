@@ -6,8 +6,9 @@ import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Áreas de Intervención Judicial',
-  description: 'Estructuras de defensa, negociación y litigio para escenarios patrimonialmente críticos.',
+  title: 'Litigio civil y comercial en La Plata',
+  description:
+    'Litigios civiles y comerciales, conflictos societarios, sucesiones y negociación en La Plata y la Provincia de Buenos Aires. VINDEX LEGAL.',
   path: '/areas',
 })
 

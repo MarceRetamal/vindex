@@ -6,8 +6,9 @@ import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Sistema VINDEX',
-  description: 'Método de intervención jurídica: Lectura técnica, Evaluación táctica, Diseño y Ejecución.',
+  title: 'Método de trabajo jurídico en 4 fases',
+  description:
+    'Las cuatro fases del método VINDEX: lectura técnica, evaluación de riesgos, diseño de estrategia e intervención. Estudio jurídico en La Plata.',
   path: '/sistema',
 })
 

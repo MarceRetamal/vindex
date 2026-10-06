@@ -1,6 +1,7 @@
 ---
 titulo: "Falleció sin testamento: quién hereda (y quién se queda sin nada) según la ley"
-descripcion: "Sin testamento, el Código Civil y Comercial define quién hereda: hijos, cónyuge, padres, hermanos. La regla de los gananciales que confunde a todos y por qué el conviviente no hereda aunque hayan pasado 20 años juntos."
+titulo_seo: "Falleció sin testamento: quién hereda"
+descripcion: "Sin testamento, el CCyC define quién hereda: hijos, cónyuge, padres, hermanos. La regla de los gananciales y por qué el conviviente no hereda."
 copete: "Cuando no hay testamento, la ley ya escribió uno. A veces coincide con lo que la familia espera; otras veces deja afuera justamente a quien compartió la vida con el fallecido. Los escenarios, uno por uno."
 materia: "Sucesiones"
 fecha: "2026-07-31"

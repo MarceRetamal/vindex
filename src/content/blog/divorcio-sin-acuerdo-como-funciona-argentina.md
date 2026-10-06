@@ -1,6 +1,7 @@
 ---
 titulo: "Divorcio sin acuerdo: por qué 'no te doy el divorcio' ya no significa nada"
-descripcion: "Desde 2015 el divorcio en Argentina es incausado: nadie puede oponerse ni frenarlo. Qué exige el Código Civil y Comercial, cómo se dividen los bienes y el plazo de 6 meses que casi nadie conoce."
+titulo_seo: "Divorcio sin acuerdo: cómo funciona (Argentina)"
+descripcion: "Desde 2015 el divorcio es incausado: nadie puede oponerse. Qué exige el CCyC, cómo se dividen los bienes y el plazo de 6 meses que casi nadie conoce."
 copete: "La frase 'no te voy a dar el divorcio' sigue funcionando como amenaza — pero jurídicamente está vacía desde hace más de una década. Cómo funciona de verdad, qué se divide y qué no, y el derecho que caduca a los 6 meses."
 materia: "Familia"
 fecha: "2026-07-31"

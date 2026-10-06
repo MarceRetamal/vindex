@@ -9,9 +9,9 @@ import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Evaluación jurídica',
+  title: 'Solicitar evaluación jurídica en La Plata',
   description:
-    'Revisión preliminar de admisibilidad y encuadre del conflicto.',
+    'Cuente su caso a VINDEX LEGAL: evaluación preliminar y confidencial, con respuesta en un plazo máximo de 24 horas hábiles. La Plata y provincia.',
   path: '/evaluacion',
 })
 
@@ -51,6 +51,7 @@ export default function EvaluacionPage() {
             <h3 className="text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-2">Protocolo Inicial</h3>
             {steps.map((step) => (
               <Card
+                as="h2"
                 key={step.title}
                 eyebrow={step.eyebrow}
                 title={step.title}

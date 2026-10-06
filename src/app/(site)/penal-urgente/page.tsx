@@ -10,7 +10,7 @@ import { PageShell } from '@/components/ui/PageShell'
 export const metadata: Metadata = buildMetadata({
   title: 'Abogado Penal Urgente en La Plata',
   description:
-    'Defensa penal ante denuncias, medidas cautelares y citaciones urgentes en toda la Provincia de Buenos Aires. Evaluación confidencial en menos de 24 hs hábiles.',
+    'Defensa penal ante denuncias, medidas cautelares y citaciones urgentes en la Provincia de Buenos Aires. Evaluación confidencial en menos de 24 hs hábiles.',
   path: '/penal-urgente',
 })
 

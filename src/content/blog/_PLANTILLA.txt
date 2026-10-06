@@ -25,7 +25,8 @@ DE ACÁ PARA ABAJO ES LO QUE VA EN EL ARCHIVO .md
 
 ---
 titulo: "Título de la nota, con la búsqueda que hace el lector"
-descripcion: "Resumen de 150 a 160 caracteres. Es lo que se lee en Google debajo del título."
+titulo_seo: "Versión corta del título para Google, hasta 47 caracteres"
+descripcion: "Resumen de hasta 155 caracteres. Es lo que se lee en Google debajo del título."
 copete: "Dos o tres frases que aparecen en la tarjeta del listado del blog. Tienen que dar ganas de entrar."
 materia: "Familia"
 fecha: "2026-08-15"

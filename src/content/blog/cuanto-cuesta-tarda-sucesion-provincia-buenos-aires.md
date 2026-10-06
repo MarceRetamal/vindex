@@ -1,6 +1,7 @@
 ---
 titulo: "Cuánto cuesta y cuánto tarda una sucesión en la Provincia de Buenos Aires"
-descripcion: "Todos los costos reales de una sucesión en PBA: tasa de justicia, honorarios, aportes, impuesto a la herencia y gastos de inscripción. Etapas del trámite y plazos realistas."
+titulo_seo: "Cuánto cuesta y tarda una sucesión en PBA"
+descripcion: "Costos reales de una sucesión en PBA: tasa de justicia, honorarios, aportes, impuestos e inscripción. Etapas del trámite y plazos realistas."
 copete: "La pregunta que todo heredero hace primero y que casi ningún estudio responde por escrito. Acá está el desglose completo de costos y tiempos, sin promesas irreales."
 materia: "Sucesiones"
 fecha: "2026-07-31"

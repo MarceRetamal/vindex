@@ -5,6 +5,9 @@ type BuildMetadataProps = {
   description: string
   path?: string
   image?: string
+  type?: 'website' | 'article'
+  publishedTime?: string
+  modifiedTime?: string
 }
 
 const siteUrl = 'https://vindexlegal.com.ar'
@@ -14,6 +17,9 @@ export function buildMetadata({
   description,
   path = '',
   image = '/og-image.jpg',
+  type = 'website',
+  publishedTime,
+  modifiedTime,
 }: BuildMetadataProps): Metadata {
   return {
     title,
@@ -28,7 +34,8 @@ export function buildMetadata({
       url: `${siteUrl}${path}`,
       siteName: 'VINDEX LEGAL',
       locale: 'es_AR',
-      type: 'website',
+      type,
+      ...(type === 'article' ? { publishedTime, modifiedTime } : {}),
       images: [
         {
           url: image,

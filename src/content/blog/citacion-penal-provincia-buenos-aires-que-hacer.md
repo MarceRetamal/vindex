@@ -1,6 +1,7 @@
 ---
 titulo: "Citación penal en la Provincia de Buenos Aires: qué hacer en las primeras 48 horas"
-descripcion: "Qué significa una citación de la fiscalía (IPP), la diferencia entre testigo e imputado, qué no hacer bajo ningún concepto y cómo designar defensor en la Provincia de Buenos Aires."
+titulo_seo: "Citación penal en PBA: qué hacer en 48 horas"
+descripcion: "Qué significa una citación de la fiscalía (IPP), la diferencia entre testigo e imputado y cómo designar defensor en la Provincia de Buenos Aires."
 copete: "Recibir una cédula de una fiscalía desordena a cualquiera. Esta guía explica qué significa, qué derechos tiene y cuáles son los errores de las primeras horas que después cuestan caro."
 materia: "Penal"
 fecha: "2026-07-31"

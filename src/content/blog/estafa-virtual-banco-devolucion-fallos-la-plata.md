@@ -1,6 +1,7 @@
 ---
 titulo: "Le vaciaron la cuenta en una estafa virtual: los fallos de La Plata que obligan a los bancos a devolver el dinero"
-descripcion: "La justicia de La Plata condenó a bancos a devolver lo robado en estafas virtuales, con daño punitivo incluido. Cuándo responde el banco, cuándo no, y los pasos que hay que dar en las primeras horas."
+titulo_seo: "Estafa virtual: cuándo el banco debe devolver"
+descripcion: "La justicia de La Plata condenó a bancos a devolver lo robado en estafas virtuales. Cuándo responde el banco y qué hacer en las primeras horas."
 copete: "Dos sentencias recientes de juzgados platenses ordenaron a bancos devolver hasta el último peso de cuentas vaciadas por estafadores. Pero no todos los casos terminan igual. La diferencia está en los detalles."
 materia: "Consumidor"
 fecha: "2026-07-31"
