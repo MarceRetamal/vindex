@@ -24,7 +24,7 @@ sistema).
 
 - **Superficie**: negro premium en 5 profundidades (`bg-deep` → `bg-float`),
   nunca negro puro plano — da jerarquía sin recurrir a color.
-- **Acento**: oro/bronce (`#D4AF37`, hover `#E5C158`, mute `#6B583E`) —
+- **Acento**: oro/bronce (`#FF6A2B`, hover `#FF9A5C`, mute `#7A3A1E`) —
   único color de marca, reservado para CTAs, foco, líneas de énfasis y
   citas de fallos/normas. Nunca como fondo grande ni color de texto de
   cuerpo.
@@ -61,7 +61,7 @@ hardcodeados** fuera de los tokens — principalmente en:
 - plantillas de email inline (`style="color: #6B7280"` en HTML de correo:
   los clientes de mail no leen `var()`, así que ahí el hardcode es
   correcto, no drift real).
-- `src/app/layout.tsx` (`themeColor`, `bg-[#07090C]`) y
+- `src/app/layout.tsx` (`themeColor`, `bg-[#0A0605]`) y
   `src/app/manifest.ts` (`background_color`/`theme_color`): son metadatos
   de plataforma (barra del navegador, PWA), no CSS — tampoco pueden
   consumir `var()`, pero conviene que su valor literal coincida siempre

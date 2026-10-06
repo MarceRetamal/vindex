@@ -28,7 +28,7 @@ export function Hero() {
               <span className="mask-line"><span style={{ ['--d' as string]: '0.25s' }}>Abogados en</span></span>
               <span className="mask-line"><span style={{ ['--d' as string]: '0.35s' }}>La Plata para</span></span>
               <span className="mask-line">
-                <span className="bg-gradient-to-r from-white via-[var(--vindex-silver)] to-[var(--vindex-silver-deep)] bg-clip-text text-transparent" style={{ ['--d' as string]: '0.45s' }}>
+                <span className="bg-gradient-to-r from-[#FFE9D2] via-[#FF9A5C] to-[#FF5A1F] bg-clip-text text-transparent" style={{ ['--d' as string]: '0.45s' }}>
                   conflictos complejos
                 </span>
               </span>

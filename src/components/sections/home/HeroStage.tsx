@@ -71,28 +71,22 @@ export function HeroStage() {
       style={{ ['--rx' as string]: '0deg', ['--ry' as string]: '0deg', ['--gx' as string]: '0px', ['--gy' as string]: '0px' }}
       aria-hidden="true"
     >
-      {/* Luz cálida y fría detrás del disco */}
+      {/* Esfera de brasa detrás del vidrio: gradiente difuso que el disco esmerila */}
       <div
-        className="absolute left-1/2 top-1/2 h-[78%] w-[78%] -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{
-          background: 'radial-gradient(circle at 45% 40%, rgba(229,193,88,0.55), rgba(212,175,55,0.16) 42%, transparent 70%)',
-          transform: 'translate3d(calc(var(--gx) * -0.8), calc(var(--gy) * -0.8), 0)',
-        }}
-      />
-      <div
-        className="absolute bottom-[4%] right-[6%] h-[38%] w-[38%] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(140,160,230,0.55), transparent 68%)',
-          transform: 'translate3d(calc(var(--gx) * 1.2), calc(var(--gy) * 1), 0)',
-        }}
-      />
+        className="absolute inset-[7%] rounded-full"
+        style={{ transform: 'translate3d(calc(var(--gx) * -0.9), calc(var(--gy) * -0.9), 0)' }}
+      >
+        <div className="orb-core absolute inset-0 rounded-full" />
+        <div className="orb-swirl absolute inset-0 rounded-full" />
+        <div className="absolute inset-0 rounded-full" style={{ boxShadow: 'inset 0 0 60px rgba(255,170,100,0.35), 0 0 120px rgba(255,106,43,0.25)' }} />
+      </div>
 
       <div
         className="anim-glass-in absolute inset-0 [transform-style:preserve-3d]"
         style={{ ['--d' as string]: '0.4s', transform: 'rotateX(var(--rx)) rotateY(var(--ry))' }}
       >
         {/* Disco de vidrio */}
-        <div className="glass glass-strong absolute inset-[7%] rounded-full" style={{ ['--glass-blur' as string]: '28px' }}>
+        <div className="glass glass-strong absolute inset-[17%] rounded-full" style={{ ['--glass-blur' as string]: '30px', background: 'var(--glass-noise), linear-gradient(150deg, rgba(8,4,3,0.78) 0%, rgba(40,14,6,0.52) 55%, rgba(90,30,10,0.38) 100%)' }}>
           <span className="absolute inset-0 overflow-hidden rounded-full">
             <span
               className="absolute inset-y-0 w-1/4 bg-gradient-to-r from-transparent via-white/25 to-transparent"
@@ -107,8 +101,8 @@ export function HeroStage() {
             <path id="ring-text" d="M200,200 m-166,0 a166,166 0 1,1 332,0 a166,166 0 1,1 -332,0" />
             <linearGradient id="ring-edge" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stopColor="#fff" stopOpacity=".7" />
-              <stop offset=".5" stopColor="#C7CCD3" stopOpacity=".12" />
-              <stop offset="1" stopColor="#E5C158" stopOpacity=".7" />
+              <stop offset=".5" stopColor="#E0D5CE" stopOpacity=".12" />
+              <stop offset="1" stopColor="#FF9A5C" stopOpacity=".7" />
             </linearGradient>
           </defs>
           <circle cx="200" cy="200" r="190" fill="none" stroke="url(#ring-edge)" strokeWidth="1" pathLength={1} className="emb-draw" style={{ ['--d' as string]: '0.8s' }} />
@@ -117,7 +111,7 @@ export function HeroStage() {
               <line
                 key={i}
                 x1="200" y1="14" x2="200" y2={i % 8 === 0 ? 26 : 19}
-                stroke={i % 8 === 0 ? '#E5C158' : '#fff'}
+                stroke={i % 8 === 0 ? '#FF9A5C' : '#fff'}
                 strokeOpacity={i % 8 === 0 ? 0.9 : 0.28}
                 strokeWidth={i % 8 === 0 ? 1.6 : 1}
                 transform={`rotate(${(i * 360) / 96} 200 200)`}
@@ -125,25 +119,33 @@ export function HeroStage() {
             ))}
           </g>
           <g className="emb-spin emb-spin-rev" style={{ ['--spin' as string]: '120s' }}>
-            <text fill="#C7CCD3" fillOpacity=".75" fontSize="11.5" fontWeight="700" letterSpacing="5.4">
+            <text fill="#E0D5CE" fillOpacity=".75" fontSize="11.5" fontWeight="700" letterSpacing="5.4">
               <textPath href="#ring-text">
                 VINDEX LEGAL · ESTRATEGIA JURÍDICA · LA PLATA · PROVINCIA DE BUENOS AIRES ·
               </textPath>
             </text>
           </g>
-          <circle cx="200" cy="200" r="146" fill="none" stroke="#E5C158" strokeOpacity=".35" strokeWidth="1" strokeDasharray="2 7" />
+          <circle cx="200" cy="200" r="146" fill="none" stroke="#FF9A5C" strokeOpacity=".35" strokeWidth="1" strokeDasharray="2 7" />
         </svg>
 
-        {/* El emblema: logo VINDEX en vidrio líquido real (refracta la luz detrás) */}
+        {/* El emblema: logo VINDEX en vidrio con halo y resplandor interior */}
         <div className="absolute inset-0 grid place-items-center" style={{ transform: 'translateZ(70px)' }}>
-          <div className="relative w-[72%]" style={{ aspectRatio: `${VB.w} / ${VB.h}` }}>
-            <svg viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} className="absolute inset-0 h-full w-full overflow-visible">
+          <div className="relative w-[54%]" style={{ aspectRatio: `${VB.w} / ${VB.h}` }}>
+            {/* halo exterior (outer glow) que respira */}
+            <svg viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} className="glow-breathe pointer-events-none absolute inset-0 h-full w-full overflow-visible">
               <defs>
-                <filter id="shadowBlur" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="11" /></filter>
+                <filter id="haloWide" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="22" /></filter>
+                <filter id="haloTight" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7" /></filter>
               </defs>
-              <g filter="url(#shadowBlur)" opacity=".55" transform="translate(0 16)">
-                <polygon points={pts(BLADE_L)} fill="#000" />
-                <polygon points={pts(BLADE_R)} fill="#000" />
+              <g>
+                <g filter="url(#haloWide)" opacity=".85">
+                  <polygon points={pts(BLADE_L)} fill="#FF5A1F" />
+                  <polygon points={pts(BLADE_R)} fill="#FF8A3D" />
+                </g>
+                <g filter="url(#haloTight)" opacity=".9">
+                  <polygon points={pts(BLADE_L)} fill="none" stroke="#FF9A5C" strokeWidth="5" strokeLinejoin="round" />
+                  <polygon points={pts(BLADE_R)} fill="none" stroke="#FF9A5C" strokeWidth="5" strokeLinejoin="round" />
+                </g>
               </g>
             </svg>
 
@@ -151,62 +153,69 @@ export function HeroStage() {
               <div
                 key={i}
                 className="glass glass-strong absolute inset-0 !rounded-none !border-0 emb-fill"
-                style={{ clipPath: clip(b), boxShadow: 'none', ['--glass-blur' as string]: '16px', ['--d' as string]: i ? '1.4s' : '1.2s' }}
+                style={{ clipPath: clip(b), boxShadow: 'none', ['--glass-blur' as string]: '14px', ['--d' as string]: i ? '1.4s' : '1.2s' }}
               >
                 <span
-                  className="absolute inset-y-0 w-1/5 bg-gradient-to-r from-transparent via-white/40 to-transparent"
-                  style={{ animation: 'sheen 6s var(--ease-liquid) 2.8s infinite', animationDelay: i ? '3.1s' : '2.8s' }}
+                  className="absolute inset-y-0 w-1/5 bg-gradient-to-r from-transparent via-white/45 to-transparent"
+                  style={{ animation: 'sheen 6s var(--ease-liquid) infinite', animationDelay: i ? '3.1s' : '2.8s' }}
                 />
               </div>
             ))}
 
             <svg viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} className="absolute inset-0 h-full w-full overflow-visible">
               <defs>
+                {/* resplandor interior (inner glow): crema arriba-izquierda, brasa abajo-derecha */}
                 <linearGradient id="face" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#fff" stopOpacity=".62" />
-                  <stop offset=".55" stopColor="#dfe6f5" stopOpacity=".22" />
-                  <stop offset="1" stopColor="#E5C158" stopOpacity=".10" />
+                  <stop offset="0" stopColor="#FFF6EC" stopOpacity=".95" />
+                  <stop offset=".5" stopColor="#FFC08A" stopOpacity=".62" />
+                  <stop offset="1" stopColor="#FF6A2B" stopOpacity=".5" />
                 </linearGradient>
                 <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#fff" stopOpacity=".95" />
-                  <stop offset=".5" stopColor="#c9d2e6" stopOpacity=".35" />
-                  <stop offset="1" stopColor="#E5C158" stopOpacity=".7" />
+                  <stop offset="0" stopColor="#FFF4E6" stopOpacity=".95" />
+                  <stop offset=".55" stopColor="#FFB070" stopOpacity=".5" />
+                  <stop offset="1" stopColor="#FF6A2B" stopOpacity=".9" />
                 </linearGradient>
                 <linearGradient id="beamTail" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#E5C158" stopOpacity=".9" />
-                  <stop offset="1" stopColor="#fff" stopOpacity=".9" />
+                  <stop offset="0" stopColor="#FF6A2B" stopOpacity=".95" />
+                  <stop offset="1" stopColor="#FFE2C4" stopOpacity=".95" />
                 </linearGradient>
                 <radialGradient id="gemGlow">
-                  <stop offset="0" stopColor="#F6DD8A" stopOpacity=".95" />
-                  <stop offset="1" stopColor="#E5C158" stopOpacity="0" />
+                  <stop offset="0" stopColor="#FFD2A8" stopOpacity=".95" />
+                  <stop offset="1" stopColor="#FF6A2B" stopOpacity="0" />
                 </radialGradient>
                 <filter id="beamGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.2" /></filter>
+                <filter id="innerGlow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="9" /></filter>
+                <clipPath id="clipL"><polygon points={pts(BLADE_L)} /></clipPath>
+                <clipPath id="clipR"><polygon points={pts(BLADE_R)} /></clipPath>
               </defs>
 
               {[
-                { poly: BLADE_L, bev: BEVEL_L, d: 1.3, ph: 0 },
-                { poly: BLADE_R, bev: BEVEL_R, d: 1.5, ph: 0.5 },
-              ].map(({ poly, bev, d, ph }, i) => (
+                { poly: BLADE_L, bev: BEVEL_L, d: 1.3, ph: 0, clipId: 'clipL' },
+                { poly: BLADE_R, bev: BEVEL_R, d: 1.5, ph: 0.5, clipId: 'clipR' },
+              ].map(({ poly, bev, d, ph, clipId }, i) => (
                 <g key={i}>
-                  {/* cuerpo y bisel tipo cromo */}
                   <polygon className="emb-fill" style={{ ['--d' as string]: `${d}s` }} points={pts(poly)} fill="url(#face)" />
-                  <path className="emb-fill" style={{ ['--d' as string]: `${d + 0.2}s` }} d={ring(poly) + ring(bev)} fillRule="evenodd" fill="url(#rim)" opacity=".5" />
-                  <polygon points={pts(bev)} fill="none" stroke="#fff" strokeOpacity=".4" strokeWidth=".8" strokeLinejoin="round" className="emb-fill" style={{ ['--d' as string]: `${d + 0.3}s` }} />
+                  {/* inner glow: borde luminoso hacia adentro */}
+                  <g clipPath={`url(#${clipId})`} className="emb-fill glow-breathe" style={{ ['--d' as string]: `${d + 0.2}s` }}>
+                    <polygon points={pts(poly)} fill="none" stroke="#FFD9B5" strokeWidth="16" strokeOpacity=".55" strokeLinejoin="round" filter="url(#innerGlow)" />
+                  </g>
+                  <path className="emb-fill" style={{ ['--d' as string]: `${d + 0.2}s` }} d={ring(poly) + ring(bev)} fillRule="evenodd" fill="url(#rim)" opacity=".55" />
+                  <polygon points={pts(bev)} fill="none" stroke="#fff" strokeOpacity=".45" strokeWidth=".8" strokeLinejoin="round" className="emb-fill" style={{ ['--d' as string]: `${d + 0.3}s` }} />
                   {/* contorno que se dibuja al cargar */}
-                  <polygon className="emb-draw" style={{ ['--d' as string]: `${0.5 + i * 0.2}s` }} points={pts(poly)} pathLength={1} fill="none" stroke="#fff" strokeOpacity=".95" strokeWidth="1.8" strokeLinejoin="round" />
-                  {/* haz de luz que recorre el contorno en bucle */}
+                  <polygon className="emb-draw" style={{ ['--d' as string]: `${0.5 + i * 0.2}s` }} points={pts(poly)} pathLength={1} fill="none" stroke="#FFEFDC" strokeOpacity=".98" strokeWidth="1.8" strokeLinejoin="round" />
+                  {/* haz de luz en bucle sobre el contorno */}
                   <g className="emb-fill" style={{ ['--d' as string]: '2.4s' }}>
-                    <polygon className="beam" style={{ ['--b0' as string]: -ph }} points={pts(poly)} pathLength={1} fill="none" stroke="#E5C158" strokeWidth="7" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="0.07 0.93" filter="url(#beamGlow)" opacity=".9" />
-                    <polygon className="beam" style={{ ['--b0' as string]: -ph }} points={pts(poly)} pathLength={1} fill="none" stroke="url(#beamTail)" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="0.2 0.8" strokeOpacity=".75" />
-                    <polygon className="beam" style={{ ['--b0' as string]: -(ph + 0.15) }} points={pts(poly)} pathLength={1} fill="none" stroke="#fff" strokeWidth="3.2" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="0.05 0.95" />
+                    <polygon className="beam" style={{ ['--b0' as string]: -ph }} points={pts(poly)} pathLength={1} fill="none" stroke="#FF6A2B" strokeWidth="8" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="0.08 0.92" filter="url(#beamGlow)" opacity=".95" />
+                    <polygon className="beam" style={{ ['--b0' as string]: -ph }} points={pts(poly)} pathLength={1} fill="none" stroke="url(#beamTail)" strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="0.22 0.78" strokeOpacity=".8" />
+                    <polygon className="beam" style={{ ['--b0' as string]: -(ph + 0.17) }} points={pts(poly)} pathLength={1} fill="none" stroke="#fff" strokeWidth="3.4" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="0.05 0.95" />
                   </g>
                 </g>
               ))}
 
-              {/* gema dorada en la muesca de la hoja derecha */}
+              {/* gema de brasa en la muesca de la hoja derecha */}
               <g className="emb-fill" style={{ ['--d' as string]: '2.2s' }}>
                 <circle cx="262" cy="205" r="22" fill="url(#gemGlow)" className="emb-gem" />
-                <polygon points="262,195 269,205 262,215 255,205" fill="#F6DD8A" stroke="#fff" strokeOpacity=".9" strokeWidth=".8" />
+                <polygon points="262,195 269,205 262,215 255,205" fill="#FFD2A8" stroke="#fff" strokeOpacity=".9" strokeWidth=".8" />
                 <polygon points="262,195 269,205 262,205" fill="#fff" opacity=".6" />
               </g>
             </svg>
