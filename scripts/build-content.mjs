@@ -87,6 +87,7 @@ function generar() {
     notas.push({
       slug,
       titulo: datos.titulo,
+      tituloSeo: datos.titulo_seo || '',
       descripcion: datos.descripcion || datos.copete || '',
       copete: datos.copete || datos.descripcion || '',
       materia: datos.materia || 'General',

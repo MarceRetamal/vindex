@@ -16,6 +16,7 @@ export type Heading = { id: string; texto: string }
 export type Nota = {
   slug: string
   titulo: string
+  tituloSeo?: string
   descripcion: string
   copete: string
   materia: string

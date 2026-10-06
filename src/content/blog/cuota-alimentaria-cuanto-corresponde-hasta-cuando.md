@@ -1,6 +1,7 @@
 ---
 titulo: "Cuota alimentaria: cuánto corresponde, hasta cuándo se paga y qué hacer si no pagan"
-descripcion: "Los alimentos de los hijos no terminan a los 18: rigen hasta los 21 y hasta los 25 si estudian (arts. 658 y 663 CCyC). Cómo se calcula la cuota, desde cuándo se debe y las herramientas reales contra el incumplimiento."
+titulo_seo: "Cuota alimentaria: monto, plazo y reclamo"
+descripcion: "Los alimentos rigen hasta los 21 años, y hasta los 25 si el hijo estudia (arts. 658 y 663 CCyC). Cómo se calcula la cuota y qué hacer si no pagan."
 copete: "Tres preguntas concentran casi todas las consultas: cuánto, hasta cuándo y qué pasa si no paga. Las tres tienen respuesta legal precisa — y varias desmienten lo que se repite en las charlas de WhatsApp."
 materia: "Familia"
 fecha: "2026-07-31"

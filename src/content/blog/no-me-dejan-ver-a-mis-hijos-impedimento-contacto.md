@@ -1,6 +1,7 @@
 ---
 titulo: "No me dejan ver a mis hijos: las tres vías legales cuando cortan el contacto"
-descripcion: "El régimen de comunicación es un derecho del hijo, no un favor entre adultos. Qué herramientas da la ley ante el impedimento de contacto: medidas judiciales del art. 557 CCyC, la vía penal y el reclamo de daños."
+titulo_seo: "Impedimento de contacto con hijos: qué hacer"
+descripcion: "El régimen de comunicación es un derecho del hijo. Qué hacer ante el impedimento de contacto: medidas del art. 557 CCyC, vía penal y reclamo de daños."
 copete: "El teléfono que no contesta, los fines de semana que se cancelan a último momento, las excusas que se acumulan. La ley tiene nombre para eso, y también tiene herramientas. Ninguna de las tres empieza por pelearse."
 materia: "Familia"
 fecha: "2026-07-31"

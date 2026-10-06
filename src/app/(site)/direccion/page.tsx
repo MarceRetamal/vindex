@@ -6,9 +6,9 @@ import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Dirección del Estudio',
+  title: 'Marcelo F. Retamal, abogado en La Plata',
   description:
-    'Dr. Marcelo F. Retamal — abogado matriculado CALP, La Plata. Trayectoria y áreas de actuación.',
+    'Marcelo F. Retamal, abogado (UNLP) matriculado en el Colegio de Abogados de La Plata. Trayectoria y áreas de actuación de VINDEX LEGAL.',
   path: '/direccion',
 })
 
@@ -16,7 +16,7 @@ const credentials = {
   fullName: 'Dr. Marcelo Fabián Retamal',
   barNumber: 'Tomo LXVI, Folio 263 — Colegio de Abogados de La Plata (CALP)',
   university: 'Universidad Nacional de La Plata (UNLP)',
-  photoSrc: '/marcelo-retamal.jpg',
+  photoSrc: '/marcelo-retamal.webp',
 }
 
 const areasOfPractice = [
@@ -43,6 +43,9 @@ export default function DireccionPage() {
             <img
               src={credentials.photoSrc}
               alt={credentials.fullName}
+              width={160}
+              height={160}
+              decoding="async"
               className="h-28 w-28 shrink-0 rounded-full border border-[var(--border-strong)] object-cover object-top grayscale-[10%] contrast-[1.05] md:h-36 md:w-36"
             />
             <div className="space-y-1.5">

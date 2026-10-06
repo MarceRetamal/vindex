@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   ...buildMetadata({
     title: 'VINDEX LEGAL | Estudio Jurídico en La Plata, Buenos Aires',
     description:
-      'Estudio jurídico en La Plata. Defensa penal urgente, sucesiones, derecho laboral y litigios patrimoniales en toda la Provincia de Buenos Aires. Evaluación confidencial del caso en 24 hs hábiles.',
+      'Estudio jurídico en La Plata: defensa penal urgente, sucesiones, derecho laboral y litigios en la provincia. Evaluación confidencial en 24 hs hábiles.',
   }),
   title: {
     absolute: 'VINDEX LEGAL | Estudio Jurídico en La Plata, Buenos Aires',

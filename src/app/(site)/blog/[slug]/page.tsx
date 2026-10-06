@@ -20,9 +20,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!nota) return buildMetadata({ title: 'Nota no encontrada', description: '', path: '/blog' })
 
   return buildMetadata({
-    title: nota.titulo,
+    title: nota.tituloSeo || nota.titulo,
     description: nota.descripcion,
     path: `/blog/${nota.slug}`,
+    type: 'article',
+    publishedTime: `${nota.fecha}T12:00:00-03:00`,
+    modifiedTime: `${nota.actualizado}T12:00:00-03:00`,
   })
 }
 

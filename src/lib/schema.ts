@@ -5,6 +5,7 @@
 export const legalServiceSchema = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
+  '@id': 'https://vindexlegal.com.ar/#estudio',
   name: 'VINDEX LEGAL',
   alternateName: 'VINDEX | Estrategia Jurídica',
   url: 'https://vindexlegal.com.ar',

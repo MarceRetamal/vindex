@@ -25,8 +25,8 @@ export function Hero() {
             </p>
 
             <h1 className="max-w-[15ch] text-[2.4rem] font-black leading-[1.02] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.6rem]">
-              <span className="mask-line"><span style={{ ['--d' as string]: '0.25s' }}>Abogados en</span></span>
-              <span className="mask-line"><span style={{ ['--d' as string]: '0.35s' }}>La Plata para</span></span>
+              <span className="mask-line"><span style={{ ['--d' as string]: '0.25s' }}>Abogados en</span>{' '}</span>
+              <span className="mask-line"><span style={{ ['--d' as string]: '0.35s' }}>La Plata para</span>{' '}</span>
               <span className="mask-line">
                 <span className="bg-gradient-to-r from-white via-[var(--vindex-silver)] to-[var(--vindex-silver-deep)] bg-clip-text text-transparent" style={{ ['--d' as string]: '0.45s' }}>
                   conflictos complejos

@@ -13,7 +13,7 @@ export const dynamic = 'force-static'
 export const metadata: Metadata = buildMetadata({
   title: 'Blog Jurídico — Guías legales claras',
   description:
-    'Guías sobre derecho penal, sucesiones, familia, consumidor y discapacidad en La Plata y la Provincia de Buenos Aires, escritas por un abogado matriculado. Sin jerga innecesaria.',
+    'Guías sobre derecho penal, sucesiones, familia, consumidor y discapacidad en La Plata y la Provincia de Buenos Aires, escritas por un abogado matriculado.',
   path: '/blog',
 })
 

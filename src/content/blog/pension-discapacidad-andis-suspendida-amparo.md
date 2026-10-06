@@ -1,6 +1,7 @@
 ---
 titulo: "ANDIS le suspendió o no le otorga la pensión por discapacidad: qué está pasando en la justicia y qué puede hacer"
-descripcion: "El estado real de los reclamos contra ANDIS: qué pasó con el amparo colectivo, por qué los amparos individuales siguen ganando en la justicia federal y qué documentación hay que reunir para reclamar."
+titulo_seo: "Pensión por discapacidad suspendida (ANDIS)"
+descripcion: "Estado de los reclamos contra ANDIS: qué pasó con el amparo colectivo, por qué los amparos individuales siguen ganando y qué documentación reunir."
 copete: "Entre auditorías, suspensiones masivas y una ley de emergencia, miles de personas quedaron sin cobrar. El mapa judicial cambió varias veces en pocos meses. Esto es lo que está pasando de verdad, y el camino que sigue abierto."
 materia: "Discapacidad"
 fecha: "2026-07-31"

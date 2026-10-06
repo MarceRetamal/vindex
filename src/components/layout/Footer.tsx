@@ -20,9 +20,14 @@ export function Footer() {
               complejos.
             </p>
 
-            <p className="text-[13px] leading-6 text-[var(--text-muted)]">
-              La Plata, Provincia de Buenos Aires.
-            </p>
+            <address className="space-y-1 text-[13px] not-italic leading-6 text-[var(--text-muted)]">
+              <p>Avenida 13 N° 821, La Plata (B1900THK), Provincia de Buenos Aires.</p>
+              <p>
+                <a href="tel:+5491141743745" className="transition-colors hover:text-white">
+                  +54 9 11 4174-3745
+                </a>
+              </p>
+            </address>
           </div>
 
           <div className="space-y-3 md:space-y-4">
