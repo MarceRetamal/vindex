@@ -3,13 +3,14 @@ import { Container } from '@/components/ui/Container'
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--border-strong)] bg-[var(--bg-elevated)] relative z-10">
+    <footer className="relative z-10 px-3 pb-3 pt-10 md:px-6 md:pb-6">
+      <div data-glass className="glass mx-auto max-w-[1200px] rounded-[32px] md:rounded-[40px]">
       <Container className="py-10 md:py-16">
         <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:gap-10">
           <div className="space-y-3 md:space-y-4">
             <div className="text-sm font-bold tracking-[0.22em] text-white">
               VINDEX
-              <span className="ml-1 text-[0.6em] font-semibold tracking-[0.18em] text-[var(--accent)]">
+              <span className="ml-1 text-[0.6em] font-semibold tracking-[0.18em] text-[var(--vindex-silver)]">
                 LEGAL
               </span>
             </div>
@@ -89,6 +90,7 @@ export function Footer() {
           </div>
         </div>
       </Container>
+      </div>
     </footer>
   )
 }

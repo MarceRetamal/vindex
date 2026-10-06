@@ -54,7 +54,6 @@ export function Differential() {
                 key={item.title}
                 title={item.title}
                 description={item.description}
-                className="bg-[var(--bg)]"
               />
             ))}
           </div>

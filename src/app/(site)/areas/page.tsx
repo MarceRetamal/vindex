@@ -53,9 +53,9 @@ export default function AreasPage() {
       
       <div className="mt-16 md:mt-24">
         <StaggerFadeIn delay={0.1} stagger={0.1}>
-          <div className="grid gap-px bg-[var(--border-strong)] rounded-2xl overflow-hidden border border-[var(--border-strong)]">
+          <div className="glass grid gap-px overflow-hidden rounded-[32px] bg-white/10">
             {areas.map((area, index) => (
-              <div key={index} className="bg-[var(--bg)] grid md:grid-cols-[1fr_2fr] gap-6 p-8 md:p-12 hover:bg-[var(--bg-elevated)] transition-colors duration-300">
+              <div key={index} className="bg-[var(--bg-main)]/55 backdrop-blur-xl grid md:grid-cols-[1fr_2fr] gap-6 p-8 md:p-12 hover:bg-white/[0.06] transition-colors duration-500">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--vindex-silver)] mb-3">
                     {area.category}
@@ -72,7 +72,7 @@ export default function AreasPage() {
                   
                   <div className="flex flex-wrap gap-2">
                     {area.tags.map((tag, tIndex) => (
-                      <span key={tIndex} className="text-xs font-semibold px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-muted)]">
+                      <span key={tIndex} className="text-xs font-semibold px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.05] text-[var(--text-secondary)]">
                         {tag}
                       </span>
                     ))}

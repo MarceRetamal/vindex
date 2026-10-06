@@ -13,8 +13,8 @@ type SectionProps = {
 
 const variants: Record<SectionVariant, string> = {
   default: 'bg-transparent',
-  soft: 'bg-[var(--bg-soft)]',
-  surface: 'bg-[var(--surface-1)]',
+  soft: 'bg-black/20',
+  surface: 'bg-transparent',
 }
 
 export function Section({

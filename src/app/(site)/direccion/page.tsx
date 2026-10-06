@@ -39,7 +39,7 @@ export default function DireccionPage() {
 
       <div className="mt-16 md:mt-24">
         <FadeIn>
-          <div className="flex flex-col items-center gap-6 rounded-[20px] border border-[var(--border-strong)] bg-[var(--surface-1)] p-6 text-center sm:flex-row sm:items-center sm:text-left md:p-8">
+          <div data-glass className="glass flex flex-col items-center gap-6 rounded-[28px] p-6 text-center sm:flex-row sm:items-center sm:text-left md:p-8">
             <img
               src={credentials.photoSrc}
               alt={credentials.fullName}
@@ -61,7 +61,7 @@ export default function DireccionPage() {
             Dónde estamos
           </h3>
           <FadeIn delay={0.05}>
-            <div className="overflow-hidden rounded-[20px] border border-[var(--border-strong)]">
+            <div data-glass className="glass overflow-hidden rounded-[28px]">
               <iframe
                 title="Ubicación de VINDEX LEGAL — Av. 13 N° 821, La Plata"
                 src="https://www.google.com/maps?q=Av.+13+821,+La+Plata,+Buenos+Aires,+Argentina&output=embed"
@@ -71,7 +71,7 @@ export default function DireccionPage() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
-              <div className="flex flex-col gap-1 border-t border-[var(--border-strong)] bg-[var(--surface-1)] p-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-1 border-t border-white/10 bg-white/[0.03] p-5 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-[14px] text-[var(--text-secondary)]">
                   Av. 13 N° 821, La Plata, Provincia de Buenos Aires.
                 </p>
@@ -90,7 +90,7 @@ export default function DireccionPage() {
               {areasOfPractice.map((area) => (
                 <span
                   key={area}
-                  className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3.5 py-1.5 text-xs font-semibold text-[var(--text-muted)]"
+                  className="glass rounded-full px-3.5 py-1.5 text-xs font-semibold text-[var(--text-secondary)]"
                 >
                   {area}
                 </span>

@@ -27,7 +27,7 @@ export function Positioning() {
             </p>
 
             <div className="grid gap-3 sm:grid-cols-2 md:gap-4">
-              <div className="rounded-[16px] border border-[var(--border)] bg-black/10 p-4 md:p-5">
+              <div data-glass className="glass glass-lift rounded-[24px] p-5 md:p-6">
                 <p className="text-sm font-semibold text-white">Selectividad</p>
                 <p className="mt-2 text-[15px] leading-6 text-[var(--text-secondary)] md:text-sm">
                   No todo caso requiere una arquitectura estratégica. Los que sí la
@@ -35,7 +35,7 @@ export function Positioning() {
                 </p>
               </div>
 
-              <div className="rounded-[16px] border border-[var(--border)] bg-black/10 p-4 md:p-5">
+              <div data-glass className="glass glass-lift rounded-[24px] p-5 md:p-6">
                 <p className="text-sm font-semibold text-white">Precisión</p>
                 <p className="mt-2 text-[15px] leading-6 text-[var(--text-secondary)] md:text-sm">
                   La lectura técnica correcta del escenario modifica viabilidad,

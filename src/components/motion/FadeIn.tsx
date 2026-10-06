@@ -1,68 +1,50 @@
 'use client'
 
-import { ReactNode, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
+import { ReactNode, useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
-
-gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 type FadeInProps = {
   children: ReactNode
   delay?: number
   y?: number
-  duration?: number
   className?: string
+  /** compat con la API anterior; la duración vive en CSS */
+  duration?: number
 }
 
-export function FadeIn({
-  children,
-  delay = 0,
-  y = 24,
-  duration = 0.8,
-  className,
-}: FadeInProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
+/**
+ * Revelado por IntersectionObserver + transiciones CSS (sin GSAP en el
+ * camino crítico). El contenido es visible si JS no corre (ver
+ * <noscript> en el layout) y respeta prefers-reduced-motion en CSS.
+ */
+export function FadeIn({ children, delay = 0, y = 28, className }: FadeInProps) {
+  const ref = useRef<HTMLDivElement>(null)
 
-  useGSAP(
-    () => {
-      if (!containerRef.current) return
-
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-      if (reduceMotion) {
-        gsap.set(containerRef.current, { opacity: 1, y: 0, visibility: 'visible' })
-        return
-      }
-
-      gsap.fromTo(
-        containerRef.current,
-        {
-          opacity: 0,
-          y,
-          visibility: 'hidden',
-        },
-        {
-          opacity: 1,
-          y: 0,
-          visibility: 'visible',
-          duration,
-          delay,
-          ease: 'power4.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 88%',
-            once: true,
-          },
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            ;(e.target as HTMLElement).dataset.in = 'true'
+            io.unobserve(e.target)
+          }
         }
-      )
-    },
-    { scope: containerRef }
-  )
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
 
   return (
-    <div ref={containerRef} className={cn('opacity-0 [visibility:hidden]', className)}>
+    <div
+      ref={ref}
+      data-reveal
+      style={{ ['--reveal-y' as string]: `${y}px`, ['--reveal-delay' as string]: `${delay}s` }}
+      className={cn(className)}
+    >
       {children}
     </div>
   )

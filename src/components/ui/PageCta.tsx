@@ -18,7 +18,7 @@ export function PageCta({
 }: PageCtaProps) {
   return (
     <FadeIn>
-      <div className="mt-14 rounded-[20px] border border-[var(--border)] bg-[var(--surface-1)] p-6 md:mt-16 md:rounded-[24px] md:p-12">
+      <div data-glass className="glass glass-strong mt-14 overflow-hidden rounded-[28px] p-6 md:mt-16 md:rounded-[36px] md:p-12">
         <div className="max-w-3xl space-y-4 md:space-y-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)] md:text-xs">
             {eyebrow}

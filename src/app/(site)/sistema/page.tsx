@@ -58,7 +58,7 @@ export default function SistemaPage() {
           <div className="flex flex-col gap-12 md:gap-20">
             {phases.map((phase) => (
               <div key={phase.num} className="relative pl-16 md:pl-24">
-                <div className="absolute left-0 top-1 items-center justify-center h-12 w-12 md:h-[72px] md:w-[72px] rounded-full border border-[var(--border-strong)] bg-[var(--bg-elevated)] shadow-[var(--shadow-float)] font-mono text-sm md:text-xl font-bold text-[var(--accent)] flex">
+                <div className="absolute left-0 top-1 items-center justify-center h-12 w-12 md:h-[72px] md:w-[72px] glass glass-strong rounded-full font-mono text-sm md:text-xl font-bold text-[var(--accent)] flex">
                   {phase.num}
                 </div>
                 
@@ -70,7 +70,7 @@ export default function SistemaPage() {
                   
                   <div className="grid sm:grid-cols-2 gap-3 mt-4">
                     {phase.mitigations.map((mit, i) => (
-                      <div key={i} className="flex items-center gap-3 p-3 rounded-lg border border-[var(--border-subtle)] bg-white/[0.01]">
+                      <div key={i} className="flex items-center gap-3 p-3 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md">
                         <div className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
                         <span className="text-sm font-medium text-[var(--text-primary)]">{mit}</span>
                       </div>
