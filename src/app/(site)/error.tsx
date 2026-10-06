@@ -40,7 +40,7 @@ export default function Error({
 
           <Link
             href="/"
-            className="inline-flex whitespace-nowrap items-center justify-center rounded-lg border border-[var(--border)] px-5 py-3.5 text-sm font-semibold text-[var(--text-primary)] transition-all duration-300 hover:border-white/10 hover:bg-[var(--surface-1)]"
+            className="inline-flex whitespace-nowrap items-center justify-center glass rounded-full px-6 py-3.5 text-sm font-semibold text-[var(--text-primary)] transition-all duration-300 hover:border-white/10 hover:bg-[var(--surface-1)]"
           >
             Volver al inicio
           </Link>

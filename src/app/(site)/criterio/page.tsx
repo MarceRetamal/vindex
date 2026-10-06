@@ -63,7 +63,7 @@ export default function CriterioPage() {
         </StaggerFadeIn>
       </div>
 
-      <div className="mt-20 md:mt-32 p-8 md:p-12 border border-[var(--border-strong)] rounded-2xl bg-[var(--bg-elevated)] shadow-2xl relative overflow-hidden">
+      <div className="mt-20 md:mt-32 glass glass-strong p-8 md:p-12 rounded-[32px] relative overflow-hidden">
          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
          <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-8 items-center">
             <div>

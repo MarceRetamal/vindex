@@ -7,7 +7,8 @@ export function FinalCta() {
   return (
     <Section className="pt-8 md:pt-16">
       <FadeIn>
-        <div className="rounded-[20px] border border-[var(--border)] bg-[var(--surface-1)] p-6 md:rounded-[24px] md:p-12">
+        <div data-glass className="glass glass-strong relative overflow-hidden rounded-[28px] p-6 md:rounded-[40px] md:p-16">
+          <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(229,193,88,0.22),transparent_65%)]" />
           <div className="max-w-3xl space-y-4 md:space-y-5">
             <Eyebrow>Evaluación jurídica</Eyebrow>
 

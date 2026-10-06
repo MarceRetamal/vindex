@@ -173,7 +173,7 @@ export default function PoliticaPrivacidadPage() {
 
       {/* Footer note */}
       <FadeIn delay={0.2}>
-        <div className="mt-12 rounded-[16px] border border-[var(--border-subtle)] bg-white/[0.02] p-6 md:mt-16 md:p-8">
+        <div className="mt-12 glass rounded-[24px] p-6 md:mt-16 md:p-8">
           <p className="text-[13px] font-bold uppercase tracking-[0.18em] text-[var(--vindex-silver)]">
             Ley N° 25.326 — DNPDP
           </p>

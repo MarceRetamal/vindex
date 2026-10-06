@@ -43,6 +43,9 @@ export default function RootLayout({
       {/* 3. OPTIMIZADO: Aseguramos una altura mínima estructural y suavizado de fuentes */}
       <body className="min-h-dvh bg-[#07090C] antialiased">
       <GoogleAnalytics />
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important;filter:none!important}.preloader{display:none!important}`}</style>
+        </noscript>
               {/* 🏛️ Datos estructurados (Schema.org) — identidad del estudio para Google */}
         <script
           type="application/ld+json"

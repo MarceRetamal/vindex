@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { navigation } from '@/data/navigation'
 import { siteConfig } from '@/data/site'
 import { Button } from '@/components/ui/Button'
+import { cn } from '@/lib/utils'
 
 type MobileMenuProps = {
   isOpen: boolean
@@ -11,59 +12,49 @@ type MobileMenuProps = {
   onClose: () => void
 }
 
-export function MobileMenu({
-  isOpen,
-  pathname,
-  onClose,
-}: MobileMenuProps) {
+export function MobileMenu({ isOpen, pathname, onClose }: MobileMenuProps) {
   return (
     <div
       role="dialog"
       aria-modal="true"
       aria-label="Menú de navegación"
-      className={`fixed inset-0 top-[72px] z-40 bg-[var(--bg-main)]/95 backdrop-blur-2xl transition-all duration-500 will-change-transform md:hidden ${
-        isOpen
-          ? 'pointer-events-auto translate-y-0 opacity-100'
-          : 'pointer-events-none -translate-y-4 opacity-0'
-      }`}
+      aria-hidden={!isOpen}
+      className={cn(
+        'fixed inset-0 z-40 bg-[var(--bg-deep)]/70 backdrop-blur-2xl transition-all duration-700 [transition-timing-function:var(--ease-liquid)] md:hidden',
+        isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+      )}
     >
-      <div className="mx-auto flex h-[calc(100vh-72px)] max-w-[1200px] flex-col px-5 pt-8 pb-10">
-        <nav className="flex flex-col gap-1">
-          {navigation.map((item) => {
+      <div className="mx-auto flex h-full max-w-[1200px] flex-col px-5 pb-10 pt-[96px]">
+        <nav className="flex flex-col gap-2" aria-label="Móvil">
+          {navigation.map((item, i) => {
             const isActive = pathname === item.href
-
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
-                className={`relative flex min-h-[48px] items-center rounded-lg px-4 text-base font-medium transition-colors duration-300 ${
-                  isActive
-                    ? 'bg-white/[0.04] text-[var(--vindex-silver)]'
-                    : 'text-[var(--text-secondary)] active:bg-white/[0.02]'
-                }`}
-              >
-                {isActive && (
-                  <span className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full bg-[var(--vindex-silver)]" />
+                tabIndex={isOpen ? 0 : -1}
+                style={{ transitionDelay: isOpen ? `${120 + i * 55}ms` : '0ms' }}
+                className={cn(
+                  'glass flex min-h-[56px] items-center justify-between rounded-[20px] px-5 text-lg font-semibold transition-all duration-700 [transition-timing-function:var(--ease-liquid)]',
+                  isOpen ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0',
+                  isActive ? 'glass-strong text-white' : 'text-[var(--text-secondary)]'
                 )}
+              >
                 {item.label}
+                <span aria-hidden className="text-[var(--vindex-silver-deep)]">›</span>
               </Link>
             )
           })}
         </nav>
 
-        <div className="mt-8 px-4">
-          <Button href={siteConfig.cta.href}>
-            {siteConfig.cta.label}
-          </Button>
+        <div className="mt-8" onClick={onClose}>
+          <Button href={siteConfig.cta.href}>{siteConfig.cta.label}</Button>
         </div>
 
-        {/* 🏛️ DETALLE DE ÉLITE: Cierre protocolar al fondo del viewport móvil */}
-        <div className="mt-auto px-4 text-center">
-          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--text-muted)]">
-            VINDEX LEGAL — Protocolo de Admisión Activo
-          </p>
-        </div>
+        <p className="mt-auto text-center text-[10px] font-bold uppercase tracking-[0.35em] text-[var(--text-muted)]">
+          VINDEX LEGAL · La Plata
+        </p>
       </div>
     </div>
   )

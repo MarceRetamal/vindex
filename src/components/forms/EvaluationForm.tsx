@@ -139,7 +139,7 @@ export function EvaluationForm() {
           strategy="afterInteractive"
           onLoad={() => setTurnstileReady(true)}
         />
-        <div className="rounded-[20px] border border-[var(--border-strong)] bg-black p-8 md:rounded-[24px] md:p-16 shadow-2xl min-h-[450px] flex flex-col justify-center items-center text-center relative overflow-hidden animate-fade-in">
+        <div className="glass glass-strong rounded-[28px] p-8 md:rounded-[36px] md:p-16 min-h-[450px] flex flex-col justify-center items-center text-center relative overflow-hidden animate-fade-in">
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent pointer-events-none" />
           <div className="max-w-xl space-y-6 relative z-10">
             <h3 className="text-[22px] font-bold tracking-[0.15em] text-white uppercase sm:text-[26px]">
@@ -163,8 +163,9 @@ export function EvaluationForm() {
         onLoad={() => setTurnstileReady(true)}
       />
       <form
+        data-glass
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded-[20px] border border-[var(--border-strong)] bg-[var(--bg-surface)] p-6 md:rounded-[24px] md:p-10 shadow-2xl relative overflow-hidden"
+        className="glass glass-strong rounded-[28px] p-6 md:rounded-[36px] md:p-10 relative overflow-hidden"
       >
       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
 
@@ -242,7 +243,8 @@ export function EvaluationForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex w-full items-center justify-center rounded-[8px] bg-[var(--accent)] px-8 py-4 text-[15px] font-bold text-[var(--bg-deep)] transition-all duration-300 hover:-translate-y-[2px] hover:bg-[var(--accent-bright)] hover:shadow-lg hover:shadow-[var(--accent-mute)] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            data-glass
+            className="glass-btn glass-btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             {isSubmitting ? 'Enviando...' : 'Solicitar Evaluación del Caso'}
           </button>

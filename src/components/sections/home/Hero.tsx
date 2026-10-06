@@ -1,160 +1,68 @@
-'use client'
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
-import { FadeIn } from '@/components/motion/FadeIn'
-import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
-import { HeroFragments } from '@/components/sections/home/HeroFragments'
-import { HeroParticleField } from '@/components/sections/home/HeroParticleField'
+import { HeroStage } from '@/components/sections/home/HeroStage'
 import { Button } from '@/components/ui/Button'
-import { Eyebrow } from '@/components/ui/Eyebrow'
-import { Section } from '@/components/ui/Section'
+import { Container } from '@/components/ui/Container'
 
-gsap.registerPlugin(ScrollTrigger, useGSAP)
-
-const attributes = [
-  'Análisis técnico',
-  'Diseño estratégico',
-  'Intervención procesal',
+const shortcuts = [
+  { href: '/penal-urgente', label: 'Denuncia o causa penal' },
+  { href: '/sucesiones', label: 'Sucesión' },
+  { href: '/evaluacion', label: 'Otro conflicto' },
 ]
 
 export function Hero() {
-  const gridRef = useRef<HTMLDivElement>(null)
-  const depthRef = useRef<HTMLDivElement>(null)
-  const visualWrapperRef = useRef<HTMLDivElement>(null)
-
-  // Parallax por mouse-move — pausado bajo prefers-reduced-motion.
-  useEffect(() => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduceMotion) return
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!visualWrapperRef.current) return
-
-      const centerX = window.innerWidth / 2
-      const centerY = window.innerHeight / 2
-
-      const moveX = (e.clientX - centerX) / 120
-      const moveY = (e.clientY - centerY) / 120
-
-      visualWrapperRef.current.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-    }
-  }, [])
-
-  // Profundidad atada a scroll: el panel visual se achica y se desvanece
-  // levemente a medida que el hero sale de vista — capa de fondo moviéndose
-  // a otro ritmo que el contenido, no un simple fade de entrada.
-  useGSAP(
-    () => {
-      if (!gridRef.current || !depthRef.current) return
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      if (reduceMotion) return
-
-      gsap.to(depthRef.current, {
-        scale: 0.92,
-        opacity: 0.7,
-        yPercent: 6,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: gridRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      })
-    },
-    { scope: gridRef }
-  )
-
   return (
-    <Section className="pt-12 sm:pt-16 md:pt-28">
-      <div ref={gridRef} className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
-        <FadeIn>
-          <div className="space-y-5 md:space-y-7">
-            <Eyebrow>Intervención jurídica de alta precisión</Eyebrow>
-
-            <h1 className="max-w-[16ch] text-[2rem] font-extrabold leading-[1.05] sm:text-4xl md:text-6xl lg:text-7xl">
-              Abogados en La Plata para conflictos complejos
-            </h1>
-
-            <p className="max-w-2xl text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base md:text-lg md:leading-8">
-              VINDEX LEGAL estructura análisis, evaluación e intervención para escenarios
-              jurídicos en La Plata y en toda la Provincia de Buenos Aires, donde
-              la claridad técnica, la lectura profunda del conflicto y la
-              superioridad estratégica modifican el resultado.
+    <section className="relative pb-16 pt-10 sm:pt-14 md:pb-28 md:pt-20">
+      <Container>
+        <div className="grid items-center gap-10 md:grid-cols-[1.1fr_0.9fr] md:gap-8">
+          <div className="space-y-6 md:space-y-8">
+            <p
+              data-glass
+              className="glass glass-chip anim-rise text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--vindex-silver)] md:text-xs"
+              style={{ ['--d' as string]: '0.15s' }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-bright)] shadow-[0_0_10px_var(--accent)]" />
+              Intervención jurídica de alta precisión
             </p>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 pt-1">
+            <h1 className="max-w-[15ch] text-[2.4rem] font-black leading-[1.02] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.6rem]">
+              <span className="mask-line"><span style={{ ['--d' as string]: '0.25s' }}>Abogados en</span></span>
+              <span className="mask-line"><span style={{ ['--d' as string]: '0.35s' }}>La Plata para</span></span>
+              <span className="mask-line">
+                <span className="bg-gradient-to-r from-white via-[var(--vindex-silver)] to-[var(--vindex-silver-deep)] bg-clip-text text-transparent" style={{ ['--d' as string]: '0.45s' }}>
+                  conflictos complejos
+                </span>
+              </span>
+            </h1>
+
+            <p className="anim-rise max-w-xl text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base md:text-lg md:leading-8" style={{ ['--d' as string]: '0.7s' }}>
+              VINDEX LEGAL estructura análisis, evaluación e intervención para escenarios
+              jurídicos en La Plata y en toda la Provincia de Buenos Aires, donde la claridad
+              técnica, la lectura profunda del conflicto y la superioridad estratégica
+              modifican el resultado.
+            </p>
+
+            <div className="anim-rise flex flex-col gap-3 pt-1 sm:flex-row sm:gap-4" style={{ ['--d' as string]: '0.85s' }}>
               <Button href="/evaluacion">Solicitar evaluación jurídica</Button>
-              <Button href="/sistema" variant="secondary">
-                Conocer el sistema
-              </Button>
+              <Button href="/sistema" variant="secondary">Conocer el sistema</Button>
             </div>
 
-            <StaggerFadeIn delay={0.1} stagger={0.08}>
-              <ul className="grid gap-3 pt-2 text-sm text-[var(--text-secondary)] sm:grid-cols-3">
-                {attributes.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-xl border border-[var(--border)] bg-white/[0.02] px-4 py-3"
-                  >
-                    {item}
-                  </li>
+            <div className="anim-rise pt-2" style={{ ['--d' as string]: '1s' }}>
+              <p className="mb-2.5 text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                Acceso directo según su situación
+              </p>
+              <div className="flex flex-wrap gap-2.5">
+                {shortcuts.map((s) => (
+                  <Link key={s.href} href={s.href} data-glass className="glass glass-chip">
+                    {s.label}
+                  </Link>
                 ))}
-              </ul>
-            </StaggerFadeIn>
-
-            <FadeIn delay={0.2}>
-              <div className="pt-4">
-                <p className="mb-2.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
-                  Acceso directo según su situación
-                </p>
-                <div className="flex flex-wrap gap-2.5">
-                  <Link
-                    href="/penal-urgente"
-                    className="rounded-full border border-[var(--border-strong)] bg-white/[0.02] px-4 py-2 text-[13px] font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]/50 hover:text-white"
-                  >
-                    Denuncia o causa penal
-                  </Link>
-                  <Link
-                    href="/sucesiones"
-                    className="rounded-full border border-[var(--border-strong)] bg-white/[0.02] px-4 py-2 text-[13px] font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]/50 hover:text-white"
-                  >
-                    Sucesión
-                  </Link>
-                  <Link
-                    href="/evaluacion"
-                    className="rounded-full border border-[var(--border-strong)] bg-white/[0.02] px-4 py-2 text-[13px] font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]/50 hover:text-white"
-                  >
-                    Otro conflicto
-                  </Link>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-        </FadeIn>
-
-        <div className="w-full mt-8 md:mt-0">
-          <FadeIn delay={0.15}>
-            <div ref={depthRef} className="will-change-transform">
-              <div
-                ref={visualWrapperRef}
-                className="relative transition-transform duration-500 ease-out will-change-transform"
-              >
-                <HeroParticleField />
-                <HeroFragments />
               </div>
             </div>
-          </FadeIn>
+          </div>
+
+          <HeroStage />
         </div>
-      </div>
-    </Section>
+      </Container>
+    </section>
   )
 }

@@ -36,9 +36,10 @@ export function FrequentSituations() {
           <div className="grid gap-4 md:grid-cols-2 md:gap-5">
             {situations.map((s) => (
               <Link
+                data-glass
                 key={s.href}
                 href={s.href}
-                className="group block rounded-[20px] border border-[var(--border)] bg-[var(--surface-1)] p-6 transition-all duration-300 hover:-translate-y-[2px] hover:border-[var(--accent)]/40 md:p-8"
+                className="glass glass-lift group block rounded-[28px] p-6 md:p-8"
               >
                 <h3 className="text-xl font-bold text-white leading-tight md:text-2xl">
                   {s.title}
@@ -46,7 +47,7 @@ export function FrequentSituations() {
                 <p className="mt-3 text-[15px] leading-7 text-[var(--text-secondary)] md:text-base">
                   {s.description}
                 </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[var(--accent)] transition-transform group-hover:translate-x-1">
+                <span className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[var(--accent-bright)] transition-transform group-hover:translate-x-1">
                   Ver cómo intervenimos →
                 </span>
               </Link>

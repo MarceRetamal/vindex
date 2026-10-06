@@ -18,7 +18,7 @@ export function ClientProfile() {
         </FadeIn>
 
         <FadeIn delay={0.12}>
-          <div className="rounded-[18px] border border-[var(--border-strong)] bg-[var(--bg-elevated)] p-6 md:p-10 shadow-2xl">
+          <div data-glass className="glass glass-strong rounded-[32px] p-6 md:p-10">
             <p className="text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base md:text-lg md:leading-8">
               Empresarios, emprendedores, pymes y estructuras patrimoniales que
               enfrentan conflictos donde el margen de error es bajo y la
@@ -26,7 +26,7 @@ export function ClientProfile() {
             </p>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2 md:mt-8 md:gap-4">
-              <div className="rounded-[14px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5">
+              <div data-glass className="glass glass-lift rounded-[22px] p-5">
                 <p className="text-sm font-semibold text-white">
                   Conflicto con impacto real
                 </p>
@@ -36,7 +36,7 @@ export function ClientProfile() {
                 </p>
               </div>
 
-              <div className="rounded-[14px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5">
+              <div data-glass className="glass glass-lift rounded-[22px] p-5">
                 <p className="text-sm font-semibold text-white">
                   Búsqueda de dirección
                 </p>

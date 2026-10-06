@@ -104,7 +104,7 @@ export default function PenalUrgentePage() {
           {caseTags.map((tag) => (
             <span
               key={tag}
-              className="text-xs font-semibold px-3 py-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-muted)]"
+              className="text-xs font-semibold px-3 py-1.5 glass rounded-full text-[var(--text-secondary)]"
             >
               {tag}
             </span>
@@ -121,7 +121,7 @@ export default function PenalUrgentePage() {
             {faqs.map((f) => (
               <details
                 key={f.q}
-                className="group rounded-[16px] border border-[var(--border)] bg-[var(--surface-1)] p-6 open:border-white/10"
+                className="glass group rounded-[24px] p-6"
               >
                 <summary className="cursor-pointer list-none font-bold text-white text-[16px] flex justify-between items-center gap-4">
                   {f.q}

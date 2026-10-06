@@ -106,7 +106,7 @@ export default function SucesionesPage() {
             {faqs.map((f) => (
               <details
                 key={f.q}
-                className="group rounded-[16px] border border-[var(--border)] bg-[var(--surface-1)] p-6 open:border-white/10"
+                className="glass group rounded-[24px] p-6"
               >
                 <summary className="cursor-pointer list-none font-bold text-white text-[16px] flex justify-between items-center gap-4">
                   {f.q}
