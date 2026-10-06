@@ -8,10 +8,22 @@ const chips = [
   { label: 'Intervención procesal', cls: 'left-[2%] bottom-[0%]', d: '2s', fd: '-4s' },
 ]
 
+
+/* Geometría del logo VINDEX (trazado sobre el arte original, viewBox 60 50 380 300). */
+const VB = { x: 60, y: 50, w: 380, h: 300 }
+const BLADE_L = [[80, 72], [178, 72], [295, 325], [196, 325]]
+const BLADE_R = [[322, 72], [420, 72], [308, 308], [262, 205]]
+const BEVEL_L = [[89, 79], [168, 79], [287, 318], [203, 318]]
+const BEVEL_R = [[329, 79], [412, 79], [305, 292], [270, 208]]
+const pts = (poly: number[][]) => poly.map(([x, y]) => `${x},${y}`).join(' ')
+const ring = (poly: number[][]) => 'M' + poly.map(([x, y]) => `${x},${y}`).join('L') + 'Z'
+const clip = (poly: number[][]) =>
+  `polygon(${poly.map(([x, y]) => `${(((x - VB.x) / VB.w) * 100).toFixed(2)}% ${(((y - VB.y) / VB.h) * 100).toFixed(2)}%`).join(', ')})`
+
 const TICKS = Array.from({ length: 96 }, (_, i) => i)
 
 /**
- * Sello VINDEX: una V de dos hojas biseladas con eje y gema dorada,
+ * Sello VINDEX: el logo de dos hojas en vidrio líquido con haz de luz y gema dorada,
  * dentro de un disco de vidrio con anillos grabados que giran lento.
  * Cada capa tiene distinta profundidad para el parallax con el puntero.
  */
@@ -122,70 +134,84 @@ export function HeroStage() {
           <circle cx="200" cy="200" r="146" fill="none" stroke="#E5C158" strokeOpacity=".35" strokeWidth="1" strokeDasharray="2 7" />
         </svg>
 
-        {/* El emblema: V de hojas biseladas + eje + gema */}
-        <svg viewBox="0 0 200 200" className="absolute inset-[19%] h-[62%] w-[62%] overflow-visible" style={{ transform: 'translateZ(70px)' }}>
-          <defs>
-            <linearGradient id="bladeL" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#ffffff" />
-              <stop offset=".55" stopColor="#dfe3ea" />
-              <stop offset="1" stopColor="#9aa2b1" />
-            </linearGradient>
-            <linearGradient id="bladeR" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#aeb5c2" />
-              <stop offset=".6" stopColor="#5c6475" />
-              <stop offset="1" stopColor="#2b3140" />
-            </linearGradient>
-            <linearGradient id="bevel" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#fff" stopOpacity=".9" />
-              <stop offset="1" stopColor="#fff" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="axis" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#E5C158" stopOpacity="0" />
-              <stop offset=".35" stopColor="#E5C158" />
-              <stop offset="1" stopColor="#E5C158" stopOpacity=".15" />
-            </linearGradient>
-            <radialGradient id="gemGlow">
-              <stop offset="0" stopColor="#F6DD8A" stopOpacity=".95" />
-              <stop offset="1" stopColor="#E5C158" stopOpacity="0" />
-            </radialGradient>
-            <filter id="drop" x="-30%" y="-30%" width="160%" height="170%">
-              <feDropShadow dx="0" dy="10" stdDeviation="9" floodColor="#000" floodOpacity=".55" />
-            </filter>
-          </defs>
+        {/* El emblema: logo VINDEX en vidrio líquido real (refracta la luz detrás) */}
+        <div className="absolute inset-0 grid place-items-center" style={{ transform: 'translateZ(70px)' }}>
+          <div className="relative w-[72%]" style={{ aspectRatio: `${VB.w} / ${VB.h}` }}>
+            <svg viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} className="absolute inset-0 h-full w-full overflow-visible">
+              <defs>
+                <filter id="shadowBlur" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="11" /></filter>
+              </defs>
+              <g filter="url(#shadowBlur)" opacity=".55" transform="translate(0 16)">
+                <polygon points={pts(BLADE_L)} fill="#000" />
+                <polygon points={pts(BLADE_R)} fill="#000" />
+              </g>
+            </svg>
 
-          <g filter="url(#drop)">
-            {/* hoja izquierda (luz) */}
-            <polygon className="emb-fill" style={{ ['--d' as string]: '1.2s' }} points="34,50 64,32 100,108 100,172" fill="url(#bladeL)" />
-            {/* hoja derecha (sombra) */}
-            <polygon className="emb-fill" style={{ ['--d' as string]: '1.35s' }} points="166,50 136,32 100,108 100,172" fill="url(#bladeR)" />
-            {/* bisel interior: reflejo en el filo de cada hoja */}
-            <polygon className="emb-fill" style={{ ['--d' as string]: '1.6s' }} points="64,32 100,108 100,121 58,36" fill="url(#bevel)" opacity=".8" />
-            <polygon className="emb-fill" style={{ ['--d' as string]: '1.7s' }} points="136,32 100,108 100,121 142,36" fill="#fff" opacity=".18" />
-          </g>
+            {[BLADE_L, BLADE_R].map((b, i) => (
+              <div
+                key={i}
+                className="glass glass-strong absolute inset-0 !rounded-none !border-0 emb-fill"
+                style={{ clipPath: clip(b), boxShadow: 'none', ['--glass-blur' as string]: '16px', ['--d' as string]: i ? '1.4s' : '1.2s' }}
+              >
+                <span
+                  className="absolute inset-y-0 w-1/5 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                  style={{ animation: 'sheen 6s var(--ease-liquid) 2.8s infinite', animationDelay: i ? '3.1s' : '2.8s' }}
+                />
+              </div>
+            ))}
 
-          {/* contorno que se dibuja al cargar */}
-          <polygon
-            className="emb-draw"
-            style={{ ['--d' as string]: '0.6s' }}
-            points="34,50 64,32 100,108 136,32 166,50 100,172"
-            pathLength={1}
-            fill="none"
-            stroke="#fff"
-            strokeOpacity=".95"
-            strokeWidth="1.2"
-            strokeLinejoin="round"
-          />
-          {/* junta dorada: el filo donde las dos hojas se encuentran */}
-          <line className="emb-draw" style={{ ['--d' as string]: '1.4s' }} x1="100" y1="108" x2="100" y2="172" pathLength={1} stroke="#E5C158" strokeWidth="1.4" />
+            <svg viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} className="absolute inset-0 h-full w-full overflow-visible">
+              <defs>
+                <linearGradient id="face" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="#fff" stopOpacity=".62" />
+                  <stop offset=".55" stopColor="#dfe6f5" stopOpacity=".22" />
+                  <stop offset="1" stopColor="#E5C158" stopOpacity=".10" />
+                </linearGradient>
+                <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="#fff" stopOpacity=".95" />
+                  <stop offset=".5" stopColor="#c9d2e6" stopOpacity=".35" />
+                  <stop offset="1" stopColor="#E5C158" stopOpacity=".7" />
+                </linearGradient>
+                <linearGradient id="beamTail" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="#E5C158" stopOpacity=".9" />
+                  <stop offset="1" stopColor="#fff" stopOpacity=".9" />
+                </linearGradient>
+                <radialGradient id="gemGlow">
+                  <stop offset="0" stopColor="#F6DD8A" stopOpacity=".95" />
+                  <stop offset="1" stopColor="#E5C158" stopOpacity="0" />
+                </radialGradient>
+                <filter id="beamGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.2" /></filter>
+              </defs>
 
-          {/* eje de precisión */}
-          <line className="emb-draw" style={{ ['--d' as string]: '1.8s' }} x1="100" y1="22" x2="100" y2="96" pathLength={1} stroke="url(#axis)" strokeWidth="1.4" />
-          <g className="emb-fill" style={{ ['--d' as string]: '2.2s' }}>
-            <circle cx="100" cy="22" r="14" fill="url(#gemGlow)" className="emb-gem" />
-            <polygon points="100,12 107,22 100,32 93,22" fill="#F6DD8A" stroke="#fff" strokeOpacity=".9" strokeWidth=".8" />
-            <polygon points="100,12 107,22 100,22" fill="#fff" opacity=".6" />
-          </g>
-        </svg>
+              {[
+                { poly: BLADE_L, bev: BEVEL_L, d: 1.3, ph: 0 },
+                { poly: BLADE_R, bev: BEVEL_R, d: 1.5, ph: 0.5 },
+              ].map(({ poly, bev, d, ph }, i) => (
+                <g key={i}>
+                  {/* cuerpo y bisel tipo cromo */}
+                  <polygon className="emb-fill" style={{ ['--d' as string]: `${d}s` }} points={pts(poly)} fill="url(#face)" />
+                  <path className="emb-fill" style={{ ['--d' as string]: `${d + 0.2}s` }} d={ring(poly) + ring(bev)} fillRule="evenodd" fill="url(#rim)" opacity=".5" />
+                  <polygon points={pts(bev)} fill="none" stroke="#fff" strokeOpacity=".4" strokeWidth=".8" strokeLinejoin="round" className="emb-fill" style={{ ['--d' as string]: `${d + 0.3}s` }} />
+                  {/* contorno que se dibuja al cargar */}
+                  <polygon className="emb-draw" style={{ ['--d' as string]: `${0.5 + i * 0.2}s` }} points={pts(poly)} pathLength={1} fill="none" stroke="#fff" strokeOpacity=".95" strokeWidth="1.8" strokeLinejoin="round" />
+                  {/* haz de luz que recorre el contorno en bucle */}
+                  <g className="emb-fill" style={{ ['--d' as string]: '2.4s' }}>
+                    <polygon className="beam" style={{ ['--b0' as string]: -ph }} points={pts(poly)} pathLength={1} fill="none" stroke="#E5C158" strokeWidth="7" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="0.07 0.93" filter="url(#beamGlow)" opacity=".9" />
+                    <polygon className="beam" style={{ ['--b0' as string]: -ph }} points={pts(poly)} pathLength={1} fill="none" stroke="url(#beamTail)" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="0.2 0.8" strokeOpacity=".75" />
+                    <polygon className="beam" style={{ ['--b0' as string]: -(ph + 0.15) }} points={pts(poly)} pathLength={1} fill="none" stroke="#fff" strokeWidth="3.2" strokeLinejoin="round" strokeLinecap="round" strokeDasharray="0.05 0.95" />
+                  </g>
+                </g>
+              ))}
+
+              {/* gema dorada en la muesca de la hoja derecha */}
+              <g className="emb-fill" style={{ ['--d' as string]: '2.2s' }}>
+                <circle cx="262" cy="205" r="22" fill="url(#gemGlow)" className="emb-gem" />
+                <polygon points="262,195 269,205 262,215 255,205" fill="#F6DD8A" stroke="#fff" strokeOpacity=".9" strokeWidth=".8" />
+                <polygon points="262,195 269,205 262,205" fill="#fff" opacity=".6" />
+              </g>
+            </svg>
+          </div>
+        </div>
 
         {/* Etiquetas flotantes */}
         {chips.map((c) => (

@@ -332,16 +332,19 @@ body {
 @keyframes draw { to { stroke-dashoffset: 0; } }
 @keyframes spin-slow { to { transform: rotate(360deg); } }
 @keyframes gem-pulse { 0%,100% { opacity: .75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.18); } }
+@keyframes beam { from { stroke-dashoffset: var(--b0, 0); } to { stroke-dashoffset: calc(var(--b0, 0) - 1); } }
 @keyframes fade-in-late { from { opacity: 0; } to { opacity: 1; } }
 .emb-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.9s var(--ease-liquid) forwards; animation-delay: var(--d, 0s); }
 .emb-fill { opacity: 0; animation: fade-in-late 1.2s ease forwards; animation-delay: var(--d, 0s); }
 .emb-spin { transform-origin: 50% 50%; transform-box: fill-box; animation: spin-slow var(--spin, 90s) linear infinite; }
 .emb-spin-rev { animation-direction: reverse; }
+.beam { animation: beam 5.5s linear infinite; }
 .emb-gem { transform-origin: center; transform-box: fill-box; animation: gem-pulse 3.2s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
   .emb-draw { animation: none; stroke-dashoffset: 0; }
   .emb-fill { animation: none; opacity: 1; }
   .emb-spin, .emb-gem { animation: none; }
+  .beam { animation: none; opacity: 0; }
 }
 
 /* Preloader de primera visita */
