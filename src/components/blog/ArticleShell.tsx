@@ -1,28 +1,18 @@
 import Link from 'next/link'
+import { CATEGORIA_TIP_POR_MATERIA, SERVICIO_POR_MATERIA } from '@/data/areas'
 import { FadeIn } from '@/components/motion/FadeIn'
+import { Cover } from '@/components/blog/Cover'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageShell } from '@/components/ui/PageShell'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { TableOfContentsDesktop, TableOfContentsMobile } from '@/components/blog/TableOfContents'
 import { formatearFecha, obtenerNotas, type NotaCompleta } from '@/lib/blog'
+import { obtenerTips } from '@/lib/tips'
 
 const baseUrl = 'https://vindexlegal.com.ar'
-
-// Páginas de servicio que ya existen. Los artículos de otras materias
-// (familia, laboral, consumidor, discapacidad) no tienen página propia todavía.
-const SERVICIOS: Record<string, { href: string; titulo: string; texto: string }> = {
-  Penal: {
-    href: '/penal-urgente',
-    titulo: 'Abogado penal urgente en La Plata',
-    texto: 'Defensa ante denuncias, medidas cautelares y citaciones en la Provincia de Buenos Aires.',
-  },
-  Sucesiones: {
-    href: '/sucesiones',
-    titulo: 'Abogado de sucesiones en La Plata',
-    texto: 'Sucesiones simples y particiones con herederos en desacuerdo.',
-  },
-}
 
 function notasRelacionadas(nota: NotaCompleta) {
   const otras = obtenerNotas().filter((n) => n.slug !== nota.slug)
@@ -31,7 +21,20 @@ function notasRelacionadas(nota: NotaCompleta) {
   return [...mismaMateria, ...resto].slice(0, 3)
 }
 
+function tipsRelacionados(nota: NotaCompleta) {
+  const categoria = CATEGORIA_TIP_POR_MATERIA[nota.materia]
+  if (!categoria) return []
+  return obtenerTips()
+    .filter((t) => t.categoria === categoria)
+    .slice(0, 3)
+}
+
 export function ArticleShell({ nota }: { nota: NotaCompleta }) {
+  const servicio = SERVICIO_POR_MATERIA[nota.materia]
+  const tips = tipsRelacionados(nota)
+  const relacionadas = notasRelacionadas(nota)
+  const urlNota = `${baseUrl}/blog/${nota.slug}`
+
   return (
     <PageShell>
       <ReadingProgress />
@@ -48,7 +51,7 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
             dateModified: nota.actualizado,
             inLanguage: 'es-AR',
             image: `${baseUrl}/og-image.jpg`,
-            mainEntityOfPage: `${baseUrl}/blog/${nota.slug}`,
+            mainEntityOfPage: urlNota,
             author: {
               '@type': 'Person',
               name: 'Marcelo Fabián Retamal',
@@ -64,29 +67,18 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
           }),
         }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              { '@type': 'ListItem', position: 1, name: 'Blog', item: `${baseUrl}/blog` },
-              { '@type': 'ListItem', position: 2, name: nota.titulo, item: `${baseUrl}/blog/${nota.slug}` },
-            ],
-          }),
-        }}
+
+      <Breadcrumbs
+        items={[
+          { name: 'Blog', href: '/blog' },
+          ...(servicio ? [{ name: nota.materia, href: servicio.href }] : []),
+          { name: nota.titulo },
+        ]}
       />
 
       <FadeIn>
         <div className="max-w-3xl">
-          <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2">
-            <Link
-              href="/blog"
-              className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)] transition-colors hover:text-white"
-            >
-              Volver al blog
-            </Link>
+          <div className="mb-5">
             <Eyebrow>{nota.materia}</Eyebrow>
           </div>
 
@@ -100,6 +92,14 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
           </p>
         </div>
       </FadeIn>
+
+      {nota.imagen ? (
+        <FadeIn delay={0.04}>
+          <div className="mt-8 max-w-3xl overflow-hidden rounded-[24px] border border-white/10">
+            <Cover src={nota.imagen} />
+          </div>
+        </FadeIn>
+      ) : null}
 
       {nota.resumen.length > 0 ? (
         <FadeIn delay={0.05}>
@@ -140,7 +140,21 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
       </div>
 
       <FadeIn>
-        <div className="mt-14 max-w-3xl glass rounded-[28px] p-6 md:p-8">
+        <div className="mt-10 flex max-w-3xl flex-wrap items-center gap-x-6 gap-y-3">
+          <TrackedLink
+            href={`https://wa.me/?text=${encodeURIComponent(`${nota.titulo} ${urlNota}`)}`}
+            evento="share"
+            params={{ method: 'whatsapp', content_type: 'nota', item_id: nota.slug }}
+            external
+            className="text-[14px] font-semibold text-[var(--accent)] underline-offset-4 hover:underline"
+          >
+            Compartir por WhatsApp
+          </TrackedLink>
+        </div>
+      </FadeIn>
+
+      <FadeIn>
+        <div className="mt-10 max-w-3xl glass rounded-[28px] p-6 md:p-8">
           <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">Sobre el autor</p>
           <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
             <strong className="font-semibold text-white">Marcelo Fabián Retamal</strong> es abogado (UNLP), matriculado
@@ -153,43 +167,62 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
         </div>
       </FadeIn>
 
-      {SERVICIOS[nota.materia] || notasRelacionadas(nota).length > 0 ? (
+      {servicio || tips.length > 0 || relacionadas.length > 0 ? (
         <FadeIn>
           <aside className="mt-10 max-w-3xl space-y-8" aria-label="Contenido relacionado">
-            {SERVICIOS[nota.materia] ? (
+            {servicio ? (
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
                   Servicio relacionado
                 </p>
-                <Link
-                  href={SERVICIOS[nota.materia].href}
-                  className="glass glass-lift mt-3 block rounded-[24px] p-5 md:p-6"
-                >
-                  <span className="block text-lg font-bold text-white">{SERVICIOS[nota.materia].titulo}</span>
+                <Link href={servicio.href} className="glass glass-lift mt-3 block rounded-[24px] p-5 md:p-6">
+                  <span className="block text-lg font-bold text-white">{servicio.titulo}</span>
                   <span className="mt-1 block text-[15px] leading-relaxed text-[var(--text-secondary)]">
-                    {SERVICIOS[nota.materia].texto}
+                    {servicio.texto}
                   </span>
                 </Link>
               </div>
             ) : null}
 
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
-                Lecturas relacionadas
-              </p>
-              <ul className="mt-3 space-y-2">
-                {notasRelacionadas(nota).map((n) => (
-                  <li key={n.slug}>
-                    <Link
-                      href={`/blog/${n.slug}`}
-                      className="text-[15px] font-medium text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
-                    >
-                      {n.titulo}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {tips.length > 0 ? (
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+                  Tips rápidos sobre este tema
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {tips.map((t) => (
+                    <li key={t.slug}>
+                      <Link
+                        href={`/tips/${t.slug}`}
+                        className="text-[15px] font-medium text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
+                      >
+                        {t.titulo}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            {relacionadas.length > 0 ? (
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+                  Lecturas relacionadas
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {relacionadas.map((n) => (
+                    <li key={n.slug}>
+                      <Link
+                        href={`/blog/${n.slug}`}
+                        className="text-[15px] font-medium text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
+                      >
+                        {n.titulo}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
           </aside>
         </FadeIn>
       ) : null}
@@ -206,10 +239,10 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
       <div className="mt-16 md:mt-24">
         <PageCta
           eyebrow="Evaluación confidencial"
-          title="¿Su situación se parece a lo que acaba de leer?"
-          description="Una evaluación preliminar del caso, confidencial y sin compromiso, permite saber en qué posición está antes de tomar cualquier decisión."
+          title="¿Tu situación se parece a lo que acabás de leer?"
+          description="Contanos qué pasó y te decimos qué podés hacer. Te respondemos en un plazo máximo de 24 horas hábiles."
           buttonHref="/evaluacion"
-          buttonLabel="Solicitar Evaluación del Caso"
+          buttonLabel="Contar mi caso"
         />
       </div>
     </PageShell>
