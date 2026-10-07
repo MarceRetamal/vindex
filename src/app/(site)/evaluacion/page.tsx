@@ -3,52 +3,53 @@ import { buildMetadata } from '@/lib/metadata'
 import { EvaluationForm } from '@/components/forms/EvaluationForm'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { Card } from '@/components/ui/Card'
-import { PageBlock } from '@/components/ui/PageBlock'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Solicitar evaluación jurídica en La Plata',
+  title: 'Contanos tu caso | Consulta jurídica en La Plata',
   description:
-    'Cuente su caso a VINDEX LEGAL: evaluación preliminar y confidencial, con respuesta en un plazo máximo de 24 horas hábiles. La Plata y provincia.',
+    'Contanos qué pasó y te decimos qué podés hacer. Consulta confidencial con respuesta en un plazo máximo de 24 horas hábiles. La Plata y provincia.',
   path: '/evaluacion',
 })
 
 const steps = [
   {
     eyebrow: '01',
-    title: 'Recepción inicial',
-    description:
-      'Se ordena el encuadre básico del caso, su estado actual y la existencia de mediación, intimaciones o plazos urgentes.',
+    title: 'Nos contás tu caso',
+    description: 'Con tus palabras, sin tecnicismos. Alcanza con lo básico.',
   },
   {
     eyebrow: '02',
-    title: 'Revisión técnica',
-    description:
-      'Se analiza la admisibilidad de la consulta y si el escenario admite una intervención estratégica.',
+    title: 'Lo revisamos',
+    description: 'Vemos qué opciones tenés, qué plazos corren y qué documentación conviene reunir.',
   },
   {
     eyebrow: '03',
-    title: 'Posicionamiento',
-    description:
-      'Si corresponde avanzar, se estipula la arquitectura de intervención legal y la proyección del conflicto.',
+    title: 'Te llamamos',
+    description: 'En un plazo máximo de 24 horas hábiles te explicamos cómo seguir.',
   },
 ]
 
 export default function EvaluacionPage() {
   return (
     <PageShell>
+      <Breadcrumbs items={[{ name: 'Contanos tu caso' }]} />
+
       <PageIntro
-        eyebrow="Evaluación jurídica"
-        title="El primer paso no es actuar. Es ordenar el escenario táctico."
-        description="VINDEX procesa este intake preliminar asegurando confidencialidad absoluta para determinar la vía de presión procesal legítima o la estrategia de contención defensiva más adecuada."
+        eyebrow="Consulta jurídica"
+        title="Contanos qué pasó. Te decimos qué podés hacer."
+        description="Tu consulta es confidencial. Respondemos en un plazo máximo de 24 horas hábiles."
       />
 
       <div className="mt-16 md:mt-24 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] items-start">
         <StaggerFadeIn>
           <div className="grid gap-6">
-            <h3 className="text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-2">Protocolo Inicial</h3>
+            <h3 className="text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-2">
+              Cómo sigue
+            </h3>
             {steps.map((step) => (
               <Card
                 as="h2"
@@ -65,12 +66,13 @@ export default function EvaluacionPage() {
           <div className="space-y-5">
             <div className="rounded-[20px] border border-[var(--accent)]/10 bg-[var(--accent)]/5 p-6 mb-6">
               <p className="text-[12px] font-semibold uppercase tracking-[0.1em] text-[var(--accent-bright)] mb-3 flex items-center gap-2">
-  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
-  Confidencialidad y secreto profesional
-</p>
-<p className="text-[14px] leading-relaxed text-[var(--text-secondary)]">
-  La información que comparta está protegida por secreto profesional (Ley 5177, art. 6). Cuanto más precisa sea la descripción del estado actual del conflicto, más preciso será el análisis preliminar. Sea sintético pero concreto.
-</p>
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
+                Confidencialidad
+              </p>
+              <p className="text-[14px] leading-relaxed text-[var(--text-secondary)]">
+                Lo que contás está protegido por el secreto profesional. Cuanto más claro sea lo que pasó, mejor
+                podemos orientarte.
+              </p>
             </div>
             <EvaluationForm />
           </div>

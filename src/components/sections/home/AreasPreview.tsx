@@ -1,3 +1,5 @@
+import Link from 'next/link'
+import { AREAS } from '@/data/areas'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
 import { Button } from '@/components/ui/Button'
@@ -5,53 +7,44 @@ import { Card } from '@/components/ui/Card'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Section } from '@/components/ui/Section'
 
-const areas = [
-  {
-    title: 'Conflictos patrimoniales complejos',
-    description:
-      'Escenarios donde el impacto económico, societario o estructural exige lectura fina y estrategia sostenida.',
-  },
-  {
-    title: 'Litigios civiles y comerciales',
-    description:
-      'Intervención en disputas donde la técnica y la consistencia táctica condicionan el resultado.',
-  },
-  {
-    title: 'Escenarios de alta fricción jurídica',
-    description:
-      'Conflictos con presión cruzada, posiciones enfrentadas y margen reducido para errores de enfoque.',
-  },
-  {
-    title: 'Estrategia preventiva y defensiva',
-    description:
-      'Diseño de posición antes de que la exposición jurídica crezca o se consolide en contra.',
-  },
-]
+// Las cuatro áreas principales (la quinta, amparos, está en Situaciones y en /areas).
+const principales = ['derecho-de-familia', 'accidentes-de-transito', 'derecho-laboral', 'accidentes-laborales-art']
+const areas = principales
+  .map((slug) => AREAS.find((a) => a.slug === slug))
+  .filter((a): a is (typeof AREAS)[number] => Boolean(a))
+
+function AreaCard({ slug, title, description, className }: { slug: string; title: string; description: string; className?: string }) {
+  return (
+    <Link href={`/${slug}`} className="block h-full">
+      <Card
+        title={title}
+        description={description}
+        className={className}
+        footer={<span className="text-[13px] font-semibold text-[var(--accent-bright)]">Ver más →</span>}
+      />
+    </Link>
+  )
+}
 
 export function AreasPreview() {
+  if (areas.length < 4) return null
+
   return (
     <Section id="areas">
       <div className="space-y-5 md:space-y-6">
         <FadeIn>
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-6">
             <div className="max-w-3xl space-y-3 md:space-y-4">
-              <Eyebrow>Áreas de intervención</Eyebrow>
+              <Eyebrow>Áreas de trabajo</Eyebrow>
 
               <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl md:text-5xl">
-                Actuación jurídica para escenarios donde la complejidad exige
-                estructura, capacidad técnica y dirección estratégica.
+                Casos que resolvemos todos los días.
               </h2>
-
-              <p className="text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base md:text-lg md:leading-8">
-                VINDEX no se presenta como una práctica generalista. La lógica de
-                intervención responde a conflictos donde la lectura técnica modifica
-                el valor del resultado.
-              </p>
             </div>
 
             <div>
               <Button href="/areas" variant="secondary">
-                Explorar áreas
+                Ver todas las áreas
               </Button>
             </div>
           </div>
@@ -60,20 +53,16 @@ export function AreasPreview() {
         <StaggerFadeIn delay={0.12}>
           <div className="grid gap-4 md:gap-5 md:grid-cols-[1.3fr_1fr] md:[grid-template-areas:'big_s1'_'big_s2'_'big_s3']">
             <div className="md:[grid-area:big]">
-              <Card
-                title={areas[0].title}
-                description={areas[0].description}
-                className="md:[&_h3]:text-3xl"
-              />
+              <AreaCard slug={areas[0].slug} title={areas[0].cardTitle} description={areas[0].cardText} className="md:[&_h3]:text-3xl" />
             </div>
             <div className="md:[grid-area:s1]">
-              <Card title={areas[1].title} description={areas[1].description} />
+              <AreaCard slug={areas[1].slug} title={areas[1].cardTitle} description={areas[1].cardText} />
             </div>
             <div className="md:[grid-area:s2]">
-              <Card title={areas[2].title} description={areas[2].description} />
+              <AreaCard slug={areas[2].slug} title={areas[2].cardTitle} description={areas[2].cardText} />
             </div>
             <div className="md:[grid-area:s3]">
-              <Card title={areas[3].title} description={areas[3].description} />
+              <AreaCard slug={areas[3].slug} title={areas[3].cardTitle} description={areas[3].cardText} />
             </div>
           </div>
         </StaggerFadeIn>

@@ -10,19 +10,19 @@ export function FinalCta() {
         <div data-glass className="glass glass-strong relative overflow-hidden rounded-[28px] p-6 md:rounded-[40px] md:p-16">
           <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(229,193,88,0.22),transparent_65%)]" />
           <div className="max-w-3xl space-y-4 md:space-y-5">
-            <Eyebrow>Evaluación jurídica</Eyebrow>
+            <Eyebrow>Consulta jurídica</Eyebrow>
 
             <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl md:text-5xl">
-              Solicite una evaluación jurídica preliminar
+              Contanos qué pasó
             </h2>
 
             <p className="max-w-2xl text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base md:text-lg md:leading-8">
-              Una lectura temprana, técnicamente correcta y estratégicamente
-              orientada puede redefinir por completo el escenario del conflicto.
+              Te decimos qué podés hacer. Tu consulta es confidencial y te respondemos en un plazo máximo de 24 horas
+              hábiles.
             </p>
 
             <div className="pt-1 md:pt-2">
-              <Button href="/evaluacion">Iniciar evaluación jurídica</Button>
+              <Button href="/evaluacion">Contar mi caso</Button>
             </div>
           </div>
         </div>

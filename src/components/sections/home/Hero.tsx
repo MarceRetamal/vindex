@@ -4,9 +4,13 @@ import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 
 const shortcuts = [
-  { href: '/penal-urgente', label: 'Denuncia o causa penal' },
+  { href: '/derecho-de-familia', label: 'Familia' },
+  { href: '/accidentes-de-transito', label: 'Accidente de tránsito' },
+  { href: '/derecho-laboral', label: 'Despido o laboral' },
+  { href: '/accidentes-laborales-art', label: 'Accidente de trabajo (ART)' },
+  { href: '/amparos-salud-discapacidad', label: 'Salud, discapacidad o IOMA' },
+  { href: '/penal-urgente', label: 'Denuncia penal' },
   { href: '/sucesiones', label: 'Sucesión' },
-  { href: '/evaluacion', label: 'Otro conflicto' },
 ]
 
 export function Hero() {
@@ -21,7 +25,7 @@ export function Hero() {
               style={{ ['--d' as string]: '0.15s' }}
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-bright)] shadow-[0_0_10px_var(--accent)]" />
-              Intervención jurídica de alta precisión
+              Estudio jurídico · La Plata
             </p>
 
             <h1 className="max-w-[15ch] text-[2.4rem] font-black leading-[1.02] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.6rem]">
@@ -29,26 +33,24 @@ export function Hero() {
               <span className="mask-line"><span style={{ ['--d' as string]: '0.35s' }}>La Plata para</span>{' '}</span>
               <span className="mask-line">
                 <span className="bg-gradient-to-r from-white via-[var(--vindex-silver)] to-[var(--vindex-silver-deep)] bg-clip-text text-transparent" style={{ ['--d' as string]: '0.45s' }}>
-                  conflictos complejos
+                  tu problema legal
                 </span>
               </span>
             </h1>
 
             <p className="anim-rise max-w-xl text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base md:text-lg md:leading-8" style={{ ['--d' as string]: '0.7s' }}>
-              VINDEX LEGAL estructura análisis, evaluación e intervención para escenarios
-              jurídicos en La Plata y en toda la Provincia de Buenos Aires, donde la claridad
-              técnica, la lectura profunda del conflicto y la superioridad estratégica
-              modifican el resultado.
+              Familia, accidentes, trabajo y salud. Te explicamos tu caso en lenguaje claro y actuamos en toda la
+              Provincia de Buenos Aires.
             </p>
 
             <div className="anim-rise flex flex-col gap-3 pt-1 sm:flex-row sm:gap-4" style={{ ['--d' as string]: '0.85s' }}>
-              <Button href="/evaluacion">Solicitar evaluación jurídica</Button>
-              <Button href="/sistema" variant="secondary">Conocer el sistema</Button>
+              <Button href="/evaluacion">Contar mi caso</Button>
+              <Button href="/tips" variant="secondary">Ver tips jurídicos</Button>
             </div>
 
             <div className="anim-rise pt-2" style={{ ['--d' as string]: '1s' }}>
               <p className="mb-2.5 text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
-                Acceso directo según su situación
+                ¿Cuál es tu situación?
               </p>
               <div className="flex flex-wrap gap-2.5">
                 {shortcuts.map((s) => (

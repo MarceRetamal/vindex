@@ -23,6 +23,8 @@ export type Nota = {
   fecha: string
   actualizado: string
   minutos: number
+  /** Ruta pública de la portada (ej.: /covers/mi-nota.svg). Vacío si no hay. */
+  imagen?: string
   resumen: string[]
 }
 

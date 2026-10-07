@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { buildMetadata } from '@/lib/metadata'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
+import { Cover } from '@/components/blog/Cover'
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { Card } from '@/components/ui/Card'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageIntro } from '@/components/ui/PageIntro'
@@ -13,7 +15,7 @@ export const dynamic = 'force-static'
 export const metadata: Metadata = buildMetadata({
   title: 'Blog Jurídico — Guías legales claras',
   description:
-    'Guías sobre derecho penal, sucesiones, familia, consumidor y discapacidad en La Plata y la Provincia de Buenos Aires, escritas por un abogado matriculado.',
+    'Guías sobre familia, laboral, accidentes, discapacidad, penal y sucesiones en La Plata y la Provincia de Buenos Aires, escritas por un abogado matriculado.',
   path: '/blog',
 })
 
@@ -22,10 +24,12 @@ export default function BlogPage() {
 
   return (
     <PageShell>
+      <Breadcrumbs items={[{ name: 'Blog' }]} />
+
       <PageIntro
-        eyebrow="Blog Jurídico VINDEX"
+        eyebrow="Blog jurídico"
         title="Respuestas claras a problemas legales reales."
-        description="Guías escritas por un abogado matriculado sobre las situaciones que más consultas generan en La Plata y la Provincia de Buenos Aires. Información general para orientarse antes de decidir."
+        description="Guías escritas por un abogado matriculado sobre las situaciones que más consultas generan. Información general para orientarte antes de decidir."
       />
 
       <div className="mt-16 md:mt-24">
@@ -34,6 +38,7 @@ export default function BlogPage() {
             {notas.map((nota) => (
               <Card
                 key={nota.slug}
+                media={nota.imagen ? <Cover src={nota.imagen} /> : undefined}
                 eyebrow={`${nota.materia} · ${formatearFecha(nota.fecha)}`}
                 title={nota.titulo}
                 description={nota.copete}
@@ -53,8 +58,10 @@ export default function BlogPage() {
 
       <div className="mt-20 md:mt-32">
         <PageCta
-          title="Leer orienta. Un dictamen resuelve."
-          description="Si su situación requiere más que información general, una evaluación preliminar confidencial define el encuadre real de su caso."
+          title="Leer orienta. Una consulta resuelve."
+          description="Si tu situación necesita algo más que información general, contanos tu caso y te decimos qué podés hacer."
+          buttonHref="/evaluacion"
+          buttonLabel="Contar mi caso"
         />
       </div>
     </PageShell>
