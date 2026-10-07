@@ -5,10 +5,10 @@ export const siteConfig = {
     label: 'Contar mi caso',
     href: '/evaluacion',
   },
-  // Número de WhatsApp en formato internacional, sin "+" ni espacios
-  // (ejemplo: '5492211234567'). Mientras esté vacío NO se muestra ningún
-  // botón ni enlace de WhatsApp en el sitio.
-  whatsapp: '',
+  // Número de WhatsApp Business en formato internacional, sin "+" ni espacios.
+  // Es el número del asistente virtual (ver src/lib/whatsapp). Si se deja vacío
+  // NO se muestra ningún botón ni enlace de WhatsApp en el sitio.
+  whatsapp: '5491141743745',
 }
 
 export function whatsappUrl(texto = 'Hola, quiero consultar por un caso.'): string {

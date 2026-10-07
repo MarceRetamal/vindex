@@ -1,0 +1,24 @@
+# Copiá este archivo como .dev.vars y completalo SOLO en tu máquina.
+# .dev.vars está en .gitignore: nunca se sube al repositorio.
+# En producción los secretos se cargan con: npx wrangler secret put NOMBRE
+
+# Correo (formulario del sitio y avisos del asistente)
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USER=
+SMTP_PASS=
+MAIL_FROM=
+MAIL_TO=
+
+# Asistente de WhatsApp (Meta Cloud API + Claude)
+WA_PHONE_NUMBER_ID=
+WA_ACCESS_TOKEN=
+WA_APP_SECRET=
+WA_VERIFY_TOKEN=
+ANTHROPIC_API_KEY=
+# Opcional. Por defecto: claude-sonnet-5
+CLAUDE_MODEL=
+
+# Opcional: mide en Google Analytics las consultas que llegan por WhatsApp
+# (GA4 > Administrar > Flujos de datos > Secretos de API de Measurement Protocol)
+GA_API_SECRET=

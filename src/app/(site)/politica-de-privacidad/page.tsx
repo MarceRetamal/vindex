@@ -41,7 +41,7 @@ const sections = [
     num: '04',
     title: 'Canal de WhatsApp Business e Inteligencia Artificial',
     content: [
-      'VINDEX LEGAL utiliza WhatsApp Business API (Meta Platforms, Inc.) como canal oficial de comunicación. Las interacciones realizadas a través de este canal pueden ser procesadas por sistemas de inteligencia artificial para clasificar y priorizar consultas entrantes, brindar orientación general de carácter informativo sobre el ordenamiento jurídico argentino, y derivar la comunicación al profesional responsable cuando corresponda.',
+      'VINDEX LEGAL utiliza WhatsApp Business API (Meta Platforms, Inc.) como canal oficial de comunicación. Las interacciones realizadas a través de este canal pueden ser procesadas por sistemas de inteligencia artificial para clasificar y priorizar consultas entrantes, brindar orientación general de carácter informativo sobre el ordenamiento jurídico argentino, y derivar la comunicación al profesional responsable cuando corresponda. El asistente se presenta siempre como un sistema de inteligencia artificial. El contenido de la conversación se conserva en el sistema del asistente durante 30 días corridos desde el primer mensaje y luego se elimina automáticamente; el resumen de la consulta que el Estudio recibe por correo electrónico se conserva en sus registros para darle seguimiento.',
       'Las respuestas automatizadas tienen carácter meramente orientativo e informativo. No constituyen asesoramiento jurídico, no crean relación abogado-cliente y no reemplazan la consulta profesional personalizada.',
       'Los mensajes intercambiados a través de WhatsApp están sujetos adicionalmente a la Política de Privacidad de WhatsApp y las condiciones de Meta Platforms, Inc.',
     ],
@@ -66,7 +66,7 @@ const sections = [
     title: 'Compartición con Terceros',
     content: [
       'VINDEX LEGAL no comercializa ni cede datos personales a terceros con fines comerciales. Los datos podrán ser compartidos únicamente con proveedores tecnológicos que actúan como encargados del tratamiento (plataformas de gestión, servicios en la nube, herramientas de automatización), bajo acuerdos de confidencialidad y seguridad; con organismos judiciales o administrativos cuando sea requerido por mandato legal o resolución judicial; y con peritos, mediadores u otros profesionales intervinientes en el proceso, cuando resulte necesario para la defensa del cliente.',
-      'Los proveedores tecnológicos utilizados incluyen, entre otros: Meta Platforms Inc. (WhatsApp Business API), Google LLC (servicios de inteligencia artificial), Cloudflare Inc. (infraestructura, seguridad y analítica web) y servicios de infraestructura en la nube. Todos ellos operan bajo marcos de protección de datos reconocidos internacionalmente.',
+      'Los proveedores tecnológicos utilizados incluyen, entre otros: Meta Platforms Inc. (WhatsApp Business API), Anthropic PBC (modelo de inteligencia artificial del asistente virtual), Cloudflare Inc. (infraestructura, seguridad y analítica web) y servicios de infraestructura en la nube. Todos ellos operan bajo marcos de protección de datos reconocidos internacionalmente.',
     ],
   },
   {
