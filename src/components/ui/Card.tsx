@@ -7,10 +7,12 @@ type CardProps = {
   eyebrow?: string
   className?: string
   footer?: ReactNode
+  /** Imagen o elemento a todo el ancho, arriba de la tarjeta (ej.: portada de una nota). */
+  media?: ReactNode
   as?: 'h2' | 'h3'
 }
 
-export function Card({ title, description, eyebrow, className = '', footer, as: Heading = 'h3' }: CardProps) {
+export function Card({ title, description, eyebrow, className = '', footer, media, as: Heading = 'h3' }: CardProps) {
   return (
     <article
       data-glass
@@ -19,6 +21,7 @@ export function Card({ title, description, eyebrow, className = '', footer, as: 
         className
       )}
     >
+      {media ? <div className="-mx-6 -mt-6 mb-5 md:-mx-8 md:-mt-8 md:mb-6">{media}</div> : null}
       {eyebrow ? (
         <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)] md:mb-4 md:text-xs">
           {eyebrow}
