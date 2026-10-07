@@ -11,7 +11,7 @@ export const legalServiceSchema = {
   url: 'https://vindexlegal.com.ar',
   image: 'https://vindexlegal.com.ar/og-image.jpg',
   description:
-    'Estudio jurídico en La Plata, Buenos Aires, especializado en estrategia jurídica para conflictos complejos: derecho de familia, laboral, penal, daños y perjuicios, administrativo y ambiental.',
+    'Estudio jurídico en La Plata, Buenos Aires: derecho de familia, accidentes de tránsito, derecho laboral, accidentes de trabajo y ART, amparos de salud y discapacidad, defensa penal y sucesiones.',
   telephone: '+5491141743745',
   email: 'info@vindexlegal.com.ar',
   address: {
@@ -35,10 +35,11 @@ export const legalServiceSchema = {
   },
   knowsAbout: [
     'Derecho de Familia',
+    'Accidentes de Tránsito',
     'Derecho Laboral',
+    'Riesgos del Trabajo (ART)',
+    'Amparos de Salud y Discapacidad',
     'Derecho Penal',
-    'Daños y Perjuicios',
-    'Derecho Administrativo',
-    'Derecho Ambiental',
+    'Sucesiones',
   ],
 }

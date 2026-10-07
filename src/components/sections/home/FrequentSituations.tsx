@@ -6,16 +6,34 @@ import { Section } from '@/components/ui/Section'
 
 const situations = [
   {
-    href: '/penal-urgente',
-    title: 'Recibió una notificación o una denuncia penal',
-    description:
-      'Defensa penal urgente en toda la Provincia de Buenos Aires: denuncias, amenazas, violencia de género, estafas.',
+    href: '/tips/no-me-pasan-la-cuota-alimentaria',
+    title: 'No me pasan la cuota alimentaria',
+    description: 'Qué hacer cuando hay deuda o todavía no hay cuota fijada.',
   },
   {
-    href: '/sucesiones',
-    title: 'Hay una sucesión sin resolver, con o sin conflicto entre herederos',
-    description:
-      'Relevamiento patrimonial y partición ordenada, incluso cuando el acuerdo entre herederos no aparece solo.',
+    href: '/blog/no-me-dejan-ver-a-mis-hijos-impedimento-contacto',
+    title: 'No me dejan ver a mis hijos',
+    description: 'Las vías legales cuando cortan el contacto.',
+  },
+  {
+    href: '/tips/me-despidieron-que-hacer-primero',
+    title: 'Me despidieron',
+    description: 'Lo primero que conviene hacer, y qué no firmar.',
+  },
+  {
+    href: '/tips/choque-con-lesiones-primeras-48-horas',
+    title: 'Tuve un choque con lesiones',
+    description: 'Qué guardar y qué hacer en las primeras 48 horas.',
+  },
+  {
+    href: '/tips/accidente-de-trabajo-art-que-hacer-primero',
+    title: 'Me accidenté trabajando',
+    description: 'Pasos con la ART y documentación que conviene reunir.',
+  },
+  {
+    href: '/tips/obra-social-o-prepaga-niega-tratamiento-amparo',
+    title: 'Mi obra social, prepaga o IOMA me niega un tratamiento',
+    description: 'Cómo reclamar y cuándo conviene un amparo.',
   },
 ]
 
@@ -25,15 +43,15 @@ export function FrequentSituations() {
       <div className="space-y-8 md:space-y-10">
         <FadeIn>
           <div className="max-w-2xl space-y-3 md:space-y-4">
-            <Eyebrow>Puntos de entrada directos</Eyebrow>
+            <Eyebrow>Situaciones frecuentes</Eyebrow>
             <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl md:text-4xl">
-              Si su situación es una de estas, empiece por acá.
+              Si te pasó algo de esto, empezá por acá.
             </h2>
           </div>
         </FadeIn>
 
-        <StaggerFadeIn stagger={0.1}>
-          <div className="grid gap-4 md:grid-cols-2 md:gap-5">
+        <StaggerFadeIn stagger={0.08}>
+          <div className="grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
             {situations.map((s) => (
               <Link
                 data-glass
@@ -41,14 +59,12 @@ export function FrequentSituations() {
                 href={s.href}
                 className="glass glass-lift group block rounded-[28px] p-6 md:p-8"
               >
-                <h3 className="text-xl font-bold text-white leading-tight md:text-2xl">
-                  {s.title}
-                </h3>
+                <h3 className="text-xl font-bold leading-tight text-white md:text-2xl">{s.title}</h3>
                 <p className="mt-3 text-[15px] leading-7 text-[var(--text-secondary)] md:text-base">
                   {s.description}
                 </p>
                 <span className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[var(--accent-bright)] transition-transform group-hover:translate-x-1">
-                  Ver cómo intervenimos →
+                  Leer →
                 </span>
               </Link>
             ))}
