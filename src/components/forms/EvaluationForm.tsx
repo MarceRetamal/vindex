@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import Script from 'next/script'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,6 +10,10 @@ import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
 import { Textarea } from '@/components/ui/Textarea'
 import { Label } from '@/components/ui/Label'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
+import { AREA_LABELS, AREA_VALUES, URGENCIA_LABELS, URGENCIA_VALUES } from '@/data/intake'
+import { whatsappUrl } from '@/data/site'
+import { track } from '@/lib/track'
 
 // 🔒 Cloudflare Turnstile — captcha invisible anti-abuso
 const TURNSTILE_SITE_KEY = '0x4AAAAAAD4LdTQMif5no3nF'
@@ -24,15 +29,19 @@ declare global {
   }
 }
 
+// Formulario pensado para personas: pocos campos, lenguaje cotidiano.
+// El email es opcional (el contacto principal es el teléfono).
 const formSchema = z.object({
-  name: z.string().min(2, 'El nombre es obligatorio y debe ser válido.'),
-  email: z.string().email('Dirección de email inválida.'),
-  phone: z.string().min(6, 'El teléfono es obligatorio.'),
-  jurisdiction: z.string().min(2, 'La jurisdicción principal del conflicto es obligatoria.'),
-  urgency: z.string().min(1, 'Debe seleccionar el estado técnico de los plazos.'),
-  message: z.string()
-    .min(10, 'La descripción del escenario requiere mayor detalle.')
-    .max(800, 'La síntesis técnica estructural no debe superar los 800 caracteres.'),
+  name: z.string().min(2, 'Escribí tu nombre.'),
+  phone: z.string().min(6, 'Dejanos un teléfono para poder llamarte.'),
+  email: z.union([z.literal(''), z.string().email('El email no es válido.')]),
+  localidad: z.string().max(100, 'Es demasiado largo.').optional(),
+  area: z.string().min(1, 'Elegí sobre qué es tu consulta.'),
+  urgency: z.string().min(1, 'Elegí una opción.'),
+  message: z
+    .string()
+    .min(10, 'Contanos un poco más para poder orientarte.')
+    .max(800, 'Máximo 800 caracteres. Podés darnos más detalle cuando te llamemos.'),
   website: z.string().optional(),
 })
 
@@ -46,6 +55,7 @@ export function EvaluationForm() {
   const [turnstileReady, setTurnstileReady] = useState(false)
   const turnstileContainerRef = useRef<HTMLDivElement>(null)
   const turnstileWidgetId = useRef<string | null>(null)
+  const formIniciado = useRef(false)
 
   useEffect(() => {
     if (!turnstileReady || !turnstileContainerRef.current || !window.turnstile || turnstileWidgetId.current) {
@@ -74,14 +84,27 @@ export function EvaluationForm() {
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    // 🛠️ OPTIMIZACIÓN CRÍTICA INP: Validar únicamente al perder el foco del campo
+    // 🛠️ OPTIMIZACIÓN INP: validar únicamente al perder el foco del campo
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: {
-      name: '', email: '', phone: '', jurisdiction: '',
-      urgency: '', message: '', website: ''
-    }
+      name: '',
+      phone: '',
+      email: '',
+      localidad: '',
+      area: '',
+      urgency: '',
+      message: '',
+      website: '',
+    },
   })
+
+  // Mide cuántas personas empiezan a completar el formulario (una sola vez).
+  function alEmpezar() {
+    if (formIniciado.current) return
+    formIniciado.current = true
+    track('form_start', { form: 'evaluacion' })
+  }
 
   async function onSubmit(data: FormValues) {
     setServerError('')
@@ -107,18 +130,15 @@ export function EvaluationForm() {
       }
 
       if (!response.ok || !responseData.ok) {
-        throw new Error(responseData.error || 'Falla estructural al transmitir el caso.')
+        throw new Error(responseData.error || 'No pudimos enviar tu consulta. Intentá de nuevo.')
       }
 
       setWarnings(responseData.warnings ?? [])
       setIsSuccess(true)
+      track('generate_lead', { form: 'evaluacion', area: data.area, urgencia: data.urgency })
       reset()
-      window.gtag?.('event', 'generate_lead', {
-        event_category: 'Formulario',
-        event_label: 'Evaluación jurídica',
-      })
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : 'Error interno de comunicación.')
+      setServerError(err instanceof Error ? err.message : 'Error de comunicación. Intentá de nuevo.')
       setTurnstileToken('')
     }
   }
@@ -132,26 +152,31 @@ export function EvaluationForm() {
 
   // 🎯 PANTALLA DE ÉXITO
   if (isSuccess) {
+    const wa = whatsappUrl('Hola, acabo de enviar mi consulta desde la web.')
     return (
-      <>
-        <Script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-          strategy="afterInteractive"
-          onLoad={() => setTurnstileReady(true)}
-        />
-        <div className="glass glass-strong rounded-[28px] p-8 md:rounded-[36px] md:p-16 min-h-[450px] flex flex-col justify-center items-center text-center relative overflow-hidden animate-fade-in">
-          <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent pointer-events-none" />
-          <div className="max-w-xl space-y-6 relative z-10">
-            <h3 className="text-[22px] font-bold tracking-[0.15em] text-white uppercase sm:text-[26px]">
-              Consulta recibida.
-            </h3>
-            <p className="text-[14px] leading-relaxed text-zinc-400 font-light md:text-[15px] text-justify md:text-center">
-              El equipo de VINDEX LEGAL está revisando el caso. Se va a comunicar a su teléfono registrado dentro de las
-              próximas 24 horas hábiles para definir los próximos pasos.
-            </p>
-          </div>
+      <div className="glass glass-strong rounded-[28px] p-8 md:rounded-[36px] md:p-16 min-h-[450px] flex flex-col justify-center items-center text-center relative overflow-hidden animate-fade-in">
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent pointer-events-none" />
+        <div className="max-w-xl space-y-6 relative z-10">
+          <h3 className="text-[22px] font-bold tracking-[0.15em] text-white uppercase sm:text-[26px]">
+            Consulta recibida.
+          </h3>
+          <p className="text-[14px] leading-relaxed text-zinc-400 font-light md:text-[15px] text-justify md:text-center">
+            Te vamos a llamar al teléfono que dejaste dentro de las próximas 24 horas hábiles. Mientras tanto, guardá
+            los mensajes, documentos y notificaciones relacionados con tu caso.
+          </p>
+          {wa ? (
+            <TrackedLink
+              href={wa}
+              evento="contact_click"
+              params={{ method: 'whatsapp', location: 'form_success' }}
+              external
+              className="inline-flex text-[14px] font-semibold text-[var(--accent-bright)] underline-offset-4 hover:underline"
+            >
+              Escribinos por WhatsApp
+            </TrackedLink>
+          ) : null}
         </div>
-      </>
+      </div>
     )
   }
 
@@ -165,107 +190,131 @@ export function EvaluationForm() {
       <form
         data-glass
         onSubmit={handleSubmit(onSubmit)}
+        onFocusCapture={alEmpezar}
         className="glass glass-strong rounded-[28px] p-6 md:rounded-[36px] md:p-10 relative overflow-hidden"
       >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
 
-      <div className="grid gap-6 relative z-10">
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="name">Nombre y Apellido *</Label>
-            <Input id="name" {...register('name')} placeholder="Representante o titular" />
-            {errors.name && <p className="text-[13px] text-red-400">{errors.name.message}</p>}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email">Correo Electrónico *</Label>
-            <Input id="email" type="email" {...register('email')} placeholder="contacto@empresa.com" />
-            {errors.email && <p className="text-[13px] text-red-400">{errors.email.message}</p>}
-          </div>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="phone">Teléfono Directo *</Label>
-            <Input id="phone" {...register('phone')} placeholder="+54 9 11 ..." />
-            {errors.phone && <p className="text-[13px] text-red-400">{errors.phone.message}</p>}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="urgency">Estado de Plazos Legales *</Label>
-            <Select id="urgency" {...register('urgency')}>
-              <option value="">Seleccionar estado...</option>
-              <option value="plazo_corriendo">Plazo judicial / procesal corriendo (Urgente)</option>
-              <option value="medida_notificada">Medida cautelar o intimación notificada</option>
-              <option value="conflicto_preventivo">Conflicto abierto sin curso judicial (Fase preventiva)</option>
-              <option value="auditoria_estrategia">Auditoría de riesgos o diseño de estrategia de fondo</option>
-            </Select>
-            {errors.urgency && <p className="text-[13px] text-red-400">{errors.urgency.message}</p>}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="jurisdiction">Jurisdicción Principal del Conflicto *</Label>
-          <Input
-            id="jurisdiction"
-            {...register('jurisdiction')}
-            placeholder="Ej.: Justicia Federal, Tribunales Ordinarios CABA, PBA, Arbitraje Internacional..." 
-          />
-          {errors.jurisdiction && <p className="text-[13px] text-red-400">{errors.jurisdiction.message}</p>}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="message">Descripción Estructural del Escenario *</Label>
-          <Textarea
-            id="message"
-            {...register('message')}
-            placeholder="Describa el núcleo del conflicto, la contraparte y los activos o estructuras comprometidas en forma sintética (máx. 800 caracteres)..." 
-          />
-          {errors.message && <p className="text-[13px] text-red-400">{errors.message.message}</p>}
-        </div>
-
-        {/* Honey pot */}
-        <input type="text" {...register('website')} className="hidden" tabIndex={-1} autoComplete="off" />
-
-        {/* 🔒 Widget de Turnstile (captcha invisible) */}
-        <div ref={turnstileContainerRef} />
-
-        {/* 🏛️ DISCLAIMER INSTITUCIONAL DE ADMISIBILIDAD */}
-        <div className="text-justify border-t border-white/[0.05] pt-4">
-          <p className="text-[12px] text-[var(--text-muted)] leading-relaxed font-light">
-          El envío de este formulario no constituye aceptación del caso ni genera relación profesional hasta que VINDEX LEGAL 
-          emita un dictamen de viabilidad formal e informe las condiciones de contratación. Respuesta en un plazo máximo de 
-          24 horas hábiles.
-</p>
-        </div>
-
-        <div className="pt-2 space-y-4">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            data-glass
-            className="glass-btn glass-btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-          >
-            {isSubmitting ? 'Enviando...' : 'Solicitar Evaluación del Caso'}
-          </button>
-
-          {warnings.length > 0 && (
-            <div className="rounded-[10px] border border-[var(--accent-mute)] bg-[var(--accent-mute)]/10 p-4">
-              <p className="text-[14px] font-semibold text-[var(--accent-bright)]">Observaciones de validación:</p>
-              <ul className="mt-2 space-y-1 text-[13px] text-[var(--text-secondary)]">
-                {warnings.map((warning) => <li key={warning}>• {warning}</li>)}
-              </ul>
+        <div className="grid gap-6 relative z-10">
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="name">Nombre y apellido *</Label>
+              <Input id="name" autoComplete="name" {...register('name')} placeholder="Tu nombre" />
+              {errors.name && <p className="text-[13px] text-red-400">{errors.name.message}</p>}
             </div>
-          )}
 
-          {serverError && (
-            <div className="rounded-[10px] bg-red-500/10 border border-red-500/20 p-4">
-              <p className="text-[14px] text-red-400 font-medium">{serverError}</p>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Teléfono (mejor si es WhatsApp) *</Label>
+              <Input
+                id="phone"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                {...register('phone')}
+                placeholder="+54 9 221 ..."
+              />
+              {errors.phone && <p className="text-[13px] text-red-400">{errors.phone.message}</p>}
             </div>
-          )}
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email (opcional)</Label>
+              <Input id="email" type="email" autoComplete="email" {...register('email')} placeholder="tu@email.com" />
+              {errors.email && <p className="text-[13px] text-red-400">{errors.email.message}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="localidad">Ciudad o partido (opcional)</Label>
+              <Input id="localidad" {...register('localidad')} placeholder="Ej.: La Plata, Berisso, Ensenada" />
+              {errors.localidad && <p className="text-[13px] text-red-400">{errors.localidad.message}</p>}
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="area">¿Sobre qué es tu consulta? *</Label>
+              <Select id="area" {...register('area')}>
+                <option value="">Elegir una opción...</option>
+                {AREA_VALUES.map((v) => (
+                  <option key={v} value={v}>
+                    {AREA_LABELS[v]}
+                  </option>
+                ))}
+              </Select>
+              {errors.area && <p className="text-[13px] text-red-400">{errors.area.message}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="urgency">¿Qué tan urgente es? *</Label>
+              <Select id="urgency" {...register('urgency')}>
+                <option value="">Elegir una opción...</option>
+                {URGENCIA_VALUES.map((v) => (
+                  <option key={v} value={v}>
+                    {URGENCIA_LABELS[v]}
+                  </option>
+                ))}
+              </Select>
+              {errors.urgency && <p className="text-[13px] text-red-400">{errors.urgency.message}</p>}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="message">Contanos qué pasó *</Label>
+            <Textarea
+              id="message"
+              {...register('message')}
+              placeholder="Con tus palabras: qué pasó y qué necesitás. No hace falta que sea técnico (máx. 800 caracteres)."
+            />
+            {errors.message && <p className="text-[13px] text-red-400">{errors.message.message}</p>}
+          </div>
+
+          {/* Honey pot */}
+          <input type="text" {...register('website')} className="hidden" tabIndex={-1} autoComplete="off" />
+
+          {/* 🔒 Widget de Turnstile (captcha invisible) */}
+          <div ref={turnstileContainerRef} />
+
+          <div className="text-justify border-t border-white/[0.05] pt-4">
+            <p className="text-[12px] text-[var(--text-muted)] leading-relaxed font-light">
+              Enviar este formulario no implica que aceptemos el caso ni genera una relación profesional hasta que lo
+              conversemos. Usamos tus datos solo para responder tu consulta (ver{' '}
+              <Link href="/politica-de-privacidad" className="underline underline-offset-4 hover:text-white">
+                Política de Privacidad
+              </Link>
+              ). Respuesta en un plazo máximo de 24 horas hábiles.
+            </p>
+          </div>
+
+          <div className="pt-2 space-y-4">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              data-glass
+              className="glass-btn glass-btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            >
+              {isSubmitting ? 'Enviando...' : 'Enviar mi consulta'}
+            </button>
+
+            {warnings.length > 0 && (
+              <div className="rounded-[10px] border border-[var(--accent-mute)] bg-[var(--accent-mute)]/10 p-4">
+                <p className="text-[14px] font-semibold text-[var(--accent-bright)]">Observaciones:</p>
+                <ul className="mt-2 space-y-1 text-[13px] text-[var(--text-secondary)]">
+                  {warnings.map((warning) => (
+                    <li key={warning}>• {warning}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {serverError && (
+              <div className="rounded-[10px] bg-red-500/10 border border-red-500/20 p-4">
+                <p className="text-[14px] text-red-400 font-medium">{serverError}</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
     </>
   )
 }
