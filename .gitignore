@@ -46,3 +46,11 @@ next-env.d.ts
 
 # resultado de "npm run build:cloudflare" — Cloudflare lo genera de cero en cada deploy
 /.open-next/
+
+# secretos locales de wrangler / Cloudflare: NUNCA se versionan (la plantilla es .dev.vars.example)
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# estado local de wrangler / simulación de bindings de Cloudflare
+/.wrangler/

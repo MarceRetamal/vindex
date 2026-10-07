@@ -8,6 +8,8 @@ import { obtenerTips } from '@/lib/tips'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
+import { whatsappUrl } from '@/data/site'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { PageCta } from '@/components/ui/PageCta'
@@ -43,6 +45,9 @@ export default async function AreaPage({ params }: Props) {
   const { area } = await params
   const data = obtenerArea(area)
   if (!data) notFound()
+
+  // El mensaje llega precargado al asistente de WhatsApp, que ya sabe de qué tema se trata.
+  const waHref = whatsappUrl(`Hola, consulto por ${data.nombre.toLowerCase()}.`)
 
   const tips = obtenerTips()
     .filter((t) => t.categoria === data.categoriaTips)
@@ -92,8 +97,19 @@ export default async function AreaPage({ params }: Props) {
       <PageIntro eyebrow={data.eyebrow} title={data.h1} description={data.intro} />
 
       <FadeIn delay={0.1}>
-        <div className="mt-8">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
           <Button href="/evaluacion">Contar mi caso</Button>
+          {waHref ? (
+            <TrackedLink
+              href={waHref}
+              evento="whatsapp_click"
+              params={{ area: data.slug, origen: 'pagina_de_area' }}
+              external
+              className="glass-btn glass-btn-secondary w-full sm:w-auto"
+            >
+              Consultar por WhatsApp
+            </TrackedLink>
+          ) : null}
         </div>
       </FadeIn>
 

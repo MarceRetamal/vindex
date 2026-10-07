@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useState } from 'react'
+import { whatsappUrl } from '@/data/site'
 
 export function FloatingWhatsApp() {
   const [isHovered, setIsHovered] = useState(false)
 
-  const phoneNumber = '5491141743745'
-  const message = 'Hola, quisiera solicitar una evaluación jurídica.'
-  const whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + encodeURIComponent(message)
+  const waHref = whatsappUrl('Hola, quisiera solicitar una evaluación jurídica.')
+  if (!waHref) return null
 
   const tooltipVisibilityClass = isHovered
     ? 'opacity-100 translate-x-0'
@@ -24,7 +24,7 @@ export function FloatingWhatsApp() {
       </div>
 
       <a
-        href={whatsappUrl}
+        href={waHref}
   target="_blank"
   rel="noopener noreferrer"
   data-glass
