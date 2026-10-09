@@ -23,7 +23,7 @@ const RULES = {
     description:
       "{type}_{campaign}_{description}_{timestamp}_{variant}.{ext}",
     examples: [
-      "banner_claude-launch_hero-image_20251209.png",
+      "banner_captacion-familia_hero-image_20251209.png",
       "logo_brand-refresh_horizontal_20251209_dark.svg",
     ],
   },
@@ -357,7 +357,7 @@ function main() {
     console.error("Usage: node validate-asset.cjs <asset-path> [--json]");
     console.error("\nExamples:");
     console.error(
-      "  node validate-asset.cjs assets/banners/social-media/banner_launch_hero_20251209.png"
+      "  node validate-asset.cjs assets/banners/social-media/banner_captacion-familia_hero_20251209.png"
     );
     console.error(
       "  node validate-asset.cjs assets/logos/icon-only/logo-icon.svg --json"

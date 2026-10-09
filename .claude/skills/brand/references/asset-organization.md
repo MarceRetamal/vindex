@@ -2,6 +2,8 @@
 
 Guidelines for organizing marketing assets in a structured, searchable system.
 
+Los assets que sirve el sitio web (portadas, `og-image.jpg`, foto del estudio) viven en `public/` y no siguen esta estructura. Las carpetas `assets/` y `.assets/` de abajo describen el esquema a usar para material de marketing (redes, piezas gráficas, video) y no existen todavía en el repo: crearlas al incorporar el primer asset.
+
 ## Directory Structure
 
 ```
@@ -35,7 +37,6 @@ project-root/
 │   │   ├── ads/                      # Promotional videos
 │   │   ├── tutorials/                # How-to content
 │   │   └── testimonials/             # Customer videos
-│   ├── infographics/                 # Data visualizations
 │   └── generated/                    # AI-generated assets
 │       └── {YYYYMMDD}/               # Date-organized
 ```
@@ -51,7 +52,7 @@ project-root/
 | Component | Format | Required | Examples |
 |-----------|--------|----------|----------|
 | type | lowercase | Yes | banner, logo, design, video |
-| campaign | kebab-case | Yes* | claude-launch, q1-promo, evergreen |
+| campaign | kebab-case | Yes* | captacion-familia, q1-promo, evergreen |
 | description | kebab-case | Yes | hero-image, email-header |
 | timestamp | YYYYMMDD | Yes | 20251209 |
 | variant | kebab-case | No | dark-mode, 1x1, mobile |
@@ -60,11 +61,10 @@ project-root/
 
 ### Examples
 ```
-banner_claude-launch_hero-image_20251209_16-9.png
+banner_captacion-familia_hero-image_20251209_16-9.png
 logo_brand-refresh_horizontal-full-color_20251209.svg
 design_holiday-campaign_email-hero_20251209_dark-mode.psd
 video_product-demo_feature-walkthrough_20251209.mp4
-infographic_evergreen_pricing-comparison_20251209.png
 ```
 
 ## Metadata Schema
@@ -75,11 +75,11 @@ infographic_evergreen_pricing-comparison_20251209.png
   "id": "uuid-v4",
   "name": "Campaign Hero Banner",
   "type": "banner",
-  "path": "assets/banners/landing-pages/banner_claude-launch_hero-image_20251209.png",
+  "path": "assets/banners/landing-pages/banner_captacion-familia_hero-image_20251209.png",
   "dimensions": { "width": 1920, "height": 1080 },
   "fileSize": 245760,
   "mimeType": "image/png",
-  "tags": ["campaign", "hero", "launch"],
+  "tags": ["campaign", "hero", "familia"],
   "status": "approved",
   "source": {
     "model": "imagen-4",
@@ -87,8 +87,8 @@ infographic_evergreen_pricing-comparison_20251209.png
     "createdAt": "2025-12-09T10:30:00Z"
   },
   "version": 2,
-  "createdBy": "agent:content-creator",
-  "approvedBy": "user:john",
+  "createdBy": "agent:claude",
+  "approvedBy": "user:marcelo",
   "approvedAt": "2025-12-09T14:00:00Z"
 }
 ```
@@ -98,10 +98,10 @@ infographic_evergreen_pricing-comparison_20251209.png
 {
   "version": 2,
   "previousVersion": 1,
-  "path": "assets/banners/landing-pages/banner_claude-launch_hero-image_20251209_v2.png",
+  "path": "assets/banners/landing-pages/banner_captacion-familia_hero-image_20251209_v2.png",
   "changes": "Updated CTA button color to match brand refresh",
   "createdAt": "2025-12-09T12:00:00Z",
-  "createdBy": "agent:ui-designer"
+  "createdBy": "agent:claude"
 }
 ```
 
@@ -139,7 +139,7 @@ ls assets/banners/**/*
 ### By Campaign
 ```bash
 # Find all assets for specific campaign
-grep -l "claude-launch" .assets/manifest.json
+grep -l "captacion-familia" .assets/manifest.json
 ```
 
 ### By Status
