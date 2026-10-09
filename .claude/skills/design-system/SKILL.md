@@ -100,10 +100,7 @@ node scripts/validate-tokens.cjs --dir src/
 ## Integration
 
 **With brand:** Extract primitives from brand colors/typography
-**With ui-styling:** Component tokens → Tailwind config
-
-**Skill Dependencies:** brand, ui-styling
-**Primary Agents:** ui-ux-designer, frontend-developer
+**Tailwind:** Component tokens → `references/tailwind-integration.md`
 
 ## Slide System
 
@@ -113,10 +110,9 @@ Brand-compliant presentations using design tokens + Chart.js + contextual decisi
 
 | File | Purpose |
 |------|---------|
-| `docs/brand-guidelines.md` | Brand identity, voice, colors |
-| `assets/design-tokens.json` | Token definitions (primitive→semantic→component) |
-| `assets/design-tokens.css` | CSS variables (import in slides) |
-| `assets/css/slide-animations.css` | CSS animation library |
+| `design-system/design-tokens.json` | Token definitions (primitive→semantic→component). Edit here |
+| `design-system/design-tokens.css` | CSS variables generated from the JSON. Do not edit by hand |
+| `src/app/globals.css` | What the app consumes in production |
 
 ### Slide Search (BM25)
 
@@ -177,7 +173,7 @@ System calculates pattern breaks at 1/3 and 2/3 positions.
 ### Slide Requirements
 
 **ALL slides MUST:**
-1. Import `assets/design-tokens.css` - single source of truth
+1. Import `design-system/design-tokens.css` - single source of truth
 2. Use CSS variables: `var(--color-primary)`, `var(--slide-bg)`, etc.
 3. Use Chart.js for charts (NOT CSS-only bars)
 4. Include navigation (keyboard arrows, click, progress bar)
@@ -197,8 +193,8 @@ new Chart(document.getElementById('revenueChart'), {
         labels: ['Sep', 'Oct', 'Nov', 'Dec'],
         datasets: [{
             data: [5, 12, 28, 45],
-            borderColor: '#FF6B6B',  // Use brand coral
-            backgroundColor: 'rgba(255, 107, 107, 0.1)',
+            borderColor: '#D4AF37',  // brand accent (--color-accent); canvas cannot read var()
+            backgroundColor: 'rgba(212, 175, 55, 0.1)',
             fill: true,
             tension: 0.4
         }]
@@ -211,27 +207,14 @@ new Chart(document.getElementById('revenueChart'), {
 
 ```css
 /* CORRECT - uses token */
-background: var(--slide-bg);
-color: var(--color-primary);
+background: var(--color-bg-main);
+color: var(--color-accent);
 font-family: var(--typography-font-heading);
 
 /* WRONG - hardcoded */
-background: #0D0D0D;
-color: #FF6B6B;
-font-family: 'Space Grotesk';
-```
-
-### Reference Implementation
-
-Working example with all features:
-```
-assets/designs/slides/claudekit-pitch-251223.html
-```
-
-### Command
-
-```bash
-/slides:create "10-slide investor pitch for ClaudeKit Marketing"
+background: #07090C;
+color: #D4AF37;
+font-family: 'Lato';
 ```
 
 ## Best Practices
