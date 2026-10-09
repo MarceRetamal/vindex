@@ -46,3 +46,6 @@ next-env.d.ts
 
 # resultado de "npm run build:cloudflare" — Cloudflare lo genera de cero en cada deploy
 /.open-next/
+
+# Cloudflare local vars (secrets)
+.dev.vars*
