@@ -1,7 +1,6 @@
 ---
 name: brand
 description: Brand voice, visual identity, messaging frameworks, asset management, brand consistency. Activate for branded content, tone of voice, marketing assets, brand compliance, style guides.
-argument-hint: "[update|review|create] [args]"
 metadata:
   author: claudekit
   version: "1.0.0"
@@ -39,26 +38,9 @@ node scripts/extract-colors.cjs --palette
 node scripts/extract-colors.cjs <image-path>
 ```
 
-## Brand Sync Workflow
+## Tokens
 
-```bash
-# 1. Edit docs/brand-guidelines.md (or use /brand update)
-# 2. Sync to design tokens
-node scripts/sync-brand-to-tokens.cjs
-# 3. Verify
-node scripts/inject-brand-context.cjs --json | head -20
-```
-
-**Files synced:**
-- `docs/brand-guidelines.md` → Source of truth
-- `assets/design-tokens.json` → Token definitions
-- `assets/design-tokens.css` → CSS variables
-
-## Subcommands
-
-| Subcommand | Description | Reference |
-|------------|-------------|-----------|
-| `update` | Update brand identity and sync to all design systems | `references/update.md` |
+Los tokens de marca viven en `design-system/design-tokens.json` (se edita a mano) y se regeneran en `design-system/design-tokens.css` con `.claude/skills/design-system/scripts/generate-tokens.cjs` (comando en `design-system/README.md`). Todavía no existe `docs/brand-guidelines.md`: crearlo desde `templates/brand-guidelines-starter.md` antes de usar `inject-brand-context.cjs` o `extract-colors.cjs`, que lo leen por defecto.
 
 ## References
 
@@ -80,7 +62,6 @@ node scripts/inject-brand-context.cjs --json | head -20
 | Script | Purpose |
 |--------|---------|
 | `scripts/inject-brand-context.cjs` | Extract brand context for prompt injection |
-| `scripts/sync-brand-to-tokens.cjs` | Sync brand-guidelines.md → design-tokens.json/css |
 | `scripts/validate-asset.cjs` | Validate asset naming, size, format |
 | `scripts/extract-colors.cjs` | Extract and compare colors against palette |
 
@@ -89,9 +70,3 @@ node scripts/inject-brand-context.cjs --json | head -20
 | Template | Purpose |
 |----------|---------|
 | `templates/brand-guidelines-starter.md` | Complete starter template for new brands |
-
-## Routing
-
-1. Parse subcommand from `$ARGUMENTS` (first word)
-2. Load corresponding `references/{subcommand}.md`
-3. Execute with remaining arguments
