@@ -3,7 +3,7 @@ titulo: "Te secuestraron el auto por trabajar con Uber, Didi o Cabify en La Plat
 titulo_seo: "Secuestro de Uber en La Plata: ¿es legal?"
 descripcion: "La Municipalidad de La Plata secuestra autos de choferes de apps sin tener una ordenanza propia que lo autorice. Qué dice la ley y qué se puede reclamar."
 copete: "La Municipalidad le saca el auto a choferes de Uber, Didi y Cabify invocando una ordenanza pensada para remises. El problema es que, en La Plata, esa actividad no tiene todavía una norma propia que la prohíba. Esa debilidad cambia todo el análisis."
-materia: "Laboral"
+materia: "Responsabilidad del Estado"
 fecha: "2026-10-13"
 actualizado: "2026-10-13"
 borrador: "no"
