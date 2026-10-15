@@ -4,6 +4,7 @@ descripcion: "Qué hacer si el otro progenitor no paga la cuota alimentaria o to
 categoria: "Familia"
 fecha: "2026-10-07"
 actualizado: "2026-10-07"
+nota_pilar: "cuota-alimentaria-cuanto-corresponde-hasta-cuando"
 borrador: "no"
 resumen:
   - Si ya hay acuerdo o sentencia, se pide la ejecución de la deuda.

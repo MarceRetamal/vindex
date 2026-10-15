@@ -168,12 +168,21 @@ function generar() {
     titulo: datos.titulo,
     descripcion: datos.descripcion || '',
     categoria: datos.categoria || 'General',
+    // Slug de la nota del blog que desarrolla el tema en profundidad (opcional).
+    notaPilar: datos.nota_pilar || '',
     fecha,
     actualizado: datos.actualizado || fecha,
     minutos: Math.max(1, Math.round(countWords(cuerpo) / 170)),
     resumen,
     html,
   }))
+
+  const slugsNotas = new Set(notas.map((n) => n.slug))
+  for (const tip of tips) {
+    if (tip.notaPilar && !slugsNotas.has(tip.notaPilar)) {
+      console.warn(`[build-content] El tip "${tip.slug}" apunta a la nota "${tip.notaPilar}", que no existe o está en borrador: no se muestra el enlace.`)
+    }
+  }
 
   fs.writeFileSync(TIPS_OUT, JSON.stringify(tips, null, 2) + '\n', 'utf8')
   console.log(`[build-content] ${tips.length} tip(s) generado(s) en src/content/tips.generated.json`)

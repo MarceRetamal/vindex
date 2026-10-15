@@ -8,6 +8,8 @@ export type Tip = {
   titulo: string
   descripcion: string
   categoria: string
+  /** Slug de la nota del blog que desarrolla el tema completo. Vacío si no hay. */
+  notaPilar?: string
   fecha: string
   actualizado: string
   minutos: number

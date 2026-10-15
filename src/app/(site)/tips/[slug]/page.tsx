@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { buildMetadata } from '@/lib/metadata'
 import { CATEGORIAS_TIPS, obtenerTip, obtenerTips } from '@/lib/tips'
-import { formatearFecha } from '@/lib/blog'
+import { formatearFecha, obtenerNota } from '@/lib/blog'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { Eyebrow } from '@/components/ui/Eyebrow'
@@ -42,6 +42,7 @@ export default async function TipPage({ params }: Props) {
   if (!tip) notFound()
 
   const categoria = CATEGORIAS_TIPS.find((c) => c.nombre === tip.categoria)
+  const notaPilar = tip.notaPilar ? obtenerNota(tip.notaPilar) : undefined
   const relacionados = obtenerTips()
     .filter((t) => t.slug !== tip.slug)
     .sort((a, b) => Number(b.categoria === tip.categoria) - Number(a.categoria === tip.categoria))
@@ -124,11 +125,25 @@ export default async function TipPage({ params }: Props) {
         />
       </FadeIn>
 
+      {notaPilar ? (
+        <FadeIn>
+          <Link
+            href={`/blog/${notaPilar.slug}`}
+            className="glass glass-lift mt-12 block max-w-3xl rounded-[24px] p-5 md:p-6"
+          >
+            <span className="block text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+              Guía completa
+            </span>
+            <span className="mt-2 block text-lg font-bold text-white">{notaPilar.titulo}</span>
+          </Link>
+        </FadeIn>
+      ) : null}
+
       {categoria ? (
         <FadeIn>
           <Link
             href={categoria.areaHref}
-            className="glass glass-lift mt-12 block max-w-3xl rounded-[24px] p-5 md:p-6"
+            className={`glass glass-lift ${notaPilar ? 'mt-4' : 'mt-12'} block max-w-3xl rounded-[24px] p-5 md:p-6`}
           >
             <span className="block text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
               Área relacionada

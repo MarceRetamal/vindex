@@ -4,6 +4,7 @@ descripcion: "Si te bloquean o no te dejan ver a tus hijos: cómo dejar registro
 categoria: "Familia"
 fecha: "2026-10-07"
 actualizado: "2026-10-07"
+nota_pilar: "no-me-dejan-ver-a-mis-hijos-impedimento-contacto"
 borrador: "no"
 resumen:
   - Dejá registro de cada intento de contacto, con fecha.

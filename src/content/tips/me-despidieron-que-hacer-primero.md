@@ -4,6 +4,7 @@ descripcion: "Si te despidieron, estos pasos ayudan a proteger tu reclamo: guard
 categoria: "Laboral"
 fecha: "2026-10-07"
 actualizado: "2026-10-07"
+nota_pilar: "despido-sin-causa-como-se-calcula-indemnizacion"
 borrador: "no"
 resumen:
   - No firmes renuncias ni acuerdos sin asesoramiento.
