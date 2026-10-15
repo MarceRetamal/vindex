@@ -26,6 +26,15 @@ const HOSTS_PRODUCCION = new Set(['vindexlegal.com.ar', 'www.vindexlegal.com.ar'
 
 export function middleware(request: NextRequest) {
   const host = (request.headers.get('host') ?? request.nextUrl.hostname).split(':')[0].toLowerCase()
+  // Las URLs de vista previa de Cloudflare (*.workers.dev) son públicas y
+  // muestran una copia exacta del sitio: se les pide a los buscadores que no
+  // las indexen, para que solo cuente vindexlegal.com.ar.
+  if (host.endsWith('.workers.dev')) {
+    const respuesta = NextResponse.next()
+    respuesta.headers.set('X-Robots-Tag', 'noindex, nofollow')
+    return respuesta
+  }
+
   if (!HOSTS_PRODUCCION.has(host)) return NextResponse.next()
 
   const protocolo =
