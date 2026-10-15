@@ -5,7 +5,7 @@ descripcion: "Estado de los reclamos contra ANDIS: qué pasó con el amparo cole
 copete: "Entre auditorías, suspensiones masivas y una ley de emergencia, miles de personas quedaron sin cobrar. El mapa judicial cambió varias veces en pocos meses. Esto es lo que está pasando de verdad, y el camino que sigue abierto."
 materia: "Discapacidad"
 fecha: "2026-07-31"
-actualizado: "2026-07-31"
+actualizado: "2026-10-15"
 resumen:
   - El amparo colectivo que ordenaba restituir las pensiones a nivel nacional fue revocado y espera revisión de la Corte Suprema.
   - Mientras tanto, los amparos individuales siguen ganando en distintos juzgados federales del país.
@@ -20,6 +20,8 @@ Un mes la pensión estaba depositada como siempre. Al siguiente, no. Sin carta, 
 
 El origen está en las auditorías dispuestas por el decreto 843/2024 sobre las pensiones no contributivas por invalidez. En su aplicación, una enorme cantidad de prestaciones fueron suspendidas o dadas de baja, muchas veces por citaciones que nunca llegaron a destino o por criterios de revisión que endurecieron los requisitos. En paralelo, las solicitudes nuevas quedaron durmiendo en cajones administrativos durante meses o años. La respuesta llegó por dos vías: la política, con la sanción de la ley 27.793 de Emergencia Nacional en Discapacidad, reglamentada en 2026 tras una intimación judicial; y la judicial, con una ola de amparos en todo el país.
 
+Un dato institucional posterior que conviene tener presente: el [Decreto de Necesidad y Urgencia 942/2025](https://www.argentina.gob.ar/normativa/nacional/norma-422010/texto), publicado en el Boletín Oficial el 2 de enero de 2026, puso fin a ANDIS como organismo propio. Sus funciones, incluido el otorgamiento, control, revisión y auditoría de las pensiones por invalidez, pasaron al Ministerio de Salud, que según el propio decreto actúa a todos sus efectos como continuador de la Agencia. Donde este artículo menciona a ANDIS, hoy quien responde es ese ministerio.
+
 ## Qué pasó con el famoso amparo colectivo
 
 Quizás escuchó las dos noticias, que parecen contradictorias. Las dos son ciertas. A fines de 2025, la justicia federal de Catamarca, en un amparo colectivo iniciado por el Defensor del Pueblo de esa provincia junto a organizaciones de la sociedad civil, ordenó a ANDIS restituir las pensiones suspendidas con alcance para todo el país; el organismo llegó a dictar la resolución 13901/2025 restableciendo los pagos en cumplimiento de la medida cautelar, y en noviembre la sentencia de fondo reconoció el derecho de todo el colectivo, calificando las suspensiones masivas como una vía de hecho de la administración. Pero en febrero de 2026 la Cámara Federal de Tucumán revocó esa sentencia, entendiendo que la ley de emergencia y su reglamentación habían cambiado el marco normativo. Las organizaciones anunciaron que llevarán la discusión a la Corte Suprema, de modo que la palabra final todavía no está dicha.
@@ -30,7 +32,7 @@ La traducción práctica de todo esto es lo que importa: la vía colectiva qued�
 
 Mientras el expediente colectivo sube y baja por las instancias, los juzgados federales del país siguen resolviendo casos concretos, con nombre y apellido, y los vienen resolviendo a favor de las personas con discapacidad. En abril de 2026, la Cámara Federal de Resistencia confirmó un embargo contra ANDIS por no restituir las pensiones de dos hermanas cuya situación se había vuelto desesperante tras la baja del beneficio. En mayo, la justicia federal de Entre Ríos ordenó devolver una pensión en un fallo que los propios abogados de la zona señalaron como puerta de entrada para miles de casos similares. La lógica de fondo se repite en estas sentencias: una prestación de la seguridad social otorgada no puede suprimirse sin un procedimiento serio, con notificación real y derecho a defenderse, y las personas con discapacidad gozan de una protección constitucional reforzada que el Estado no puede esquivar con argumentos de gestión.
 
-Hay además una segunda situación, distinta de la suspensión, que tiene su propia herramienta: la del que pidió la pensión, cumple los requisitos, y el expediente lleva una eternidad sin respuesta. Para eso existe el amparo por mora, un mecanismo pensado precisamente para que un juez le ordene a la administración resolver de una vez, en un plazo concreto. No le garantiza que la respuesta sea favorable, pero termina con el limbo del silencio, que es muchas veces la peor de las respuestas.
+Hay además una segunda situación, distinta de la suspensión, que tiene su propia herramienta: la del que pidió la pensión, cumple los requisitos, y el expediente lleva una eternidad sin respuesta. Para eso existe el amparo por mora, un mecanismo pensado precisamente para que un juez le ordene a la administración resolver de una vez, en un plazo concreto. No le garantiza que la respuesta sea favorable, pero termina con el limbo del silencio, que es muchas veces la peor de las respuestas. Explicamos cómo funciona, y qué plazos vienen fijando los jueces, en la guía sobre el [amparo por mora contra ANDIS](/blog/amparo-por-mora-andis-pension-no-contributiva).
 
 ## Qué conviene hacer, concretamente
 
