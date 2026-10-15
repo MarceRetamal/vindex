@@ -110,6 +110,20 @@ resumen:      tres frases cortas con lo más importante de la nota. Aparecen
               de un fallo o una norma, en un recuadro distinto al del texto
               normal.
 
+faq:          (opcional) preguntas frecuentes para Google y los buscadores con
+              IA. Va en el bloque de datos de arriba, debajo de resumen, así:
+
+              faq:
+                - pregunta: "¿Cuánto tarda un divorcio sin acuerdo?"
+                  respuesta: "Respuesta breve y completa, en una sola línea."
+                - pregunta: "¿Otra pregunta?"
+                  respuesta: "Su respuesta."
+
+              Cada respuesta va en una sola línea. Las mismas preguntas y
+              respuestas tienen que aparecer también en el texto de la nota
+              (por ejemplo, en una sección "## Preguntas frecuentes"): Google
+              exige que lo marcado sea visible para el lector.
+
 Los subtítulos (##) salen numerados solos, y arriba de la nota aparece
 automáticamente un índice con los subtítulos que hayas puesto — no hace
 falta escribir ninguno de los dos a mano.

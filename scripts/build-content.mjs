@@ -37,11 +37,12 @@ const EXTENSIONES_PORTADA = ['webp', 'avif', 'jpg', 'jpeg', 'png', 'svg']
 function parseFrontmatter(fileContent) {
   const normalized = fileContent.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n')
   const match = normalized.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
-  if (!match) return { datos: {}, resumen: [], cuerpo: normalized.trim() }
+  if (!match) return { datos: {}, resumen: [], faq: [], cuerpo: normalized.trim() }
 
   const lines = match[1].split('\n')
   const datos = {}
   const resumen = []
+  const faq = []
   let i = 0
 
   while (i < lines.length) {
@@ -56,18 +57,43 @@ function parseFrontmatter(fileContent) {
       }
       continue
     }
+    // Preguntas frecuentes (opcional). Formato en el frontmatter:
+    //   faq:
+    //     - pregunta: "¿...?"
+    //       respuesta: "..."
+    if (/^faq:\s*$/.test(line)) {
+      i += 1
+      while (i < lines.length) {
+        const inicio = lines[i].match(/^\s*-\s+pregunta\s*:\s*(.*)$/)
+        if (!inicio) break
+        const item = { pregunta: quitarComillas(inicio[1]), respuesta: '' }
+        i += 1
+        const resp = lines[i] && lines[i].match(/^\s+respuesta\s*:\s*(.*)$/)
+        if (resp) {
+          item.respuesta = quitarComillas(resp[1])
+          i += 1
+        }
+        if (item.pregunta && item.respuesta) faq.push(item)
+        else console.warn(`[build-content] Pregunta frecuente incompleta (falta pregunta o respuesta): "${item.pregunta}"`)
+      }
+      continue
+    }
     const pair = line.match(/^([a-zA-ZáéíóúñÁÉÍÓÚÑ_]+)\s*:\s*(.*)$/)
     if (pair) {
-      let value = pair[2].trim()
-      if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
-        value = value.slice(1, -1)
-      }
-      datos[pair[1].trim().toLowerCase()] = value
+      datos[pair[1].trim().toLowerCase()] = quitarComillas(pair[2])
     }
     i += 1
   }
 
-  return { datos, resumen, cuerpo: match[2].trim() }
+  return { datos, resumen, faq, cuerpo: match[2].trim() }
+}
+
+function quitarComillas(texto) {
+  const value = texto.trim()
+  if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+    return value.slice(1, -1)
+  }
+  return value
 }
 
 function buscarPortada(slug) {
@@ -90,7 +116,7 @@ function leerCarpeta(dir, etiqueta) {
   for (const fileName of archivos) {
     const slug = fileName.replace(/\.md$/, '')
     const fileContent = fs.readFileSync(path.join(dir, fileName), 'utf8')
-    const { datos, resumen, cuerpo } = parseFrontmatter(fileContent)
+    const { datos, resumen, faq, cuerpo } = parseFrontmatter(fileContent)
 
     if (!datos.titulo || !cuerpo) {
       console.warn(`[build-content] Se omite ${fileName}: falta título o cuerpo.`)
@@ -103,7 +129,7 @@ function leerCarpeta(dir, etiqueta) {
     const fecha = datos.fecha || new Date().toISOString().slice(0, 10)
     const { html, headings } = renderArticle(cuerpo)
 
-    items.push({ slug, datos, resumen, cuerpo, fecha, html, headings })
+    items.push({ slug, datos, resumen, faq, cuerpo, fecha, html, headings })
   }
 
   items.sort((a, b) => {
@@ -116,7 +142,7 @@ function leerCarpeta(dir, etiqueta) {
 
 function generar() {
   // ---- BLOG ----
-  const notas = leerCarpeta(BLOG_DIR, 'notas').map(({ slug, datos, resumen, cuerpo, fecha, html, headings }) => ({
+  const notas = leerCarpeta(BLOG_DIR, 'notas').map(({ slug, datos, resumen, faq, cuerpo, fecha, html, headings }) => ({
     slug,
     titulo: datos.titulo,
     tituloSeo: datos.titulo_seo || '',
@@ -128,6 +154,7 @@ function generar() {
     minutos: Math.max(1, Math.round(countWords(cuerpo) / 170)),
     imagen: buscarPortada(slug),
     resumen,
+    faq,
     html,
     headings,
   }))

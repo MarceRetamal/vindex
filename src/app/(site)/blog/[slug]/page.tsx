@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { buildMetadata } from '@/lib/metadata'
 import { obtenerNota, obtenerNotas } from '@/lib/blog'
 import { ArticleShell } from '@/components/blog/ArticleShell'
+import { FaqSchema } from '@/components/blog/FaqSchema'
 
 export const dynamic = 'force-static'
 export const dynamicParams = false
@@ -35,5 +36,10 @@ export default async function NotaPage({ params }: Props) {
 
   if (!nota) notFound()
 
-  return <ArticleShell nota={nota} />
+  return (
+    <>
+      <FaqSchema faq={nota.faq} url={`https://vindexlegal.com.ar/blog/${nota.slug}`} />
+      <ArticleShell nota={nota} />
+    </>
+  )
 }
