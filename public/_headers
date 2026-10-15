@@ -16,3 +16,7 @@
 
 /icon.svg
   Cache-Control: public, max-age=86400
+
+# Vistas previas de Cloudflare: que los buscadores no indexen la copia del sitio.
+https://:sub.:account.workers.dev/*
+  X-Robots-Tag: noindex, nofollow
