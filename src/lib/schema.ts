@@ -47,8 +47,9 @@ export const legalServiceSchema = {
   // entidad (y no otra con nombre parecido). Agregar solo URLs reales y
   // públicas, con los mismos datos de nombre, dirección y teléfono que acá.
   sameAs: [
+    'https://www.instagram.com/vindexlegal.ar/',
+    'https://www.facebook.com/vindexleg',
+    'https://www.linkedin.com/in/vindex-legal',
     // TODO: add once GBP/social profiles are live — Google Business Profile
-    // TODO: add once GBP/social profiles are live — LinkedIn
-    // TODO: add once GBP/social profiles are live — Instagram
   ] as string[],
 }
