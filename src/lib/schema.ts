@@ -42,4 +42,13 @@ export const legalServiceSchema = {
     'Derecho Penal',
     'Sucesiones',
   ],
+  // Perfiles oficiales del estudio fuera de este sitio. Le confirman a Google
+  // y a los modelos de IA que "VINDEX LEGAL — Marcelo F. Retamal" es una sola
+  // entidad (y no otra con nombre parecido). Agregar solo URLs reales y
+  // públicas, con los mismos datos de nombre, dirección y teléfono que acá.
+  sameAs: [
+    // TODO: add once GBP/social profiles are live — Google Business Profile
+    // TODO: add once GBP/social profiles are live — LinkedIn
+    // TODO: add once GBP/social profiles are live — Instagram
+  ] as string[],
 }

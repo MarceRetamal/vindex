@@ -13,6 +13,9 @@ import notasGeneradas from '@/content/blog.generated.json'
 
 export type Heading = { id: string; texto: string }
 
+/** Par pregunta/respuesta del campo opcional `faq:` del frontmatter. */
+export type PreguntaFrecuente = { pregunta: string; respuesta: string }
+
 export type Nota = {
   slug: string
   titulo: string
@@ -26,6 +29,8 @@ export type Nota = {
   /** Ruta pública de la portada (ej.: /covers/mi-nota.svg). Vacío si no hay. */
   imagen?: string
   resumen: string[]
+  /** Preguntas frecuentes para el JSON-LD FAQPage. Vacío si la nota no trae `faq:`. */
+  faq?: PreguntaFrecuente[]
 }
 
 export type NotaCompleta = Nota & { html: string; headings: Heading[] }
