@@ -4,6 +4,7 @@ descripcion: "Si trabajás sin registrar o mal registrado, estas son las pruebas
 categoria: "Laboral"
 fecha: "2026-10-07"
 actualizado: "2026-10-07"
+nota_pilar: "despido-sin-causa-como-se-calcula-indemnizacion"
 borrador: "no"
 resumen:
   - La relación laboral se puede probar aunque no haya recibos.

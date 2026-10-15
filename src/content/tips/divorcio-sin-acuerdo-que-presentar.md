@@ -4,6 +4,7 @@ descripcion: "El divorcio puede pedirlo uno solo, sin alegar causa. Qué hay que
 categoria: "Familia"
 fecha: "2026-10-07"
 actualizado: "2026-10-07"
+nota_pilar: "divorcio-sin-acuerdo-como-funciona-argentina"
 borrador: "no"
 resumen:
   - Alcanza con que lo pida uno solo; no hace falta acuerdo ni explicar motivos.

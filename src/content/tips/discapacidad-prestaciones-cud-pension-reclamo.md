@@ -4,6 +4,7 @@ descripcion: "Qué reunir y qué reclamar cuando te niegan o demoran prestacione
 categoria: "Amparos"
 fecha: "2026-10-07"
 actualizado: "2026-10-07"
+nota_pilar: "pension-discapacidad-andis-suspendida-amparo"
 borrador: "no"
 resumen:
   - Juntá el CUD, los informes médicos y el número y la fecha de cada trámite.
