@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
+import { SocialLinks } from '@/components/ui/SocialLinks'
 import { AREAS } from '@/data/areas'
 import { whatsappUrl } from '@/data/site'
 
@@ -52,6 +53,8 @@ export function Footer() {
                 </p>
               ) : null}
             </address>
+
+            <SocialLinks className="pt-1" />
           </div>
 
           <div className="space-y-3 md:space-y-4">

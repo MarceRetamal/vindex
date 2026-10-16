@@ -2,11 +2,6 @@
 
 import { useEffect, useRef } from 'react'
 
-const chips = [
-  { label: 'Análisis técnico', cls: 'left-[-2%] top-[4%]', d: '1.6s', fd: '0s' },
-  { label: 'Diseño estratégico', cls: 'right-[-4%] top-[50%]', d: '1.8s', fd: '-2s' },
-  { label: 'Intervención procesal', cls: 'left-[2%] bottom-[0%]', d: '2s', fd: '-4s' },
-]
 
 
 /* Geometría del logo VINDEX (trazado sobre el arte original, viewBox 60 50 380 300). */
@@ -71,19 +66,12 @@ export function HeroStage() {
       style={{ ['--rx' as string]: '0deg', ['--ry' as string]: '0deg', ['--gx' as string]: '0px', ['--gy' as string]: '0px' }}
       aria-hidden="true"
     >
-      {/* Luz cálida y fría detrás del disco */}
+      {/* Luz cálida detrás del disco */}
       <div
         className="absolute left-1/2 top-1/2 h-[78%] w-[78%] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           background: 'radial-gradient(circle at 45% 40%, rgba(229,193,88,0.55), rgba(212,175,55,0.16) 42%, transparent 70%)',
           transform: 'translate3d(calc(var(--gx) * -0.8), calc(var(--gy) * -0.8), 0)',
-        }}
-      />
-      <div
-        className="absolute bottom-[4%] right-[6%] h-[38%] w-[38%] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(140,160,230,0.55), transparent 68%)',
-          transform: 'translate3d(calc(var(--gx) * 1.2), calc(var(--gy) * 1), 0)',
         }}
       />
 
@@ -213,17 +201,6 @@ export function HeroStage() {
           </div>
         </div>
 
-        {/* Etiquetas flotantes */}
-        {chips.map((c) => (
-          <div key={c.label} className={`anim-glass-in absolute ${c.cls}`} style={{ ['--d' as string]: c.d, transform: 'translateZ(110px)' }}>
-            <div className="float-y" style={{ ['--fd' as string]: c.fd }}>
-              <span data-glass className="glass glass-chip text-white">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-bright)] shadow-[0_0_10px_var(--accent)]" />
-                {c.label}
-              </span>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   )
