@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
-import { PageCta } from '@/components/ui/PageCta'
+import Link from 'next/link'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
 
@@ -71,9 +71,9 @@ export default function CriterioPage() {
               <h3 className="text-2xl font-bold text-white tracking-tight mb-2">Un primer escrito improvisado no se corrige después.</h3>
               <p className="text-[var(--text-secondary)] m-0">Se decide antes de escribir, no durante.</p>
             </div>
-            <a href="/evaluacion" className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] text-[var(--bg-deep)] px-8 py-3.5 font-bold transition-all hover:bg-[var(--accent-bright)] hover:scale-[1.02]">
+            <Link href="/evaluacion" className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] text-[var(--bg-deep)] px-8 py-3.5 font-bold transition-all hover:bg-[var(--accent-bright)] hover:scale-[1.02]">
                 Solicitar Evaluación del Caso
-            </a>
+            </Link>
          </div>
       </div>
     </PageShell>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { buildMetadata } from '@/lib/metadata'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
@@ -137,9 +138,9 @@ export default function PenalUrgentePage() {
       <FadeIn>
         <p className="mt-10 text-[15px] leading-relaxed text-[var(--text-secondary)]">
           Guía relacionada:{' '}
-          <a href="/blog/citacion-penal-provincia-buenos-aires-que-hacer" className="font-medium text-[var(--accent)] underline-offset-4 hover:underline">
+          <Link href="/blog/citacion-penal-provincia-buenos-aires-que-hacer" className="font-medium text-[var(--accent)] underline-offset-4 hover:underline">
             Citación penal en la Provincia de Buenos Aires: qué hacer en las primeras 48 horas →
-          </a>
+          </Link>
         </p>
       </FadeIn>
 
