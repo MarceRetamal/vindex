@@ -8,6 +8,7 @@ Sitio Next.js 16 (App Router) que se publica como un Cloudflare Worker mediante 
 
 | Pieza | Runtime | Qué hace |
 |---|---|---|
+| `worker.ts` | Worker | Entrada del Worker: delega en OpenNext y corre la tarea programada (cada 10 min) que reenvía consultas pendientes. |
 | `src/middleware.ts` | Edge | Redirige http → https en el dominio de producción y marca `noindex` las vistas previas `*.workers.dev`. |
 | `src/app/api/intake/route.ts` | Node.js (`nodejs_compat`) | Recibe el formulario de consulta. |
 | Páginas | Estáticas (SSG) | Se sirven desde el caché de assets (`staticAssetsIncrementalCache`). |
@@ -36,7 +37,8 @@ EvaluationForm (navegador) ── zod + Turnstile ──► POST /api/intake
    1. honeypot `website` → responde ok sin procesar
    2. verifica Turnstile (Cloudflare)          ── falla → 400
    3. valida con zod                           ── falla → 400
-   4. correo al estudio (SMTP)                 ── falla → 500 (la consulta NO queda guardada)
+   4. correo al estudio (SMTP)                 ── falla → se guarda en KV y se reintenta cada 10 min
+                                                  (si tampoco se puede guardar → 500)
    5. correo de cortesía a quien consulta      ── falla → se registra y sigue
    6. 3 plantillas de WhatsApp (Meta Graph)    ── falla → se registra y sigue
    7. { ok: true }
@@ -64,7 +66,7 @@ Ordenadas por impacto en el negocio.
    - En los dos casos el mensaje no llega y el error solo queda en el registro del Worker.
    - Corregirlo cambia a quién le llega el mensaje, así que queda para una decisión aparte.
 2. **Versión de la API de Meta** (`v18.0`, fija en el código). Meta retira las versiones viejas de la Graph API. Hay que verificar en el panel de Meta que siga activa y planificar la actualización.
-3. **La consulta no se guarda en ningún lado.** Si el SMTP falla, la persona ve un error y la consulta se pierde. No hay cola ni almacenamiento de respaldo.
+3. ~~**La consulta no se guarda en ningún lado.**~~ Resuelto el 16/10/2026. Si el SMTP falla, la consulta se guarda en Cloudflare KV (`CONSULTAS_PENDIENTES`, `src/lib/intake/pendientes.ts`) y la tarea programada de `worker.ts` la reenvía cada 10 minutos con el asunto "[REENVÍO — recibida el …]". Se borra al entregarse y, como máximo, a los 30 días. Las consultas pendientes se pueden ver en el panel de Cloudflare → Storage & Databases → KV → `vindex-consultas-pendientes`.
 4. **Latencia del envío.** La persona espera, en serie, la verificación de Turnstile, 1 o 2 correos y 3 llamadas a Meta antes de ver "Consulta recibida". Las tareas secundarias (cortesía y WhatsApp) podrían ir en segundo plano con `ctx.waitUntil` del Worker. Eso cambia la secuencia y queda para una decisión aparte.
 5. **Validación del navegador más laxa que la del servidor.**
    - El formulario no limita el largo del nombre (120), el teléfono (30) ni el email (200).

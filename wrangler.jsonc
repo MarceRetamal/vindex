@@ -1,6 +1,7 @@
 {
   "name": "vindex",
-  "main": ".open-next/worker.js",
+  // worker.ts envuelve el Worker de OpenNext y le suma la tarea programada.
+  "main": "worker.ts",
   "compatibility_date": "2026-06-03",
   "compatibility_flags": [
     "nodejs_compat"
@@ -8,6 +9,17 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
+  },
+  // Respaldo de consultas cuyo correo al estudio falló (src/lib/intake/pendientes.ts).
+  "kv_namespaces": [
+    {
+      "binding": "CONSULTAS_PENDIENTES",
+      "id": "cc418479f0db4440aa52804cf13cacaf"
+    }
+  ],
+  // Reintento de esas consultas cada 10 minutos (UTC).
+  "triggers": {
+    "crons": ["*/10 * * * *"]
   },
   "observability": {
     "enabled": true,

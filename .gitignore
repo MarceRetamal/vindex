@@ -49,3 +49,6 @@ next-env.d.ts
 
 # Cloudflare local vars (secrets)
 .dev.vars*
+
+# estado local de wrangler dev (KV simulado, etc.)
+/.wrangler/
