@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { navigation } from '@/data/navigation'
 import { siteConfig } from '@/data/site'
 import { Button } from '@/components/ui/Button'
+import { SocialLinks } from '@/components/ui/SocialLinks'
 import { cn } from '@/lib/utils'
 
 type MobileMenuProps = {
@@ -52,7 +53,9 @@ export function MobileMenu({ isOpen, pathname, onClose }: MobileMenuProps) {
           <Button href={siteConfig.cta.href}>{siteConfig.cta.label}</Button>
         </div>
 
-        <p className="mt-auto text-center text-[10px] font-bold uppercase tracking-[0.35em] text-[var(--text-muted)]">
+        <SocialLinks className="mt-auto justify-center pb-5" tabIndex={isOpen ? 0 : -1} />
+
+        <p className="text-center text-[10px] font-bold uppercase tracking-[0.35em] text-[var(--text-muted)]">
           VINDEX LEGAL · La Plata
         </p>
       </div>

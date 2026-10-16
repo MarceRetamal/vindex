@@ -1,17 +1,6 @@
-import Link from 'next/link'
 import { HeroStage } from '@/components/sections/home/HeroStage'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
-
-const shortcuts = [
-  { href: '/derecho-de-familia', label: 'Familia' },
-  { href: '/accidentes-de-transito', label: 'Accidente de tránsito' },
-  { href: '/derecho-laboral', label: 'Despido o laboral' },
-  { href: '/accidentes-laborales-art', label: 'Accidente de trabajo (ART)' },
-  { href: '/amparos-salud-discapacidad', label: 'Salud, discapacidad o IOMA' },
-  { href: '/penal-urgente', label: 'Denuncia penal' },
-  { href: '/sucesiones', label: 'Sucesión' },
-]
 
 export function Hero() {
   return (
@@ -48,18 +37,10 @@ export function Hero() {
               <Button href="/tips" variant="secondary">Ver tips jurídicos</Button>
             </div>
 
-            <div className="anim-rise pt-2" style={{ ['--d' as string]: '1s' }}>
-              <p className="mb-2.5 text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
-                ¿Cuál es tu situación?
-              </p>
-              <div className="flex flex-wrap gap-2.5">
-                {shortcuts.map((s) => (
-                  <Link key={s.href} href={s.href} data-glass className="glass glass-chip">
-                    {s.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            <p className="anim-rise text-[13px] leading-6 text-[var(--text-muted)]" style={{ ['--d' as string]: '1s' }}>
+              Dr. Marcelo F. Retamal · Abogado (UNLP) ·{' '}
+              <span className="whitespace-nowrap">Matrícula CALP T° LXVI F° 263</span>
+            </p>
           </div>
 
           <HeroStage />

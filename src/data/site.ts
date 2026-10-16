@@ -15,3 +15,12 @@ export function whatsappUrl(texto = 'Hola, quiero consultar por un caso.'): stri
   if (!siteConfig.whatsapp) return ''
   return `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(texto)}`
 }
+
+// Perfiles oficiales del estudio. Se muestran como íconos en el pie de página
+// y en el menú móvil. Mantener alineado con `sameAs` en src/lib/schema.ts.
+export const redesSociales = [
+  { red: 'instagram', nombre: 'Instagram', href: 'https://www.instagram.com/vindexlegal.ar/' },
+  { red: 'facebook', nombre: 'Facebook', href: 'https://www.facebook.com/vindexleg' },
+  { red: 'linkedin', nombre: 'LinkedIn', href: 'https://www.linkedin.com/in/vindex-legal' },
+  { red: 'google', nombre: 'Google Maps', href: 'https://maps.google.com/?cid=11063836089595176365' },
+] as const
