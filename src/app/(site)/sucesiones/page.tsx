@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { buildMetadata } from '@/lib/metadata'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerFadeIn } from '@/components/motion/StaggerFadeIn'
@@ -122,9 +123,9 @@ export default function SucesionesPage() {
       <FadeIn>
         <p className="mt-10 text-[15px] leading-relaxed text-[var(--text-secondary)]">
           Guía relacionada:{' '}
-          <a href="/blog/cuanto-cuesta-tarda-sucesion-provincia-buenos-aires" className="font-medium text-[var(--accent)] underline-offset-4 hover:underline">
+          <Link href="/blog/cuanto-cuesta-tarda-sucesion-provincia-buenos-aires" className="font-medium text-[var(--accent)] underline-offset-4 hover:underline">
             Cuánto cuesta y cuánto tarda una sucesión en la Provincia de Buenos Aires →
-          </a>
+          </Link>
         </p>
       </FadeIn>
 
