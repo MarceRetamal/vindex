@@ -13,6 +13,7 @@ import { LinkList } from '@/components/ui/LinkList'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { articleSchema } from '@/lib/schema'
 import { SITE_URL } from '@/data/site'
+import { Overline } from '@/components/ui/Overline'
 
 export const dynamic = 'force-static'
 export const dynamicParams = false
@@ -119,9 +120,9 @@ export default async function TipPage({ params }: Props) {
             href={`/blog/${notaPilar.slug}`}
             className="glass glass-lift mt-12 block max-w-3xl rounded-[24px] p-5 md:p-6"
           >
-            <span className="block text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+            <Overline as="span" className="block">
               Guía completa
-            </span>
+            </Overline>
             <span className="mt-2 block text-lg font-bold text-white">{notaPilar.titulo}</span>
           </Link>
         </FadeIn>
@@ -133,9 +134,9 @@ export default async function TipPage({ params }: Props) {
             href={categoria.areaHref}
             className={`glass glass-lift ${notaPilar ? 'mt-4' : 'mt-12'} block max-w-3xl rounded-[24px] p-5 md:p-6`}
           >
-            <span className="block text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+            <Overline as="span" className="block">
               Área relacionada
-            </span>
+            </Overline>
             <span className="mt-2 block text-lg font-bold text-white">Ver cómo trabajamos en {tip.categoria}</span>
           </Link>
         </FadeIn>
@@ -144,7 +145,7 @@ export default async function TipPage({ params }: Props) {
       {relacionados.length > 0 ? (
         <FadeIn>
           <aside className="mt-10 max-w-3xl" aria-label="Más tips">
-            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">Seguir leyendo</p>
+            <Overline>Seguir leyendo</Overline>
             <LinkList className="mt-3 space-y-2" items={relacionados.map((t) => ({ href: `/tips/${t.slug}`, texto: t.titulo }))} />
           </aside>
         </FadeIn>

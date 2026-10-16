@@ -4,6 +4,7 @@ import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { SocialLinks } from '@/components/ui/SocialLinks'
 import { AREAS } from '@/data/areas'
 import { contacto, whatsappUrl } from '@/data/site'
+import { Overline } from '@/components/ui/Overline'
 
 const linkClass = 'transition-colors hover:text-white'
 
@@ -11,7 +12,7 @@ export function Footer() {
   const wa = whatsappUrl()
 
   return (
-    <footer className="relative z-10 px-3 pb-3 pt-10 md:px-6 md:pb-6">
+    <footer data-fondo className="relative z-10 px-3 pb-3 pt-10 md:px-6 md:pb-6">
       <div data-glass className="glass mx-auto max-w-[1200px] rounded-[32px] md:rounded-[40px]">
       <Container className="py-10 md:py-16">
         <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:gap-10">
@@ -58,9 +59,9 @@ export function Footer() {
           </div>
 
           <div className="space-y-3 md:space-y-4">
-            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)] md:text-xs">
+            <Overline className="md:text-xs">
               Áreas
-            </p>
+            </Overline>
 
             <nav className="flex flex-col gap-2.5 text-[15px] text-[var(--text-secondary)] md:gap-3 md:text-sm" aria-label="Áreas">
               {AREAS.map((a) => (
@@ -78,9 +79,9 @@ export function Footer() {
           </div>
 
           <div className="space-y-3 md:space-y-4">
-            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)] md:text-xs">
+            <Overline className="md:text-xs">
               El estudio
-            </p>
+            </Overline>
 
             <nav className="flex flex-col gap-2.5 text-[15px] text-[var(--text-secondary)] md:gap-3 md:text-sm" aria-label="Estudio">
               <Link href="/tips" className={linkClass}>

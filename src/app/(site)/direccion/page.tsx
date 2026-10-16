@@ -4,6 +4,7 @@ import { FadeIn } from '@/components/motion/FadeIn'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Marcelo F. Retamal, abogado en La Plata',
@@ -60,9 +61,9 @@ export default function DireccionPage() {
         </FadeIn>
 
         <div className="mt-14">
-          <h3 className="mb-5 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+          <SectionTitle className="mb-5">
             Dónde estamos
-          </h3>
+          </SectionTitle>
           <FadeIn delay={0.05}>
             <div data-glass className="glass overflow-hidden rounded-[28px]">
               <iframe
@@ -85,9 +86,9 @@ export default function DireccionPage() {
         </div>
 
         <div className="mt-14">
-          <h3 className="mb-5 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+          <SectionTitle className="mb-5">
             Áreas de actuación
-          </h3>
+          </SectionTitle>
           <FadeIn delay={0.1}>
             <div className="flex flex-wrap gap-2">
               {areasOfPractice.map((area) => (

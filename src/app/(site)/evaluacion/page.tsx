@@ -7,6 +7,7 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { Card } from '@/components/ui/Card'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Contanos tu caso | Consulta jurídica en La Plata',
@@ -47,12 +48,12 @@ export default function EvaluacionPage() {
       <div className="mt-16 md:mt-24 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] items-start">
         <StaggerFadeIn>
           <div className="grid gap-6">
-            <h3 className="text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-2">
+            <SectionTitle className="mb-2">
               Cómo sigue
-            </h3>
+            </SectionTitle>
             {steps.map((step) => (
               <Card
-                as="h2"
+                as="h3"
                 key={step.title}
                 eyebrow={step.eyebrow}
                 title={step.title}

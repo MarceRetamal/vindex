@@ -14,9 +14,12 @@ import { PageCta } from '@/components/ui/PageCta'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
 import { LinkList } from '@/components/ui/LinkList'
+import { FaqList } from '@/components/ui/FaqList'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { faqSchema, serviceSchema } from '@/lib/schema'
 import { SITE_URL } from '@/data/site'
+import { Overline } from '@/components/ui/Overline'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 
 // Una página por área (familia, tránsito, laboral, ART, amparos). Los datos
 // salen de src/data/areas.ts. Cualquier otra dirección da 404.
@@ -53,10 +56,11 @@ export default async function AreaPage({ params }: Props) {
     .filter((n) => n.materia === data.materia)
     .slice(0, 3)
   const otrasAreas = AREAS.filter((a) => a.slug !== data.slug)
+  const preguntas = data.faqs.map((f) => ({ pregunta: f.q, respuesta: f.a }))
 
   return (
     <PageShell>
-      <JsonLd data={faqSchema(data.faqs.map((f) => ({ pregunta: f.q, respuesta: f.a })))} />
+      <JsonLd data={faqSchema(preguntas)} />
       <JsonLd
         data={serviceSchema({
           nombre: data.h1,
@@ -77,9 +81,9 @@ export default async function AreaPage({ params }: Props) {
       </FadeIn>
 
       <div className="mt-16 md:mt-24">
-        <h2 className="mb-6 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+        <SectionTitle className="mb-6">
           ¿Te pasó algo de esto?
-        </h2>
+        </SectionTitle>
         <StaggerFadeIn stagger={0.1}>
           <div className="grid gap-6 sm:grid-cols-2">
             {data.situaciones.map((s, i) => (
@@ -100,9 +104,9 @@ export default async function AreaPage({ params }: Props) {
       </FadeIn>
 
       <div className="mt-20 md:mt-28">
-        <h2 className="mb-6 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+        <SectionTitle className="mb-6">
           Qué hacer primero
-        </h2>
+        </SectionTitle>
         <StaggerFadeIn stagger={0.1}>
           <div className="grid gap-6 md:grid-cols-3">
             {data.pasos.map((p, i) => (
@@ -113,21 +117,11 @@ export default async function AreaPage({ params }: Props) {
       </div>
 
       <div className="mt-20 md:mt-28">
-        <h2 className="mb-6 text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+        <SectionTitle className="mb-6">
           Preguntas frecuentes
-        </h2>
+        </SectionTitle>
         <StaggerFadeIn stagger={0.08}>
-          <div className="grid gap-4">
-            {data.faqs.map((f) => (
-              <details key={f.q} className="glass group rounded-[24px] p-6">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-bold text-white">
-                  {f.q}
-                  <span className="text-[var(--accent)] transition-transform group-open:rotate-45">+</span>
-                </summary>
-                <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">{f.a}</p>
-              </details>
-            ))}
-          </div>
+          <FaqList items={preguntas} />
         </StaggerFadeIn>
       </div>
 
@@ -135,18 +129,18 @@ export default async function AreaPage({ params }: Props) {
         <div className="mt-20 grid gap-10 md:mt-28 md:grid-cols-2">
           {tips.length > 0 ? (
             <FadeIn>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+              <Overline>
                 Tips para tu caso
-              </p>
+              </Overline>
               <LinkList className="mt-4 space-y-3" items={tips.map((t) => ({ href: `/tips/${t.slug}`, texto: t.titulo }))} />
             </FadeIn>
           ) : null}
 
           {notas.length > 0 ? (
             <FadeIn delay={0.05}>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+              <Overline>
                 Guías para leer
-              </p>
+              </Overline>
               <LinkList
                 className="mt-4 space-y-3"
                 items={notas.map((n) => ({
@@ -162,7 +156,7 @@ export default async function AreaPage({ params }: Props) {
 
       <FadeIn>
         <div className="mt-16">
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">Otras áreas</p>
+          <Overline>Otras áreas</Overline>
           <div className="mt-4 flex flex-wrap gap-2.5">
             {otrasAreas.map((a) => (
               <Link key={a.slug} href={`/${a.slug}`} data-glass className="glass glass-chip">

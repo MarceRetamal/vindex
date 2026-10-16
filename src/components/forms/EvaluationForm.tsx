@@ -3,13 +3,15 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Script from 'next/script'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
 import { Textarea } from '@/components/ui/Textarea'
-import { Label } from '@/components/ui/Label'
+import { Field } from '@/components/ui/Field'
+import { Alert } from '@/components/ui/Alert'
+import { Button } from '@/components/ui/Button'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { AREA_LABELS, AREA_VALUES, LIMITES, URGENCIA_LABELS, URGENCIA_VALUES } from '@/data/intake'
 import { whatsappUrl } from '@/data/site'
@@ -32,9 +34,12 @@ declare global {
 // Formulario pensado para personas: pocos campos, lenguaje cotidiano.
 // El email es opcional (el contacto principal es el teléfono).
 const formSchema = z.object({
-  name: z.string().min(LIMITES.nombreMin, 'Escribí tu nombre.'),
-  phone: z.string().min(LIMITES.telefonoMin, 'Dejanos un teléfono para poder llamarte.'),
-  email: z.union([z.literal(''), z.string().email('El email no es válido.')]),
+  name: z.string().min(LIMITES.nombreMin, 'Escribí tu nombre.').max(LIMITES.nombreMax, 'Es demasiado largo.'),
+  phone: z
+    .string()
+    .min(LIMITES.telefonoMin, 'Dejanos un teléfono para poder llamarte.')
+    .max(LIMITES.telefonoMax, 'Es demasiado largo.'),
+  email: z.union([z.literal(''), z.string().email('El email no es válido.').max(LIMITES.emailMax, 'Es demasiado largo.')]),
   localidad: z.string().max(LIMITES.localidadMax, 'Es demasiado largo.').optional(),
   area: z.string().min(1, 'Elegí sobre qué es tu consulta.'),
   urgency: z.string().min(1, 'Elegí una opción.'),
@@ -50,12 +55,12 @@ type FormValues = z.infer<typeof formSchema>
 export function EvaluationForm() {
   const [isSuccess, setIsSuccess] = useState(false)
   const [serverError, setServerError] = useState('')
-  const [warnings, setWarnings] = useState<string[]>([])
   const [turnstileToken, setTurnstileToken] = useState('')
   const [turnstileReady, setTurnstileReady] = useState(false)
   const turnstileContainerRef = useRef<HTMLDivElement>(null)
   const turnstileWidgetId = useRef<string | null>(null)
   const formIniciado = useRef(false)
+  const exitoRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
     if (!turnstileReady || !turnstileContainerRef.current || !window.turnstile || turnstileWidgetId.current) {
@@ -81,12 +86,16 @@ export function EvaluationForm() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    // 🛠️ OPTIMIZACIÓN INP: validar únicamente al perder el foco del campo
+    // 🛠️ OPTIMIZACIÓN INP: la primera validación es al perder el foco del campo.
     mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    // Después de un intento de envío, el error se borra mientras se escribe.
+    // Con 'onBlur' el error recién desaparecía al hacer clic en "Enviar": el
+    // botón subía ~28 px a mitad del clic y el envío se perdía.
+    reValidateMode: 'onChange',
     defaultValues: {
       name: '',
       phone: '',
@@ -108,7 +117,6 @@ export function EvaluationForm() {
 
   async function onSubmit(data: FormValues) {
     setServerError('')
-    setWarnings([])
     setIsSuccess(false)
 
     if (!turnstileToken) {
@@ -123,17 +131,15 @@ export function EvaluationForm() {
         body: JSON.stringify({ ...data, turnstileToken }),
       })
 
-      const responseData = (await response.json()) as {
+      const responseData = (await response.json().catch(() => ({ ok: false }))) as {
         ok: boolean
         error?: string
-        warnings?: string[]
       }
 
       if (!response.ok || !responseData.ok) {
         throw new Error(responseData.error || 'No pudimos enviar tu consulta. Intentá de nuevo.')
       }
 
-      setWarnings(responseData.warnings ?? [])
       setIsSuccess(true)
       track('generate_lead', { form: 'evaluacion', area: data.area, urgencia: data.urgency })
       reset()
@@ -150,14 +156,29 @@ export function EvaluationForm() {
     }
   }, [serverError])
 
+  // Al pasar a la pantalla de éxito, el foco va al título para que el lector
+  // de pantalla la anuncie (el formulario que tenía el foco ya no existe).
+  useEffect(() => {
+    if (isSuccess) exitoRef.current?.focus()
+  }, [isSuccess])
+
+  const largoMensaje = useWatch({ control, name: 'message' })?.length ?? 0
+
   // 🎯 PANTALLA DE ÉXITO
   if (isSuccess) {
     const wa = whatsappUrl('Hola, acabo de enviar mi consulta desde la web.')
     return (
-      <div className="glass glass-strong rounded-[28px] p-8 md:rounded-[36px] md:p-16 min-h-[450px] flex flex-col justify-center items-center text-center relative overflow-hidden animate-fade-in">
+      <div
+        role="status"
+        className="glass glass-strong rounded-[28px] p-8 md:rounded-[36px] md:p-16 min-h-[450px] flex flex-col justify-center items-center text-center relative overflow-hidden animate-fade-in"
+      >
         <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent pointer-events-none" />
         <div className="max-w-xl space-y-6 relative z-10">
-          <h3 className="text-[22px] font-bold tracking-[0.15em] text-white uppercase sm:text-[26px]">
+          <h3
+            ref={exitoRef}
+            tabIndex={-1}
+            className="text-[22px] font-bold tracking-[0.15em] text-white uppercase focus:outline-none sm:text-[26px]"
+          >
             Consulta recibida.
           </h3>
           <p className="text-[14px] leading-relaxed text-zinc-400 font-light md:text-[15px] text-justify md:text-center">
@@ -191,86 +212,112 @@ export function EvaluationForm() {
         data-glass
         onSubmit={handleSubmit(onSubmit)}
         onFocusCapture={alEmpezar}
+        noValidate
+        aria-label="Formulario de consulta"
         className="glass glass-strong rounded-[28px] p-6 md:rounded-[36px] md:p-10 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
 
         <div className="grid gap-6 relative z-10">
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="name">Nombre y apellido *</Label>
-              <Input id="name" autoComplete="name" {...register('name')} placeholder="Tu nombre" />
-              {errors.name && <p className="text-[13px] text-red-400">{errors.name.message}</p>}
-            </div>
+            <Field id="name" label="Nombre y apellido" required error={errors.name?.message}>
+              {(control) => (
+                <Input {...control} autoComplete="name" maxLength={LIMITES.nombreMax} placeholder="Tu nombre" {...register('name')} />
+              )}
+            </Field>
 
-            <div className="space-y-2">
-              <Label htmlFor="phone">Teléfono (mejor si es WhatsApp) *</Label>
-              <Input
-                id="phone"
-                type="tel"
-                inputMode="tel"
-                autoComplete="tel"
-                {...register('phone')}
-                placeholder="+54 9 221 ..."
+            <Field id="phone" label="Teléfono (mejor si es WhatsApp)" required error={errors.phone?.message}>
+              {(control) => (
+                <Input
+                  {...control}
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  maxLength={LIMITES.telefonoMax}
+                  placeholder="+54 9 221 ..."
+                  {...register('phone')}
+                />
+              )}
+            </Field>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <Field id="email" label="Email (opcional)" error={errors.email?.message}>
+              {(control) => (
+                <Input
+                  {...control}
+                  type="email"
+                  autoComplete="email"
+                  maxLength={LIMITES.emailMax}
+                  placeholder="tu@email.com"
+                  {...register('email')}
+                />
+              )}
+            </Field>
+
+            <Field id="localidad" label="Ciudad o partido (opcional)" error={errors.localidad?.message}>
+              {(control) => (
+                <Input
+                  {...control}
+                  autoComplete="address-level2"
+                  maxLength={LIMITES.localidadMax}
+                  placeholder="Ej.: La Plata, Berisso, Ensenada"
+                  {...register('localidad')}
+                />
+              )}
+            </Field>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <Field id="area" label="¿Sobre qué es tu consulta?" required error={errors.area?.message}>
+              {(control) => (
+                <Select {...control} {...register('area')}>
+                  <option value="">Elegir una opción...</option>
+                  {AREA_VALUES.map((v) => (
+                    <option key={v} value={v}>
+                      {AREA_LABELS[v]}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            </Field>
+
+            <Field id="urgency" label="¿Qué tan urgente es?" required error={errors.urgency?.message}>
+              {(control) => (
+                <Select {...control} {...register('urgency')}>
+                  <option value="">Elegir una opción...</option>
+                  {URGENCIA_VALUES.map((v) => (
+                    <option key={v} value={v}>
+                      {URGENCIA_LABELS[v]}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            </Field>
+          </div>
+
+          <Field
+            id="message"
+            label="Contanos qué pasó"
+            required
+            error={errors.message?.message}
+            hint={
+              <span className={largoMensaje > LIMITES.mensajeMax ? 'text-red-400' : undefined}>
+                {largoMensaje} / {LIMITES.mensajeMax} caracteres
+              </span>
+            }
+          >
+            {(control) => (
+              <Textarea
+                {...control}
+                placeholder={`Con tus palabras: qué pasó y qué necesitás. No hace falta que sea técnico (máx. ${LIMITES.mensajeMax} caracteres).`}
+                {...register('message')}
               />
-              {errors.phone && <p className="text-[13px] text-red-400">{errors.phone.message}</p>}
-            </div>
-          </div>
+            )}
+          </Field>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email (opcional)</Label>
-              <Input id="email" type="email" autoComplete="email" {...register('email')} placeholder="tu@email.com" />
-              {errors.email && <p className="text-[13px] text-red-400">{errors.email.message}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="localidad">Ciudad o partido (opcional)</Label>
-              <Input id="localidad" {...register('localidad')} placeholder="Ej.: La Plata, Berisso, Ensenada" />
-              {errors.localidad && <p className="text-[13px] text-red-400">{errors.localidad.message}</p>}
-            </div>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="area">¿Sobre qué es tu consulta? *</Label>
-              <Select id="area" {...register('area')}>
-                <option value="">Elegir una opción...</option>
-                {AREA_VALUES.map((v) => (
-                  <option key={v} value={v}>
-                    {AREA_LABELS[v]}
-                  </option>
-                ))}
-              </Select>
-              {errors.area && <p className="text-[13px] text-red-400">{errors.area.message}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="urgency">¿Qué tan urgente es? *</Label>
-              <Select id="urgency" {...register('urgency')}>
-                <option value="">Elegir una opción...</option>
-                {URGENCIA_VALUES.map((v) => (
-                  <option key={v} value={v}>
-                    {URGENCIA_LABELS[v]}
-                  </option>
-                ))}
-              </Select>
-              {errors.urgency && <p className="text-[13px] text-red-400">{errors.urgency.message}</p>}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="message">Contanos qué pasó *</Label>
-            <Textarea
-              id="message"
-              {...register('message')}
-              placeholder="Con tus palabras: qué pasó y qué necesitás. No hace falta que sea técnico (máx. 800 caracteres)."
-            />
-            {errors.message && <p className="text-[13px] text-red-400">{errors.message.message}</p>}
-          </div>
-
-          {/* Honey pot */}
-          <input type="text" {...register('website')} className="hidden" tabIndex={-1} autoComplete="off" />
+          {/* Honeypot: invisible para personas y lectores de pantalla; si llega completo, es un bot. */}
+          <input type="text" {...register('website')} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
           {/* 🔒 Widget de Turnstile (captcha invisible) */}
           <div ref={turnstileContainerRef} />
@@ -287,31 +334,11 @@ export function EvaluationForm() {
           </div>
 
           <div className="pt-2 space-y-4">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              data-glass
-              className="glass-btn glass-btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-            >
-              {isSubmitting ? 'Enviando...' : 'Enviar mi consulta'}
-            </button>
+            <Button type="submit" loading={isSubmitting} loadingLabel="Enviando..." arrow={false}>
+              Enviar mi consulta
+            </Button>
 
-            {warnings.length > 0 && (
-              <div className="rounded-[10px] border border-[var(--accent-mute)] bg-[var(--accent-mute)]/10 p-4">
-                <p className="text-[14px] font-semibold text-[var(--accent-bright)]">Observaciones:</p>
-                <ul className="mt-2 space-y-1 text-[13px] text-[var(--text-secondary)]">
-                  {warnings.map((warning) => (
-                    <li key={warning}>• {warning}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {serverError && (
-              <div className="rounded-[10px] bg-red-500/10 border border-red-500/20 p-4">
-                <p className="text-[14px] text-red-400 font-medium">{serverError}</p>
-              </div>
-            )}
+            {serverError ? <Alert tone="error">{serverError}</Alert> : null}
           </div>
         </div>
       </form>

@@ -1,5 +1,6 @@
 import { FadeIn } from '@/components/motion/FadeIn'
 import { Button } from '@/components/ui/Button'
+import { Overline } from '@/components/ui/Overline'
 
 type PageCtaProps = {
   eyebrow?: string
@@ -20,9 +21,9 @@ export function PageCta({
     <FadeIn>
       <div data-glass className="glass glass-strong mt-14 overflow-hidden rounded-[28px] p-6 md:mt-16 md:rounded-[36px] md:p-12">
         <div className="max-w-3xl space-y-4 md:space-y-5">
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)] md:text-xs">
+          <Overline className="md:text-xs">
             {eyebrow}
-          </p>
+          </Overline>
 
           <h2 className="max-w-[15ch] text-2xl font-extrabold leading-tight md:max-w-[13ch] md:text-5xl">
             {title}

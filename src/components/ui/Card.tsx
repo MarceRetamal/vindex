@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
+import { Overline } from '@/components/ui/Overline'
 
 type CardProps = {
   title: string
@@ -23,9 +24,9 @@ export function Card({ title, description, eyebrow, className = '', footer, medi
     >
       {media ? <div className="-mx-6 -mt-6 mb-5 md:-mx-8 md:-mt-8 md:mb-6">{media}</div> : null}
       {eyebrow ? (
-        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)] md:mb-4 md:text-xs">
+        <Overline className="mb-3 md:mb-4 md:text-xs">
           {eyebrow}
-        </p>
+        </Overline>
       ) : null}
       <Heading className="text-xl font-bold leading-tight text-white md:text-2xl">{title}</Heading>
       <p className="mt-3 text-[15px] leading-7 text-[var(--text-secondary)] md:mt-4 md:text-base">
