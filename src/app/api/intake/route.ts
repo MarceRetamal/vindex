@@ -10,6 +10,7 @@ import {
   type Transporter,
 } from '@/lib/intake/correo'
 import { guardarPendiente } from '@/lib/intake/pendientes'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 export const runtime = 'nodejs'
 
 // 🛡️ VALIDACIÓN SERVER-SIDE — espejo del esquema del formulario, pero acá es
@@ -99,6 +100,20 @@ async function sendWhatsAppNotification(payload: IntakePayload, requestID: strin
   }
 }
 
+// Ejecuta una tarea después de responder, con ctx.waitUntil del Worker:
+// Cloudflare la deja terminar aunque la respuesta ya haya salido. Fuera del
+// Worker (next dev / next start no tienen ese contexto), la espera como antes.
+async function enSegundoPlano(tarea: () => Promise<void>) {
+  let ctx: { waitUntil(promesa: Promise<unknown>): void } | undefined
+  try {
+    ctx = getCloudflareContext().ctx
+  } catch {
+    ctx = undefined
+  }
+  if (ctx) ctx.waitUntil(tarea())
+  else await tarea()
+}
+
 // 🔒 Verifica el token de Turnstile contra la API de Cloudflare (siteverify).
 // Si esto falla o no está bien configurado, el envío se rechaza — nunca se
 // asume "humano" por defecto.
@@ -174,16 +189,21 @@ export async function POST(request: Request) {
       await guardarPendiente(payload, requestID, errorCorreo)
     }
 
-    // La confirmación a quien consulta es secundaria: si falla, se registra pero
-    // no se le muestra un error (la consulta ya llegó y reintentar la duplicaría).
-    try {
-      await sendCourtesyEmail(transporter ?? getTransporter(), payload, requestID)
-    } catch (courtesyError) {
-      console.error('No se pudo enviar el correo de confirmación:', courtesyError)
+    // Lo que sigue es secundario y no cambia la respuesta: la confirmación a
+    // quien consulta (si dejó email) y los mensajes de WhatsApp. Si fallan, se
+    // registra y la persona no ve un error (la consulta ya llegó y reintentar
+    // la duplicaría). Corren en segundo plano: la persona ve "Consulta
+    // recibida" sin esperar a Gmail ni a Meta.
+    const tareasSecundarias = async () => {
+      try {
+        await sendCourtesyEmail(transporter ?? getTransporter(), payload, requestID)
+      } catch (courtesyError) {
+        console.error('No se pudo enviar el correo de confirmación:', courtesyError)
+      }
+      // Mensajes de WhatsApp (plantillas aprobadas en Meta)
+      await sendWhatsAppNotification(payload, requestID)
     }
-
-    // Mensajes de WhatsApp (plantillas aprobadas en Meta)
-    await sendWhatsAppNotification(payload, requestID)
+    await enSegundoPlano(tareasSecundarias)
 
     return NextResponse.json({ ok: true, warnings: [] })
   } catch (error) {
