@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { SITE_URL as siteUrl } from '@/data/site'
 
 type BuildMetadataProps = {
   title: string
@@ -9,8 +10,6 @@ type BuildMetadataProps = {
   publishedTime?: string
   modifiedTime?: string
 }
-
-const siteUrl = 'https://vindexlegal.com.ar'
 
 export function buildMetadata({
   title,

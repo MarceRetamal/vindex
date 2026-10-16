@@ -30,26 +30,51 @@ export function HeroStage() {
     if (!el) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     if (window.matchMedia('(hover: none)').matches) return
+    // El cálculo corre solo mientras el sello está en pantalla y el puntero
+    // se movió hace poco: cuando la inclinación alcanza su destino, el ciclo
+    // se detiene y no consume CPU hasta el próximo movimiento.
     let raf = 0
+    let activo = false
+    let visible = true
     let tx = 0, ty = 0, cx = 0, cy = 0
-    const onMove = (e: PointerEvent) => {
-      tx = (e.clientX / window.innerWidth - 0.5) * 2
-      ty = (e.clientY / window.innerHeight - 0.5) * 2
-    }
-    const tick = () => {
-      cx += (tx - cx) * 0.07
-      cy += (ty - cy) * 0.07
+    const aplicar = () => {
       el.style.setProperty('--rx', `${(-cy * 8).toFixed(2)}deg`)
       el.style.setProperty('--ry', `${(cx * 10).toFixed(2)}deg`)
       el.style.setProperty('--gx', `${(cx * 34).toFixed(1)}px`)
       el.style.setProperty('--gy', `${(cy * 26).toFixed(1)}px`)
+    }
+    const tick = () => {
+      cx += (tx - cx) * 0.07
+      cy += (ty - cy) * 0.07
+      if (Math.abs(tx - cx) < 0.0005 && Math.abs(ty - cy) < 0.0005) {
+        cx = tx
+        cy = ty
+        aplicar()
+        activo = false
+        return
+      }
+      aplicar()
       raf = requestAnimationFrame(tick)
     }
+    const arrancar = () => {
+      if (activo || !visible) return
+      activo = true
+      raf = requestAnimationFrame(tick)
+    }
+    const onMove = (e: PointerEvent) => {
+      tx = (e.clientX / window.innerWidth - 0.5) * 2
+      ty = (e.clientY / window.innerHeight - 0.5) * 2
+      arrancar()
+    }
     window.addEventListener('pointermove', onMove, { passive: true })
-    raf = requestAnimationFrame(tick)
     const io = new IntersectionObserver(([en]) => {
-      cancelAnimationFrame(raf)
-      if (en.isIntersecting) raf = requestAnimationFrame(tick)
+      visible = en.isIntersecting
+      if (visible) {
+        arrancar()
+      } else {
+        cancelAnimationFrame(raf)
+        activo = false
+      }
     })
     io.observe(el)
     return () => {

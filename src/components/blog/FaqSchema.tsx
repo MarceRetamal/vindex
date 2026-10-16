@@ -1,4 +1,6 @@
 import type { PreguntaFrecuente } from '@/lib/blog'
+import { faqSchema } from '@/lib/schema'
+import { JsonLd } from '@/components/seo/JsonLd'
 
 // Datos estructurados FAQPage (Schema.org) para una nota del blog.
 // No muestra nada en pantalla: solo agrega el JSON-LD si la nota trae el
@@ -12,23 +14,5 @@ import type { PreguntaFrecuente } from '@/lib/blog'
 export function FaqSchema({ faq, url }: { faq?: PreguntaFrecuente[]; url: string }) {
   if (!faq || faq.length === 0) return null
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    '@id': `${url}#faq`,
-    inLanguage: 'es-AR',
-    mainEntity: faq.map(({ pregunta, respuesta }) => ({
-      '@type': 'Question',
-      name: pregunta,
-      acceptedAnswer: { '@type': 'Answer', text: respuesta },
-    })),
-  }
-
-  return (
-    <script
-      type="application/ld+json"
-      // Escapa "<" para que una respuesta con "</script>" no pueda cortar la etiqueta.
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
-    />
-  )
+  return <JsonLd data={faqSchema(faq, { id: `${url}#faq` })} />
 }

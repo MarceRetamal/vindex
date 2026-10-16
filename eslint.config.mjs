@@ -18,6 +18,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Build de Cloudflare y material de herramientas: no es código del sitio.
+    ".open-next/**",
+    ".agents/**",
+    ".claude/**",
+    "design-system/**",
   ]),
 ]);
 
