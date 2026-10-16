@@ -17,10 +17,9 @@ export const metadata: Metadata = {
   },
 }
 
-// Home reorganizada: entrada rápida por situación, áreas, tips y contacto.
-// Los bloques Positioning, System, Differential y ClientProfile ya no se
-// muestran acá (sus archivos siguen en src/components/sections/home/ por si
-// querés recuperarlos).
+// Home: entrada rápida por situación, áreas, tips y contacto. Los bloques
+// anteriores (Positioning, System, Differential, ClientProfile) se borraron
+// el 16/10/2026; si hacen falta, están en el historial de git.
 export default function HomePage() {
   return (
     <>

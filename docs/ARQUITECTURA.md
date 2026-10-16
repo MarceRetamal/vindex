@@ -77,13 +77,20 @@ Ordenadas por impacto en el negocio.
 
 | Tema | Detalle | Acción sugerida |
 |---|---|---|
-| Material ajeno en el repo | `.agents/` (≈1.400 archivos, 18 MB de skills de AWS), `skills-lock.json` y `vindex-clean.zip` (vacío). | Quitarlos del repo. |
-| Código muerto | `Positioning`, `System`, `Differential` y `ClientProfile` (home) y `PageBlock`. `gsap` y `@gsap/react` solo los usa `System`. La UI de "Observaciones" del formulario nunca se muestra, porque la API siempre devuelve `warnings: []`. | Borrar con aprobación; quedan en el historial de git. |
 | `middleware.ts` | Next 16 lo marca como obsoleto en favor de `proxy.ts`, pero OpenNext todavía no soporta `proxy.ts`. | Migrar cuando OpenNext lo soporte. |
 | `<img>` en `/direccion` | Único aviso de lint. | Evaluar `next/image` con loader de Cloudflare sin tocar el diseño. |
 | Clases repetidas | La etiqueta chica en mayúsculas (`text-[11px] font-bold uppercase tracking-[0.22em]…`) y el cuerpo de artículo (blog y tips, con tamaños distintos) se repiten. | Extraer componentes cuando se toque ese diseño. |
 
-## 5. Refactor aplicado el 16/10/2026 (sin cambios de funcionalidad)
+## 5. Limpieza del 16/10/2026
+
+Se borraron del repo:
+- `.agents/` (1.399 archivos de skills de AWS ajenos al sitio), `skills-lock.json` y `vindex-clean.zip` (vacío);
+- las secciones de la home sin uso (`Positioning`, `System`, `Differential`, `ClientProfile`) y `PageBlock`;
+- las dependencias `gsap` y `@gsap/react`, que solo usaba `System`.
+
+Todo queda en el historial de git.
+
+## 6. Refactor aplicado el 16/10/2026 (sin cambios de funcionalidad)
 
 - `src/data/site.ts`: `SITE_URL` y `contacto` reemplazan 12 copias de la URL y 3 del teléfono.
 - `src/lib/schema.ts` y `src/components/seo/JsonLd.tsx`: un solo lugar para todo el JSON-LD. Escapa `<` en todos los bloques; antes solo lo hacía el FAQ de las notas.

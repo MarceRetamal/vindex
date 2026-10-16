@@ -15,10 +15,8 @@
     "postcss": "^8.5.10"
   },
   "dependencies": {
-    "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^5.2.2",
     "clsx": "^2.1.1",
-    "gsap": "^3.14.2",
     "lucide-react": "^1.8.0",
     "next": "^16.2.3",
     "nodemailer": "^9.0.3",
