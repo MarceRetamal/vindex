@@ -39,8 +39,8 @@ EvaluationForm (navegador) ── zod + Turnstile ──► POST /api/intake
    3. valida con zod                           ── falla → 400
    4. correo al estudio (SMTP)                 ── falla → se guarda en KV y se reintenta cada 10 min
                                                   (si tampoco se puede guardar → 500)
-   5. correo de cortesía a quien consulta      ── falla → se registra y sigue
-   6. 3 plantillas de WhatsApp (Meta Graph)    ── falla → se registra y sigue
+   5. correo de cortesía a quien consulta      ┐ en segundo plano (ctx.waitUntil), después
+   6. 3 plantillas de WhatsApp (Meta Graph)    ┘ de responder; si fallan, se registra
    7. { ok: true }
 ```
 
@@ -67,7 +67,7 @@ Ordenadas por impacto en el negocio.
    - Corregirlo cambia a quién le llega el mensaje, así que queda para una decisión aparte.
 2. **Versión de la API de Meta** (`v18.0`, fija en el código). Meta retira las versiones viejas de la Graph API. Hay que verificar en el panel de Meta que siga activa y planificar la actualización.
 3. ~~**La consulta no se guarda en ningún lado.**~~ Resuelto el 16/10/2026. Si el SMTP falla, la consulta se guarda en Cloudflare KV (`CONSULTAS_PENDIENTES`, `src/lib/intake/pendientes.ts`) y la tarea programada de `worker.ts` la reenvía cada 10 minutos con el asunto "[REENVÍO — recibida el …]". Se borra al entregarse y, como máximo, a los 30 días. Las consultas pendientes se pueden ver en el panel de Cloudflare → Storage & Databases → KV → `vindex-consultas-pendientes`.
-4. **Latencia del envío.** La persona espera, en serie, la verificación de Turnstile, 1 o 2 correos y 3 llamadas a Meta antes de ver "Consulta recibida". Las tareas secundarias (cortesía y WhatsApp) podrían ir en segundo plano con `ctx.waitUntil` del Worker. Eso cambia la secuencia y queda para una decisión aparte.
+4. ~~**Latencia del envío.**~~ Resuelto el 16/10/2026. La persona solo espera Turnstile y el correo al estudio (o su guardado en KV). La confirmación y los WhatsApp corren después con `ctx.waitUntil`. Con un SMTP de 2 s por mensaje, la respuesta bajó de 4,2 s a 2,1 s, sin contar las 3 llamadas a Meta que también dejaron de esperarse.
 5. **Validación del navegador más laxa que la del servidor.**
    - El formulario no limita el largo del nombre (120), el teléfono (30) ni el email (200).
    - Si alguien los supera, recibe el error genérico "Datos inválidos" en lugar de un mensaje en el campo.
