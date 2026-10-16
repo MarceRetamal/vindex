@@ -9,6 +9,8 @@ import { Card } from '@/components/ui/Card'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
+import { EmptyState } from '@/components/ui/EmptyState'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 
 export const dynamic = 'force-static'
 
@@ -43,19 +45,28 @@ export default function TipsPage() {
         </div>
       </FadeIn>
 
+      {categorias.length === 0 ? (
+        <div className="mt-16">
+          <EmptyState
+            title="Todavía no hay tips publicados."
+            description="Mientras tanto, podés contarnos tu caso y te respondemos en un plazo máximo de 24 horas hábiles."
+          />
+        </div>
+      ) : null}
+
       {categorias.map((c) => {
         const items = tips.filter((t) => t.categoria === c.nombre)
         return (
           <section key={c.ancla} id={c.ancla} className="mt-16 scroll-mt-28 md:mt-20">
             <div className="mb-6 flex items-end justify-between gap-4">
-              <h2 className="text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+              <SectionTitle>
                 {c.nombre}
-              </h2>
+              </SectionTitle>
               <Link
                 href={c.areaHref}
                 className="text-[13px] font-semibold text-[var(--accent)] underline-offset-4 hover:underline"
               >
-                Ver el área →
+                Ver el área<span className="sr-only"> de {c.nombre}</span> <span aria-hidden="true">→</span>
               </Link>
             </div>
             <StaggerFadeIn stagger={0.08}>
@@ -71,7 +82,7 @@ export default function TipsPage() {
                         href={`/tips/${t.slug}`}
                         className="text-[14px] font-semibold text-(--accent) underline-offset-4 hover:underline"
                       >
-                        Leer el tip
+                        Leer el tip<span className="sr-only">: {t.titulo}</span>
                       </Link>
                     }
                   />

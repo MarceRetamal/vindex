@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { navigation } from '@/data/navigation'
 import { siteConfig } from '@/data/site'
 import { Button } from '@/components/ui/Button'
@@ -14,6 +14,7 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [lastPathname, setLastPathname] = useState(pathname)
+  const botonMenuRef = useRef<HTMLButtonElement>(null)
 
   if (pathname !== lastPathname) {
     setLastPathname(pathname)
@@ -27,10 +28,22 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Con el menú abierto, el resto de la página queda inerte: no se puede
+  // enfocar ni leer, así el foco no se escapa detrás del menú.
   useEffect(() => {
     document.body.classList.toggle('overflow-hidden', isOpen)
-    return () => document.body.classList.remove('overflow-hidden')
+    const fondo = document.querySelectorAll<HTMLElement>('[data-fondo]')
+    fondo.forEach((el) => (el.inert = isOpen))
+    return () => {
+      document.body.classList.remove('overflow-hidden')
+      fondo.forEach((el) => (el.inert = false))
+    }
   }, [isOpen])
+
+  function cerrarMenu({ devolverFoco = false } = {}) {
+    setIsOpen(false)
+    if (devolverFoco) botonMenuRef.current?.focus()
+  }
 
   return (
     <>
@@ -74,15 +87,17 @@ export function Header() {
           </nav>
 
           <div className="ml-auto hidden md:block">
-            <Button href={siteConfig.cta.href} className="!py-2.5 !px-5">
+            <Button href={siteConfig.cta.href} size="sm">
               {siteConfig.cta.label}
             </Button>
           </div>
 
           <button
+            ref={botonMenuRef}
             type="button"
             aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={isOpen}
+            aria-controls="menu-movil"
             onClick={() => setIsOpen((p) => !p)}
             className="glass relative z-50 ml-auto inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full md:hidden"
           >
@@ -92,7 +107,7 @@ export function Header() {
         </div>
       </header>
 
-      <MobileMenu isOpen={isOpen} pathname={pathname} onClose={() => setIsOpen(false)} />
+      <MobileMenu isOpen={isOpen} pathname={pathname} onClose={cerrarMenu} />
     </>
   )
 }

@@ -38,3 +38,4 @@ npm run preview           # build + Worker local para probar antes de publicar
 - `public/_headers` — cabeceras de los archivos estáticos (las páginas toman las suyas de `next.config.ts`).
 - `src/data/site.ts` — URL, teléfono, email, WhatsApp y redes del estudio (fuente única).
 - `docs/ARQUITECTURA.md` — mapa del sistema, flujos de datos, zonas críticas y deuda técnica.
+- `docs/COMPONENTES.md` — sistema de componentes: catálogo, props, ejemplos y buenas prácticas.

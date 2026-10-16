@@ -15,6 +15,7 @@ import { obtenerTips } from '@/lib/tips'
 import { articleSchema } from '@/lib/schema'
 import { SITE_URL } from '@/data/site'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { Overline } from '@/components/ui/Overline'
 
 function notasRelacionadas(nota: NotaCompleta) {
   const otras = obtenerNotas().filter((n) => n.slug !== nota.slug)
@@ -138,7 +139,7 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
 
       <FadeIn>
         <div className="mt-10 max-w-3xl glass rounded-[28px] p-6 md:p-8">
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">Sobre el autor</p>
+          <Overline>Sobre el autor</Overline>
           <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
             <strong className="font-semibold text-white">Marcelo Fabián Retamal</strong> es abogado (UNLP), matriculado
             en el Colegio de Abogados de La Plata (T° LXVI, F° 263) y director de VINDEX LEGAL. Ejerce en La Plata y en
@@ -155,9 +156,9 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
           <aside className="mt-10 max-w-3xl space-y-8" aria-label="Contenido relacionado">
             {servicio ? (
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+                <Overline>
                   Servicio relacionado
-                </p>
+                </Overline>
                 <Link href={servicio.href} className="glass glass-lift mt-3 block rounded-[24px] p-5 md:p-6">
                   <span className="block text-lg font-bold text-white">{servicio.titulo}</span>
                   <span className="mt-1 block text-[15px] leading-relaxed text-[var(--text-secondary)]">
@@ -169,18 +170,18 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
 
             {tips.length > 0 ? (
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+                <Overline>
                   Tips rápidos sobre este tema
-                </p>
+                </Overline>
                 <LinkList className="mt-3 space-y-2" items={tips.map((t) => ({ href: `/tips/${t.slug}`, texto: t.titulo }))} />
               </div>
             ) : null}
 
             {relacionadas.length > 0 ? (
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
+                <Overline>
                   Lecturas relacionadas
-                </p>
+                </Overline>
                 <LinkList
                   className="mt-3 space-y-2"
                   items={relacionadas.map((n) => ({ href: `/blog/${n.slug}`, texto: n.titulo }))}

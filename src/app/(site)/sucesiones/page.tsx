@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
+import { SectionTitle } from '@/components/ui/SectionTitle'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Abogado en Sucesiones en La Plata',
@@ -86,9 +87,9 @@ export default function SucesionesPage() {
       />
 
       <div className="mt-16 md:mt-24">
-        <h3 className="text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-6">
+        <SectionTitle as="h3" className="mb-6">
           Situaciones que atendemos
-        </h3>
+        </SectionTitle>
         <StaggerFadeIn stagger={0.1}>
           <div className="grid gap-6 sm:grid-cols-2">
             {situations.map((s) => (
@@ -99,9 +100,9 @@ export default function SucesionesPage() {
       </div>
 
       <div className="mt-20 md:mt-28">
-        <h3 className="text-[14px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-6">
+        <SectionTitle as="h3" className="mb-6">
           Preguntas frecuentes
-        </h3>
+        </SectionTitle>
         <StaggerFadeIn stagger={0.08}>
           <div className="grid gap-4">
             {faqs.map((f) => (
