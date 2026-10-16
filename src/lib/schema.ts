@@ -50,6 +50,8 @@ export const legalServiceSchema = {
     'https://www.instagram.com/vindexlegal.ar/',
     'https://www.facebook.com/vindexleg',
     'https://www.linkedin.com/in/vindex-legal',
-    // TODO: add once GBP/social profiles are live — Google Business Profile
+    // Perfil de Empresa de Google (ficha de Maps), por su CID estable.
+    'https://maps.google.com/?cid=11063836089595176365',
   ] as string[],
+  hasMap: 'https://maps.google.com/?cid=11063836089595176365',
 }
