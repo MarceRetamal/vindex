@@ -11,7 +11,7 @@ import { Select } from '@/components/ui/Select'
 import { Textarea } from '@/components/ui/Textarea'
 import { Label } from '@/components/ui/Label'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
-import { AREA_LABELS, AREA_VALUES, URGENCIA_LABELS, URGENCIA_VALUES } from '@/data/intake'
+import { AREA_LABELS, AREA_VALUES, LIMITES, URGENCIA_LABELS, URGENCIA_VALUES } from '@/data/intake'
 import { whatsappUrl } from '@/data/site'
 import { track } from '@/lib/track'
 
@@ -32,16 +32,16 @@ declare global {
 // Formulario pensado para personas: pocos campos, lenguaje cotidiano.
 // El email es opcional (el contacto principal es el teléfono).
 const formSchema = z.object({
-  name: z.string().min(2, 'Escribí tu nombre.'),
-  phone: z.string().min(6, 'Dejanos un teléfono para poder llamarte.'),
+  name: z.string().min(LIMITES.nombreMin, 'Escribí tu nombre.'),
+  phone: z.string().min(LIMITES.telefonoMin, 'Dejanos un teléfono para poder llamarte.'),
   email: z.union([z.literal(''), z.string().email('El email no es válido.')]),
-  localidad: z.string().max(100, 'Es demasiado largo.').optional(),
+  localidad: z.string().max(LIMITES.localidadMax, 'Es demasiado largo.').optional(),
   area: z.string().min(1, 'Elegí sobre qué es tu consulta.'),
   urgency: z.string().min(1, 'Elegí una opción.'),
   message: z
     .string()
-    .min(10, 'Contanos un poco más para poder orientarte.')
-    .max(800, 'Máximo 800 caracteres. Podés darnos más detalle cuando te llamemos.'),
+    .min(LIMITES.mensajeMin, 'Contanos un poco más para poder orientarte.')
+    .max(LIMITES.mensajeMax, `Máximo ${LIMITES.mensajeMax} caracteres. Podés darnos más detalle cuando te llamemos.`),
   website: z.string().optional(),
 })
 

@@ -35,3 +35,16 @@ export const URGENCIA_LABELS: Record<UrgenciaValue, string> = {
   reciente: 'Pasó hace poco y quiero saber mis opciones',
   antiguo: 'Es un problema de hace tiempo',
 }
+
+// Largos mínimos y máximos de cada campo. Los usan el formulario y la
+// validación del servidor, para que los dos midan igual.
+export const LIMITES = {
+  nombreMin: 2,
+  nombreMax: 120,
+  telefonoMin: 6,
+  telefonoMax: 30,
+  emailMax: 200,
+  localidadMax: 100,
+  mensajeMin: 10,
+  mensajeMax: 800,
+} as const

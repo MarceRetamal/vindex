@@ -1,3 +1,18 @@
+// Fuente única de los datos del estudio que se repiten en el código (URL,
+// teléfono, email, redes). Si cambia alguno, se cambia acá y se actualiza en
+// todo el sitio: metadatos, datos estructurados, sitemap, pie de página y
+// botón de WhatsApp. Los textos visibles de cada página no salen de acá.
+
+export const SITE_URL = 'https://vindexlegal.com.ar'
+
+export const contacto = {
+  /** Formato internacional, para enlaces tel: y datos estructurados. */
+  telefono: '+5491141743745',
+  /** Como se muestra en pantalla. */
+  telefonoVisible: '+54 9 11 4174-3745',
+  email: 'info@vindexlegal.com.ar',
+}
+
 export const siteConfig = {
   name: 'VINDEX LEGAL',
   claim: 'Estudio jurídico en La Plata para personas y familias.',
@@ -17,7 +32,7 @@ export function whatsappUrl(texto = 'Hola, quiero consultar por un caso.'): stri
 }
 
 // Perfiles oficiales del estudio. Se muestran como íconos en el pie de página
-// y en el menú móvil. Mantener alineado con `sameAs` en src/lib/schema.ts.
+// y en el menú móvil, y alimentan `sameAs` en src/lib/schema.ts.
 export const redesSociales = [
   { red: 'instagram', nombre: 'Instagram', href: 'https://www.instagram.com/vindexlegal.ar/' },
   { red: 'facebook', nombre: 'Facebook', href: 'https://www.facebook.com/vindexleg' },

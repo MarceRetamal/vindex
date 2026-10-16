@@ -9,8 +9,10 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageShell } from '@/components/ui/PageShell'
-
-const baseUrl = 'https://vindexlegal.com.ar'
+import { LinkList } from '@/components/ui/LinkList'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { articleSchema } from '@/lib/schema'
+import { SITE_URL } from '@/data/site'
 
 export const dynamic = 'force-static'
 export const dynamicParams = false
@@ -50,29 +52,15 @@ export default async function TipPage({ params }: Props) {
 
   return (
     <PageShell>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            headline: tip.titulo,
-            description: tip.descripcion,
-            articleSection: tip.categoria,
-            datePublished: tip.fecha,
-            dateModified: tip.actualizado,
-            inLanguage: 'es-AR',
-            image: `${baseUrl}/og-image.jpg`,
-            mainEntityOfPage: `${baseUrl}/tips/${tip.slug}`,
-            author: {
-              '@type': 'Person',
-              name: 'Marcelo Fabián Retamal',
-              jobTitle: 'Abogado',
-              url: `${baseUrl}/direccion`,
-            },
-            publisher: { '@type': 'LegalService', '@id': `${baseUrl}/#estudio`, name: 'VINDEX LEGAL', url: baseUrl },
-          }),
-        }}
+      <JsonLd
+        data={articleSchema({
+          titulo: tip.titulo,
+          descripcion: tip.descripcion,
+          seccion: tip.categoria,
+          fecha: tip.fecha,
+          actualizado: tip.actualizado,
+          url: `${SITE_URL}/tips/${tip.slug}`,
+        })}
       />
 
       <Breadcrumbs
@@ -157,18 +145,7 @@ export default async function TipPage({ params }: Props) {
         <FadeIn>
           <aside className="mt-10 max-w-3xl" aria-label="Más tips">
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">Seguir leyendo</p>
-            <ul className="mt-3 space-y-2">
-              {relacionados.map((t) => (
-                <li key={t.slug}>
-                  <Link
-                    href={`/tips/${t.slug}`}
-                    className="text-[15px] font-medium text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
-                  >
-                    {t.titulo}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <LinkList className="mt-3 space-y-2" items={relacionados.map((t) => ({ href: `/tips/${t.slug}`, texto: t.titulo }))} />
           </aside>
         </FadeIn>
       ) : null}

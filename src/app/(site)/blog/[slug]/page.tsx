@@ -4,6 +4,7 @@ import { buildMetadata } from '@/lib/metadata'
 import { obtenerNota, obtenerNotas } from '@/lib/blog'
 import { ArticleShell } from '@/components/blog/ArticleShell'
 import { FaqSchema } from '@/components/blog/FaqSchema'
+import { SITE_URL } from '@/data/site'
 
 export const dynamic = 'force-static'
 export const dynamicParams = false
@@ -38,7 +39,7 @@ export default async function NotaPage({ params }: Props) {
 
   return (
     <>
-      <FaqSchema faq={nota.faq} url={`https://vindexlegal.com.ar/blog/${nota.slug}`} />
+      <FaqSchema faq={nota.faq} url={`${SITE_URL}/blog/${nota.slug}`} />
       <ArticleShell nota={nota} />
     </>
   )

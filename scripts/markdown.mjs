@@ -1,10 +1,6 @@
-// Copia funcional de src/lib/markdown.ts, en JavaScript plano y sin tipos,
-// para que el script de generación (scripts/build-content.mjs) la pueda
-// ejecutar directamente con Node, sin pasar por el compilador de TypeScript.
-//
-// Si el día de mañana cambia la sintaxis del blog (##, !!, >, etc.), el
-// cambio se hace acá Y en src/lib/markdown.ts (que ya no corre en el
-// servidor, pero se deja documentado ahí para referencia).
+// Conversor del markdown simplificado de notas y tips a HTML. Lo usa solo
+// scripts/build-content.mjs, en el momento del build; el sitio nunca lo
+// ejecuta. Si cambia la sintaxis del blog (##, !!, >, etc.), se cambia acá.
 
 function escapeHtml(input) {
   return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')

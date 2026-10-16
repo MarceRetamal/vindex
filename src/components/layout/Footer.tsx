@@ -3,7 +3,7 @@ import { Container } from '@/components/ui/Container'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { SocialLinks } from '@/components/ui/SocialLinks'
 import { AREAS } from '@/data/areas'
-import { whatsappUrl } from '@/data/site'
+import { contacto, whatsappUrl } from '@/data/site'
 
 const linkClass = 'transition-colors hover:text-white'
 
@@ -31,12 +31,12 @@ export function Footer() {
               <p>Avenida 13 N° 821, La Plata (B1900THK), Provincia de Buenos Aires.</p>
               <p>
                 <TrackedLink
-                  href="tel:+5491141743745"
+                  href={`tel:${contacto.telefono}`}
                   evento="contact_click"
                   params={{ method: 'phone', location: 'footer' }}
                   className={linkClass}
                 >
-                  +54 9 11 4174-3745
+                  {contacto.telefonoVisible}
                 </TrackedLink>
               </p>
               {wa ? (

@@ -7,12 +7,14 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageShell } from '@/components/ui/PageShell'
+import { LinkList } from '@/components/ui/LinkList'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { TableOfContentsDesktop, TableOfContentsMobile } from '@/components/blog/TableOfContents'
 import { formatearFecha, obtenerNotas, type NotaCompleta } from '@/lib/blog'
 import { obtenerTips } from '@/lib/tips'
-
-const baseUrl = 'https://vindexlegal.com.ar'
+import { articleSchema } from '@/lib/schema'
+import { SITE_URL } from '@/data/site'
+import { JsonLd } from '@/components/seo/JsonLd'
 
 function notasRelacionadas(nota: NotaCompleta) {
   const otras = obtenerNotas().filter((n) => n.slug !== nota.slug)
@@ -33,39 +35,20 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
   const servicio = SERVICIO_POR_MATERIA[nota.materia]
   const tips = tipsRelacionados(nota)
   const relacionadas = notasRelacionadas(nota)
-  const urlNota = `${baseUrl}/blog/${nota.slug}`
+  const urlNota = `${SITE_URL}/blog/${nota.slug}`
 
   return (
     <PageShell>
       <ReadingProgress />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            headline: nota.titulo,
-            description: nota.descripcion,
-            datePublished: nota.fecha,
-            dateModified: nota.actualizado,
-            inLanguage: 'es-AR',
-            image: `${baseUrl}/og-image.jpg`,
-            mainEntityOfPage: urlNota,
-            author: {
-              '@type': 'Person',
-              name: 'Marcelo Fabián Retamal',
-              jobTitle: 'Abogado',
-              url: `${baseUrl}/direccion`,
-            },
-            publisher: {
-              '@type': 'LegalService',
-              '@id': `${baseUrl}/#estudio`,
-              name: 'VINDEX LEGAL',
-              url: baseUrl,
-            },
-          }),
-        }}
+      <JsonLd
+        data={articleSchema({
+          titulo: nota.titulo,
+          descripcion: nota.descripcion,
+          fecha: nota.fecha,
+          actualizado: nota.actualizado,
+          url: urlNota,
+        })}
       />
 
       <Breadcrumbs
@@ -189,18 +172,7 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
                 <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
                   Tips rápidos sobre este tema
                 </p>
-                <ul className="mt-3 space-y-2">
-                  {tips.map((t) => (
-                    <li key={t.slug}>
-                      <Link
-                        href={`/tips/${t.slug}`}
-                        className="text-[15px] font-medium text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
-                      >
-                        {t.titulo}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                <LinkList className="mt-3 space-y-2" items={tips.map((t) => ({ href: `/tips/${t.slug}`, texto: t.titulo }))} />
               </div>
             ) : null}
 
@@ -209,18 +181,10 @@ export function ArticleShell({ nota }: { nota: NotaCompleta }) {
                 <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
                   Lecturas relacionadas
                 </p>
-                <ul className="mt-3 space-y-2">
-                  {relacionadas.map((n) => (
-                    <li key={n.slug}>
-                      <Link
-                        href={`/blog/${n.slug}`}
-                        className="text-[15px] font-medium text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
-                      >
-                        {n.titulo}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                <LinkList
+                  className="mt-3 space-y-2"
+                  items={relacionadas.map((n) => ({ href: `/blog/${n.slug}`, texto: n.titulo }))}
+                />
               </div>
             ) : null}
           </aside>

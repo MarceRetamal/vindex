@@ -13,8 +13,10 @@ import { Card } from '@/components/ui/Card'
 import { PageCta } from '@/components/ui/PageCta'
 import { PageIntro } from '@/components/ui/PageIntro'
 import { PageShell } from '@/components/ui/PageShell'
-
-const baseUrl = 'https://vindexlegal.com.ar'
+import { LinkList } from '@/components/ui/LinkList'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { faqSchema, serviceSchema } from '@/lib/schema'
+import { SITE_URL } from '@/data/site'
 
 // Una página por área (familia, tránsito, laboral, ART, amparos). Los datos
 // salen de src/data/areas.ts. Cualquier otra dirección da 404.
@@ -54,37 +56,14 @@ export default async function AreaPage({ params }: Props) {
 
   return (
     <PageShell>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: data.faqs.map((f) => ({
-              '@type': 'Question',
-              name: f.q,
-              acceptedAnswer: { '@type': 'Answer', text: f.a },
-            })),
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Service',
-            name: data.h1,
-            description: data.description,
-            url: `${baseUrl}/${data.slug}`,
-            serviceType: data.nombre,
-            areaServed: [
-              { '@type': 'City', name: 'La Plata' },
-              { '@type': 'AdministrativeArea', name: 'Provincia de Buenos Aires' },
-            ],
-            provider: { '@type': 'LegalService', '@id': `${baseUrl}/#estudio`, name: 'VINDEX LEGAL' },
-          }),
-        }}
+      <JsonLd data={faqSchema(data.faqs.map((f) => ({ pregunta: f.q, respuesta: f.a })))} />
+      <JsonLd
+        data={serviceSchema({
+          nombre: data.h1,
+          tipo: data.nombre,
+          descripcion: data.description,
+          url: `${SITE_URL}/${data.slug}`,
+        })}
       />
 
       <Breadcrumbs items={[{ name: 'Áreas', href: '/areas' }, { name: data.nombre }]} />
@@ -159,18 +138,7 @@ export default async function AreaPage({ params }: Props) {
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
                 Tips para tu caso
               </p>
-              <ul className="mt-4 space-y-3">
-                {tips.map((t) => (
-                  <li key={t.slug}>
-                    <Link
-                      href={`/tips/${t.slug}`}
-                      className="text-[15px] font-medium text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
-                    >
-                      {t.titulo}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <LinkList className="mt-4 space-y-3" items={tips.map((t) => ({ href: `/tips/${t.slug}`, texto: t.titulo }))} />
             </FadeIn>
           ) : null}
 
@@ -179,19 +147,14 @@ export default async function AreaPage({ params }: Props) {
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--vindex-silver)]">
                 Guías para leer
               </p>
-              <ul className="mt-4 space-y-3">
-                {notas.map((n) => (
-                  <li key={n.slug}>
-                    <Link
-                      href={`/blog/${n.slug}`}
-                      className="text-[15px] font-medium text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
-                    >
-                      {n.titulo}
-                    </Link>
-                    <span className="ml-2 text-[12px] text-[var(--text-muted)]">{formatearFecha(n.fecha)}</span>
-                  </li>
-                ))}
-              </ul>
+              <LinkList
+                className="mt-4 space-y-3"
+                items={notas.map((n) => ({
+                  href: `/blog/${n.slug}`,
+                  texto: n.titulo,
+                  extra: <span className="ml-2 text-[12px] text-[var(--text-muted)]">{formatearFecha(n.fecha)}</span>,
+                }))}
+              />
             </FadeIn>
           ) : null}
         </div>

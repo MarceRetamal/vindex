@@ -1,6 +1,6 @@
 import Link from 'next/link'
-
-const baseUrl = 'https://vindexlegal.com.ar'
+import { SITE_URL as baseUrl } from '@/data/site'
+import { JsonLd } from '@/components/seo/JsonLd'
 
 export type Crumb = { name: string; href?: string }
 
@@ -22,7 +22,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
       <nav aria-label="Migas de pan" className="mb-6 md:mb-8">
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)] md:text-xs">
           {todas.map((c, i) => {

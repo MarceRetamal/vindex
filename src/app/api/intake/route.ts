@@ -6,6 +6,7 @@ import {
   AREA_VALUES,
   URGENCIA_LABELS,
   URGENCIA_VALUES,
+  LIMITES,
   type AreaValue,
   type UrgenciaValue,
 } from '@/data/intake'
@@ -24,13 +25,13 @@ type IntakePayload = {
 // 🛡️ VALIDACIÓN SERVER-SIDE — espejo del esquema del formulario, pero acá es
 // la que realmente importa: el navegador se puede saltear, esto no.
 const intakeSchema = z.object({
-  name: z.string().trim().min(2, 'El nombre es obligatorio.').max(120, 'El nombre es demasiado largo.'),
-  phone: z.string().trim().min(6, 'El teléfono es obligatorio.').max(30, 'El teléfono es demasiado largo.'),
-  email: z.union([z.literal(''), z.string().trim().email('Email inválido.').max(200, 'El email es demasiado largo.')]).optional(),
-  localidad: z.string().trim().max(100, 'La localidad es demasiado larga.').optional(),
+  name: z.string().trim().min(LIMITES.nombreMin, 'El nombre es obligatorio.').max(LIMITES.nombreMax, 'El nombre es demasiado largo.'),
+  phone: z.string().trim().min(LIMITES.telefonoMin, 'El teléfono es obligatorio.').max(LIMITES.telefonoMax, 'El teléfono es demasiado largo.'),
+  email: z.union([z.literal(''), z.string().trim().email('Email inválido.').max(LIMITES.emailMax, 'El email es demasiado largo.')]).optional(),
+  localidad: z.string().trim().max(LIMITES.localidadMax, 'La localidad es demasiado larga.').optional(),
   area: z.enum(AREA_VALUES),
   urgency: z.enum(URGENCIA_VALUES),
-  message: z.string().trim().min(10, 'La descripción requiere mayor detalle.').max(800, 'La descripción no debe superar los 800 caracteres.'),
+  message: z.string().trim().min(LIMITES.mensajeMin, 'La descripción requiere mayor detalle.').max(LIMITES.mensajeMax, `La descripción no debe superar los ${LIMITES.mensajeMax} caracteres.`),
   website: z.string().optional(),
 })
 
@@ -56,7 +57,9 @@ function escapeHtml(value: string) {
     .replace(/'/g, '&#039;')
 }
 
-function getTransporter() {
+type Transporter = ReturnType<typeof nodemailer.createTransport>
+
+function getTransporter(): Transporter {
   const smtpHost = getEnv('SMTP_HOST')
   const smtpPort = Number(getEnv('SMTP_PORT'))
   const smtpSecure = parseBoolean(process.env.SMTP_SECURE, true)
@@ -75,7 +78,7 @@ function getTransporter() {
 }
 
 // 1. CORREO INTERNO (llega al estudio)
-async function sendInstitutionalEmail(payload: IntakePayload) {
+async function sendInstitutionalEmail(transporter: Transporter, payload: IntakePayload) {
   const areaLabel = AREA_LABELS[payload.area]
   const urgencyLabel = URGENCIA_LABELS[payload.urgency]
   const localidad = payload.localidad?.trim() || 'No indicó'
@@ -101,7 +104,6 @@ async function sendInstitutionalEmail(payload: IntakePayload) {
 
   const mailFrom = getEnv('MAIL_FROM')
   const mailTo = getEnv('MAIL_TO')
-  const transporter = getTransporter()
 
   await transporter.sendMail({
     from: mailFrom,
@@ -115,7 +117,7 @@ async function sendInstitutionalEmail(payload: IntakePayload) {
 }
 
 // 2. CORREO DE CONFIRMACIÓN (para quien consulta; solo si dejó email)
-async function sendCourtesyEmail(payload: IntakePayload, requestID: string) {
+async function sendCourtesyEmail(transporter: Transporter, payload: IntakePayload, requestID: string) {
   const to = payload.email?.trim()
   if (!to) return
 
@@ -148,7 +150,6 @@ async function sendCourtesyEmail(payload: IntakePayload, requestID: string) {
   `
 
   const mailFrom = getEnv('MAIL_FROM')
-  const transporter = getTransporter()
 
   await transporter.sendMail({
     from: mailFrom,
@@ -159,115 +160,75 @@ async function sendCourtesyEmail(payload: IntakePayload, requestID: string) {
   })
 }
 
-// 3. ENTORNO TRIPLE DISPARO SECUENCIAL (Sincronizado)
+// 3. MENSAJES DE WHATSAPP (tres plantillas, en orden)
 // NOTA: el texto de estos tres mensajes lo definen las plantillas aprobadas en
 // Meta (vindex LEGAL_admision_v2_parte1/2/3), no este código. Si querés cambiar
 // el tono, hay que crear y aprobar plantillas nuevas en Meta Business.
+const WHATSAPP_API = 'https://graph.facebook.com/v18.0'
+const PLANTILLA_WHATSAPP = 'vindex LEGAL_admision_v2_parte'
+
+// Lleva el teléfono que escribió la persona al formato internacional que pide
+// la API de WhatsApp (549...). Solo reconoce los prefijos listados: un número
+// cargado como 221..., 0221... o con 15 se envía tal cual (ver el informe de
+// arquitectura antes de ampliarlo, porque cambia a quién le llega el mensaje).
+function normalizarTelefonoWhatsApp(telefono: string): string {
+  const soloDigitos = telefono.replace(/\D/g, '')
+  if (soloDigitos.startsWith('5409')) return '549' + soloDigitos.substring(4)
+  if (soloDigitos.startsWith('549')) return soloDigitos
+  if (['11', '34', '26', '35'].some((prefijo) => soloDigitos.startsWith(prefijo))) return '549' + soloDigitos
+  return soloDigitos
+}
+
+async function enviarPlantillaWhatsApp(
+  credenciales: { phoneNumberID: string; accessToken: string },
+  destino: string,
+  parte: 1 | 2 | 3,
+  components: unknown[]
+) {
+  const response = await fetch(`${WHATSAPP_API}/${credenciales.phoneNumberID}/messages`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${credenciales.accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      messaging_product: 'whatsapp',
+      to: destino,
+      type: 'template',
+      template: {
+        name: `${PLANTILLA_WHATSAPP}${parte}`,
+        language: { code: 'es_AR' },
+        components,
+      },
+    }),
+  })
+
+  if (!response.ok) {
+    const errData = await response.json()
+    console.error(`Meta API rechazó la Parte ${parte}:`, errData)
+  }
+}
+
 async function sendWhatsAppNotification(payload: IntakePayload, requestID: string) {
   try {
-    const phoneNumberID = getEnv('WA_PHONE_NUMBER_ID')
-    const accessToken = getEnv('WA_ACCESS_TOKEN')
+    const credenciales = { phoneNumberID: getEnv('WA_PHONE_NUMBER_ID'), accessToken: getEnv('WA_ACCESS_TOKEN') }
     const logoUrl = getEnv('WA_LOGO_URL')
+    const destino = normalizarTelefonoWhatsApp(payload.phone)
 
-    let cleanedPhone = payload.phone.replace(/\D/g, '')
-
-    if (cleanedPhone.startsWith('5409')) {
-      cleanedPhone = '549' + cleanedPhone.substring(4)
-    } else if (cleanedPhone.startsWith('549')) {
-      // Formato internacional correcto
-    } else if (cleanedPhone.startsWith('11') || cleanedPhone.startsWith('34') || cleanedPhone.startsWith('26') || cleanedPhone.startsWith('35')) {
-      cleanedPhone = '549' + cleanedPhone
-    }
-
-    // 🚀 MENSAJE 1: Saludo con logotipo + Código de Registro Estratégico
-    const response1 = await fetch(`https://graph.facebook.com/v18.0/${phoneNumberID}/messages`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
+    // Parte 1: saludo con el logo y el número de referencia de la consulta.
+    await enviarPlantillaWhatsApp(credenciales, destino, 1, [
+      { type: 'header', parameters: [{ type: 'image', image: { link: logoUrl } }] },
+      {
+        type: 'body',
+        parameters: [
+          { type: 'text', text: payload.name },
+          { type: 'text', text: requestID },
+        ],
       },
-      body: JSON.stringify({
-        messaging_product: "whatsapp",
-        to: cleanedPhone,
-        type: "template",
-        template: {
-          name: "vindex LEGAL_admision_v2_parte1",
-          language: { code: "es_AR" },
-          components: [
-            {
-              type: "header",
-              parameters: [
-                {
-                  type: "image",
-                  image: { link: logoUrl }
-                }
-              ]
-            },
-            {
-              type: "body",
-              parameters: [
-                { type: "text", text: payload.name },
-                { type: "text", text: requestID }
-              ]
-            }
-          ]
-        }
-      }),
-    })
-
-    if (!response1.ok) {
-      const errData1 = await response1.json()
-      console.error('Meta API rechazó la Parte 1:', errData1)
-    }
-
-    // 🚀 MENSAJE 2: Manifiesto y Quiebre de Simetría (Texto Puro)
-    const response2 = await fetch(`https://graph.facebook.com/v18.0/${phoneNumberID}/messages`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        messaging_product: "whatsapp",
-        to: cleanedPhone,
-        type: "template",
-        template: {
-          name: "vindex LEGAL_admision_v2_parte2",
-          language: { code: "es_AR" },
-          components: []
-        }
-      }),
-    })
-
-    if (!response2.ok) {
-      const errData2 = await response2.json()
-      console.error('Meta API rechazó la Parte 2:', errData2)
-    }
-
-    // 🚀 MENSAJE 3: Protocolo de Confidencialidad + Cierre con Botón Web
-    const response3 = await fetch(`https://graph.facebook.com/v18.0/${phoneNumberID}/messages`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        messaging_product: "whatsapp",
-        to: cleanedPhone,
-        type: "template",
-        template: {
-          name: "vindex LEGAL_admision_v2_parte3",
-          language: { code: "es_AR" },
-          components: []
-        }
-      }),
-    })
-
-    if (!response3.ok) {
-      const errData3 = await response3.json()
-      console.error('Meta API rechazó la Parte 3:', errData3)
-    }
-
+    ])
+    // Parte 2 y 3: texto fijo de la plantilla, sin variables.
+    await enviarPlantillaWhatsApp(credenciales, destino, 2, [])
+    await enviarPlantillaWhatsApp(credenciales, destino, 3, [])
   } catch (waError) {
     console.error('Error de conexión con la infraestructura de WhatsApp:', waError)
   }
@@ -337,12 +298,13 @@ export async function POST(request: Request) {
 
     // El correo al estudio es lo que no puede fallar: si sale bien, la consulta
     // ya está entregada.
-    await sendInstitutionalEmail(payload)
+    const transporter = getTransporter()
+    await sendInstitutionalEmail(transporter, payload)
 
     // La confirmación a quien consulta es secundaria: si falla, se registra pero
     // no se le muestra un error (la consulta ya llegó y reintentar la duplicaría).
     try {
-      await sendCourtesyEmail(payload, requestID)
+      await sendCourtesyEmail(transporter, payload, requestID)
     } catch (courtesyError) {
       console.error('No se pudo enviar el correo de confirmación:', courtesyError)
     }

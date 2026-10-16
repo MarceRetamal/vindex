@@ -2,8 +2,7 @@ import { MetadataRoute } from 'next'
 import { AREAS } from '@/data/areas'
 import { obtenerNotas } from '@/lib/blog'
 import { obtenerTips } from '@/lib/tips'
-
-const baseUrl = 'https://vindexlegal.com.ar'
+import { SITE_URL as baseUrl } from '@/data/site'
 
 export const dynamic = 'force-static'
 

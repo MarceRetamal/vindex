@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { whatsappUrl as armarUrlWhatsApp } from '@/data/site'
+import { track } from '@/lib/track'
 
 export function FloatingWhatsApp() {
   const [isHovered, setIsHovered] = useState(false)
 
-  const phoneNumber = '5491141743745'
-  const message = 'Hola, quisiera solicitar una evaluación jurídica.'
-  const whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + encodeURIComponent(message)
+  const whatsappUrl = armarUrlWhatsApp('Hola, quisiera solicitar una evaluación jurídica.')
 
   const tooltipVisibilityClass = isHovered
     ? 'opacity-100 translate-x-0'
@@ -25,22 +25,15 @@ export function FloatingWhatsApp() {
 
       <a
         href={whatsappUrl}
-  target="_blank"
-  rel="noopener noreferrer"
-  data-glass
-  className="glass glass-strong relative group flex items-center justify-center w-14 h-14 rounded-full hover:scale-105"
-  onMouseEnter={() => setIsHovered(true)}
-  onMouseLeave={() => setIsHovered(false)}
-  onClick={() => {
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'contact_whatsapp', {
-        event_category: 'WhatsApp',
-        event_label: 'Botón flotante',
-      })
-    }
-  }}
-  aria-label="Contactar por WhatsApp"
->
+        target="_blank"
+        rel="noopener noreferrer"
+        data-glass
+        className="glass glass-strong relative group flex items-center justify-center w-14 h-14 rounded-full hover:scale-105"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={() => track('contact_whatsapp', { event_category: 'WhatsApp', event_label: 'Botón flotante' })}
+        aria-label="Contactar por WhatsApp"
+      >
         <div className="absolute inset-0 rounded-full bg-[var(--accent)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <svg

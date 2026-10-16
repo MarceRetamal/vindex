@@ -2,13 +2,15 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { fontBody, fontHeading, fontItalic } from '@/lib/fonts'
 import { legalServiceSchema } from '@/lib/schema'
+import { SITE_URL } from '@/data/site'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 
 const descripcion =
   'Estudio jurídico en La Plata: familia, accidentes de tránsito, laboral, ART y amparos de salud.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://vindexlegal.com.ar'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'VINDEX LEGAL',
     template: '%s | VINDEX LEGAL',
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'VINDEX LEGAL',
     description: descripcion,
-    url: 'https://vindexlegal.com.ar',
+    url: SITE_URL,
     siteName: 'VINDEX LEGAL',
     locale: 'es_AR',
     type: 'website',
@@ -48,10 +50,7 @@ export default function RootLayout({
           <style>{`[data-reveal]{opacity:1!important;transform:none!important;filter:none!important}.preloader{display:none!important}`}</style>
         </noscript>
         {/* 🏛️ Datos estructurados (Schema.org) — identidad del estudio para Google */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }}
-        />
+        <JsonLd data={legalServiceSchema} />
         {children}
 
       </body>
