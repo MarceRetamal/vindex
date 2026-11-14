@@ -19,6 +19,13 @@ const nextConfig: NextConfig = {
         source: '/:path*',
         headers: [
           { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+          // Las mismas protecciones que public/_headers les da a los archivos
+          // estáticos: sin ellas, las páginas (que arma el Worker) quedaban
+          // sin defensa contra clickjacking ni detección de tipo de contenido.
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
         ],
       },
     ];
