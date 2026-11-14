@@ -30,7 +30,9 @@ const intakeSchema = z.object({
 // NOTA: el texto de estos tres mensajes lo definen las plantillas aprobadas en
 // Meta (vindex LEGAL_admision_v2_parte1/2/3), no este código. Si querés cambiar
 // el tono, hay que crear y aprobar plantillas nuevas en Meta Business.
-const WHATSAPP_API = 'https://graph.facebook.com/v18.0'
+// Meta retira cada versión a los ~2 años (la v18.0 venció el 26/1/2026).
+// Revisar el calendario en developers.facebook.com → Graph API → Changelog.
+const WHATSAPP_API = 'https://graph.facebook.com/v25.0'
 const PLANTILLA_WHATSAPP = 'vindex LEGAL_admision_v2_parte'
 
 // Lleva el teléfono que escribió la persona al formato internacional que pide
