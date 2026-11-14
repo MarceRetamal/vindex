@@ -1,11 +1,16 @@
 ---
 titulo: "Cuota alimentaria: cuánto corresponde, hasta cuándo se paga y qué hacer si no pagan"
-titulo_seo: "Cuota alimentaria: monto, plazo y reclamo"
-descripcion: "Los alimentos rigen hasta los 21 años, y hasta los 25 si el hijo estudia (arts. 658 y 663 CCyC). Cómo se calcula la cuota y qué hacer si no pagan."
+titulo_seo: "Cuota alimentaria: qué porcentaje es y hasta cuándo"
+descripcion: "La ley no fija un porcentaje de cuota alimentaria: cómo la calculan los jueces, hasta qué edad se paga (21 o 25 años) y qué hacer si no pagan."
 copete: "Tres preguntas concentran casi todas las consultas: cuánto, hasta cuándo y qué pasa si no paga. Las tres tienen respuesta legal precisa — y varias desmienten lo que se repite en las charlas de WhatsApp."
 materia: "Familia"
 fecha: "2026-07-31"
-actualizado: "2026-07-31"
+actualizado: "2026-11-14"
+faq:
+  - pregunta: "¿Qué porcentaje del sueldo es la cuota alimentaria?"
+    respuesta: "Ninguno fijado por ley. El Código Civil y Comercial no establece un porcentaje: el juez fija la cuota según las necesidades del hijo y la capacidad económica de quien debe pagar. Cuando hay sueldo registrado, suele expresarla como un porcentaje de esos ingresos, que varía según la cantidad de hijos y las circunstancias del caso."
+  - pregunta: "¿Hasta qué edad se paga la cuota alimentaria?"
+    respuesta: "Hasta los 21 años como regla, y hasta los 25 si el hijo estudia o se capacita y eso le impide sostenerse por sí mismo (artículos 658 y 663 del Código Civil y Comercial)."
 resumen:
   - La obligación alimentaria no termina a los 18 años: rige hasta los 21, y hasta los 25 si el hijo estudia.
   - Las tareas cotidianas de cuidado tienen valor económico y cuentan como aporte, según el propio Código Civil y Comercial.
@@ -29,6 +34,14 @@ El error más extendido es creer que la obligación termina con la mayoría de e
 - **Hasta los 21 años** como regla (art. 658). Entre los 18 y los 21 el hijo no tiene que probar que necesita: es el progenitor obligado quien debe acreditar, si pretende dejar de pagar, que el hijo cuenta con recursos propios suficientes.
 
 - **Hasta los 25 años** si el hijo estudia o se prepara en un arte u oficio, y esa formación le impide sostenerse por sí mismo (art. 663). Un hijo cursando una carrera universitaria con dedicación real entra, típicamente, en este supuesto.
+
+## Qué porcentaje del sueldo es la cuota alimentaria
+
+Ninguno fijado por ley. Es la pregunta más repetida, y la respuesta honesta es que el Código Civil y Comercial **no establece un porcentaje**: ni el 20, ni el 30, ni ningún otro número de los que circulan. El juez fija la cuota mirando dos cosas, cuánto necesita el hijo y cuánto puede pagar el obligado, y recién después la expresa de alguna forma.
+
+Cuando el obligado tiene sueldo en blanco, esa forma suele ser un porcentaje de sus ingresos, porque así la cuota se actualiza sola con cada aumento y se puede descontar directamente del recibo. Pero ese porcentaje es el resultado del cálculo, no su punto de partida: cambia según cuántos hijos hay, sus edades, sus gastos reales y lo que aporta cada progenitor. Dos sueldos iguales pueden terminar en cuotas distintas.
+
+Cuando no hay recibo de sueldo, el porcentaje no sirve, y la cuota se fija como una suma con actualización o con referencia a la Canasta de Crianza del INDEC, como se explica a continuación.
 
 ## Cuánto: lo que la ley dice (y lo que no dice)
 
