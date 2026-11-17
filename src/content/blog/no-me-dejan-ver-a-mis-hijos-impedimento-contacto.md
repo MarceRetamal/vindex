@@ -1,11 +1,11 @@
 ---
 titulo: "No me dejan ver a mis hijos: las tres vías legales cuando cortan el contacto"
-titulo_seo: "Impedimento de contacto con hijos: qué hacer"
-descripcion: "El régimen de comunicación es un derecho del hijo. Qué hacer ante el impedimento de contacto: medidas del art. 557 CCyC, vía penal y reclamo de daños."
+titulo_seo: "No me dejan ver a mis hijos: qué hacer y cómo denunciar"
+descripcion: "Si no le dejan ver a sus hijos o lo bloquean, hay tres vías: pedir al juez que haga cumplir el régimen, denuncia penal (Ley 24.270) y reclamo de daños."
 copete: "El teléfono que no contesta, los fines de semana que se cancelan a último momento, las excusas que se acumulan. La ley tiene nombre para eso, y también tiene herramientas. Ninguna de las tres empieza por pelearse."
 materia: "Familia"
 fecha: "2026-07-31"
-actualizado: "2026-07-31"
+actualizado: "2026-11-14"
 resumen:
   - El régimen de comunicación es un derecho de los hijos, no una decisión discrecional de los adultos.
   - Existen tres vías: las medidas del artículo 557 del Código Civil, la denuncia penal y el reclamo de daños y perjuicios.
