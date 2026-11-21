@@ -1,0 +1,9 @@
+# Secretos y artefactos locales del motor de marketing
+.env
+.venv/
+__pycache__/
+*.pyc
+.runs/
+
+# El .gitignore de la raíz ignora `.env*`; esto deja versionar la plantilla.
+!.env.example
