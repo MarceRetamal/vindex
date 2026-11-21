@@ -52,3 +52,6 @@ next-env.d.ts
 
 # estado local de wrangler dev (KV simulado, etc.)
 /.wrangler/
+
+# graphify: grafo de conocimiento generado localmente
+/graphify-out/
