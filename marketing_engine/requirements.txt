@@ -1,0 +1,7 @@
+# Motor de marketing multiagente de Vindex Legal. Python 3.11+
+langgraph>=1.0,<2
+google-genai>=1.0
+pydantic>=2.7,<3
+GitPython>=3.1
+PyYAML>=6.0
+python-dotenv>=1.0
