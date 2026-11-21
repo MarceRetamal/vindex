@@ -36,6 +36,7 @@ def _parser() -> argparse.ArgumentParser:
     p.add_argument("--branch", help="Rama donde commitear (pisa GIT_BRANCH)")
     p.add_argument("--push", action="store_true", help="Hace push de la rama tras commitear (pisa GIT_PUSH)")
     p.add_argument("--mock", action="store_true", help="LLM simulado, sin red ni API key (solo con --dry-run)")
+    p.add_argument("--list-models", action="store_true", help="Lista los modelos Gemini que tu clave puede usar, y termina")
     p.add_argument("--list-areas", action="store_true", help="Muestra las áreas válidas y la cobertura actual, y termina")
     p.add_argument("-q", "--quiet", action="store_true", help="No imprime la bitácora en vivo")
     return p
@@ -91,6 +92,19 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.list_areas:
         return _listar_areas()
+    if args.list_models:
+        if not cfg.gemini_api_key:
+            print("error: falta GEMINI_API_KEY en marketing_engine/.env", file=sys.stderr)
+            return 2
+        from google import genai
+
+        cliente = genai.Client(api_key=cfg.gemini_api_key)
+        for m in cliente.models.list():
+            acciones = getattr(m, "supported_actions", None) or []
+            if "generateContent" in acciones:
+                print((m.name or "").replace("models/", ""))
+        print(f"\nEn uso: estrategia={cfg.modelo_estrategia} · redacción={cfg.modelo_redaccion} · auditoría={cfg.modelo_auditoria} · rápido={cfg.modelo_rapido}")
+        return 0
 
     if args.mode in ("blog", "tip") and not args.area:
         print("error: --mode blog/tip requiere --area <slug> (ver --list-areas)", file=sys.stderr)

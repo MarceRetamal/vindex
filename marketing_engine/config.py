@@ -64,10 +64,10 @@ def _bool(nombre: str, defecto: bool = False) -> bool:
 class Settings:
     gemini_api_key: str = field(default_factory=lambda: os.environ.get("GEMINI_API_KEY", "").strip())
     # Modelos: se pueden cambiar por variable de entorno sin tocar código.
-    modelo_estrategia: str = field(default_factory=lambda: os.environ.get("MODEL_STRATEGY", "gemini-2.5-pro"))
-    modelo_redaccion: str = field(default_factory=lambda: os.environ.get("MODEL_WRITER", "gemini-2.5-pro"))
-    modelo_auditoria: str = field(default_factory=lambda: os.environ.get("MODEL_AUDITOR", "gemini-2.5-pro"))
-    modelo_rapido: str = field(default_factory=lambda: os.environ.get("MODEL_FAST", "gemini-2.5-flash"))
+    modelo_estrategia: str = field(default_factory=lambda: os.environ.get("MODEL_STRATEGY", "gemini-3.1-pro-preview"))
+    modelo_redaccion: str = field(default_factory=lambda: os.environ.get("MODEL_WRITER", "gemini-3.1-pro-preview"))
+    modelo_auditoria: str = field(default_factory=lambda: os.environ.get("MODEL_AUDITOR", "gemini-3.1-pro-preview"))
+    modelo_rapido: str = field(default_factory=lambda: os.environ.get("MODEL_FAST", "gemini-3.1-pro-preview"))
     # LLM simulado, sin red ni clave. Sirve para probar el grafo completo.
     mock: bool = field(default_factory=lambda: _bool("MARKETING_ENGINE_MOCK"))
     max_revisiones: int = field(default_factory=lambda: int(os.environ.get("MAX_REVISIONES", "3")))

@@ -120,7 +120,7 @@ La prioridad de cada área combina su peso comercial (`peso_conversion`, juicio 
 ## Límites conocidos
 
 - Los tips solo pueden pertenecer a las categorías de `CATEGORIAS_TIPS` (`src/lib/tips.ts`): Amparos, Familia, Tránsito, Laboral y ART. Penal, Sucesiones y Consumidor se cubren con notas de blog hasta que el sitio sume esas categorías.
-- Los modelos Gemini por defecto (`MODEL_*`) son configurables; verificá en la documentación de Google qué IDs están vigentes antes del primer uso real.
+- Google retira modelos con frecuencia (`gemini-2.5-pro` ya no está disponible para cuentas nuevas). Los `MODEL_*` son configurables en `.env`; `python -m marketing_engine.main --list-models` muestra los que tu clave puede usar.
 - Las reglas éticas están codificadas como principios y patrones, sin citar artículos de la Ley 5177 ni del Código de Ética del CALP. [CITA A VERIFICAR: artículos de la Ley 5177 y del Código de Ética del Colegio de Abogados sobre publicidad, captación de clientela y promesa de resultados.] Hay que contrastar `PRINCIPIOS_ETICOS` y `PATRONES_PROHIBIDOS` en `config.py` con el texto vigente.
 - La verificación de fuentes del Radar compara dominios consultados por el buscador con los dominios que el modelo declara; reduce las invenciones pero no reemplaza la lectura humana de fallos y normas citados.
 - Los listados numerados de los tips existentes (`src/content/tips/*.md`) tienen los ítems en líneas consecutivas, y el conversor actual los fusiona en un solo `<li>`. El motor genera listas correctas, pero el contenido ya publicado se ve afectado.
