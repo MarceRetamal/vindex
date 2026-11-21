@@ -36,6 +36,9 @@ def _parser() -> argparse.ArgumentParser:
     p.add_argument("--branch", help="Rama donde commitear (pisa GIT_BRANCH)")
     p.add_argument("--push", action="store_true", help="Hace push de la rama tras commitear (pisa GIT_PUSH)")
     p.add_argument("--mock", action="store_true", help="LLM simulado, sin red ni API key (solo con --dry-run)")
+    p.add_argument("--list-models", action="store_true", help="Lista los modelos Gemini que tu clave puede usar, y termina")
+    p.add_argument("--test-models", metavar="ID1,ID2,...",
+                   help="Prueba cada modelo con una llamada real (texto y búsqueda en internet) y dice cuáles sirven")
     p.add_argument("--list-areas", action="store_true", help="Muestra las áreas válidas y la cobertura actual, y termina")
     p.add_argument("-q", "--quiet", action="store_true", help="No imprime la bitácora en vivo")
     return p
@@ -91,6 +94,45 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.list_areas:
         return _listar_areas()
+    if args.test_models:
+        if not cfg.gemini_api_key:
+            print("error: falta GEMINI_API_KEY en marketing_engine/.env", file=sys.stderr)
+            return 2
+        from google import genai
+
+        cliente = genai.Client(api_key=cfg.gemini_api_key)
+        t = genai.types
+        ok = []
+        for modelo in [m.strip().replace("models/", "") for m in args.test_models.split(",") if m.strip()]:
+            estado = []
+            for etiqueta, conf in (
+                ("texto", None),
+                ("búsqueda", t.GenerateContentConfig(tools=[t.Tool(google_search=t.GoogleSearch())])),
+            ):
+                try:
+                    r = cliente.models.generate_content(model=modelo, contents="Respondé solo con la palabra: listo", config=conf)
+                    estado.append(f"{etiqueta} OK" if (r.text or "").strip() else f"{etiqueta} vacío")
+                except Exception as exc:  # noqa: BLE001
+                    estado.append(f"{etiqueta} FALLA ({str(exc)[:90]})")
+            sirve = all(e.endswith("OK") for e in estado)
+            if sirve:
+                ok.append(modelo)
+            print(f"{'✔' if sirve else '✖'} {modelo}: " + " · ".join(estado))
+        print("\nSirven para el motor: " + (", ".join(ok) or "ninguno") + "\nPoné el elegido en las líneas MODEL_* de marketing_engine/.env")
+        return 0 if ok else 1
+    if args.list_models:
+        if not cfg.gemini_api_key:
+            print("error: falta GEMINI_API_KEY en marketing_engine/.env", file=sys.stderr)
+            return 2
+        from google import genai
+
+        cliente = genai.Client(api_key=cfg.gemini_api_key)
+        for m in cliente.models.list():
+            acciones = getattr(m, "supported_actions", None) or []
+            if "generateContent" in acciones:
+                print((m.name or "").replace("models/", ""))
+        print(f"\nEn uso: estrategia={cfg.modelo_estrategia} · redacción={cfg.modelo_redaccion} · auditoría={cfg.modelo_auditoria} · rápido={cfg.modelo_rapido}")
+        return 0
 
     if args.mode in ("blog", "tip") and not args.area:
         print("error: --mode blog/tip requiere --area <slug> (ver --list-areas)", file=sys.stderr)
