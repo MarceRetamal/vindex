@@ -5,3 +5,5 @@ pydantic>=2.7,<3
 GitPython>=3.1
 PyYAML>=6.0
 python-dotenv>=1.0
+# Windows no trae base de husos horarios
+tzdata>=2024.1; sys_platform == 'win32'

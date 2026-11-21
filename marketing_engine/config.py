@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -36,7 +36,11 @@ MARKDOWN_SCRIPT = REPO_ROOT / "scripts" / "markdown.mjs"
 TEMPLATE_BLOG = BLOG_DIR / "_PLANTILLA.txt"
 RUNS_DIR = ENGINE_DIR / ".runs"  # ignorado por git; único lugar donde escribe --dry-run
 
-TZ = ZoneInfo("America/Argentina/Buenos_Aires")
+try:
+    TZ = ZoneInfo("America/Argentina/Buenos_Aires")
+except Exception:  # noqa: BLE001 - Windows sin el paquete tzdata
+    # Argentina no usa horario de verano: UTC-3 fijo equivale a la zona real.
+    TZ = timezone(timedelta(hours=-3), "ART")
 
 
 def hoy() -> date:
