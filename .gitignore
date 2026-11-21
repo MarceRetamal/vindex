@@ -55,3 +55,4 @@ next-env.d.ts
 
 # graphify: grafo de conocimiento generado localmente
 /graphify-out/
+/.claude/settings.json
