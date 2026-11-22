@@ -10,7 +10,13 @@ declare global {
     list(options: { prefix: string; limit?: number }): Promise<{ keys: { name: string; expiration?: number }[] }>
   }
 
+  interface LimitadorBasico {
+    limit(options: { key: string }): Promise<{ success: boolean }>
+  }
+
   interface CloudflareEnv {
+    /** Límite de consultas por IP (Rate Limiting binding, ver wrangler.jsonc). */
+    INTAKE_LIMITER?: LimitadorBasico
     /** Consultas cuyo correo al estudio falló; se reintentan cada 10 minutos. */
     CONSULTAS_PENDIENTES?: KvNamespaceBasico
   }

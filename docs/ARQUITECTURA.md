@@ -35,16 +35,18 @@ public/covers/<slug>.* ┘   (frontmatter, markdown → HTML,                   
 ```
 EvaluationForm (navegador) ── zod + Turnstile ──► POST /api/intake
    1. honeypot `website` → responde ok sin procesar
-   2. verifica Turnstile (Cloudflare)          ── falla → 400
-   3. valida con zod                           ── falla → 400
-   4. correo al estudio (SMTP)                 ── falla → se guarda en KV y se reintenta cada 10 min
+   2. límite por IP (5 por minuto)             ── excedido → 429
+   3. verifica Turnstile (Cloudflare)          ── falla → 400; servicio caído → 503
+   4. valida con zod                           ── falla → 400
+   5. límite por teléfono (3 cada 24 h, KV)    ── excedido → 429
+   6. correo al estudio (SMTP)                 ── falla → se guarda en KV y se reintenta cada 10 min
                                                   (si tampoco se puede guardar → 500)
-   5. correo de cortesía a quien consulta      ┐ en segundo plano (ctx.waitUntil), después
-   6. 3 plantillas de WhatsApp (Meta Graph)    ┘ de responder; si fallan, se registra
-   7. { ok: true }
+   7. correo de cortesía a quien consulta      ┐ en segundo plano (ctx.waitUntil), después
+   8. 3 plantillas de WhatsApp (Meta Graph)    ┘ de responder; si fallan, se registra
+   9. { ok: true }
 ```
 
-Las opciones y los largos de los campos viven en `src/data/intake.ts` y los usan el formulario y el servidor.
+Los límites de intentos viven en `src/lib/intake/limite.ts` (el de IP usa el binding `INTAKE_LIMITER` de `wrangler.jsonc`; ambos se omiten fuera del Worker). La normalización del teléfono está en `src/lib/intake/telefono.ts`. Las opciones y los largos de los campos viven en `src/data/intake.ts` y los usan el formulario y el servidor.
 
 ### 2.3 SEO y datos estructurados
 
@@ -60,17 +62,11 @@ Las opciones y los largos de los campos viven en `src/data/intake.ts` y los usan
 
 Ordenadas por impacto en el negocio.
 
-1. **Normalización del teléfono para WhatsApp** (`normalizarTelefonoWhatsApp`, API de intake). Solo agrega `549` a los números que empiezan con 11, 34, 26 o 35.
-   - Un número de La Plata cargado como `221 555 1234` se envía como `2215551234`, que la API interpreta como prefijo internacional 221 (Senegal).
-   - Uno cargado como `0221 15 ...` se envía con el 0.
-   - En los dos casos el mensaje no llega y el error solo queda en el registro del Worker.
-   - Corregirlo cambia a quién le llega el mensaje, así que queda para una decisión aparte.
-2. **Versión de la API de Meta** (`v18.0`, fija en el código). Meta retira las versiones viejas de la Graph API. Hay que verificar en el panel de Meta que siga activa y planificar la actualización.
+1. ~~**Normalización del teléfono para WhatsApp.**~~ Resuelto el 21/11/2026. `src/lib/intake/telefono.ts` agrega `549` a cualquier número argentino de 10 dígitos nacionales y quita el 0 y el 15 (`221 555 1234`, `0221 15 555 1234`, `+54 9 221 …`). Un número sin código de área o de otro país se envía tal cual y WhatsApp lo rechaza (queda en el registro del Worker).
+2. **Versión de la API de Meta** (`v25.0`, fija en `route.ts`). Meta retira cada versión a los ~2 años (la v18.0 venció el 26/1/2026). Revisar el calendario en el Changelog de la Graph API y planificar la actualización antes del retiro.
 3. ~~**La consulta no se guarda en ningún lado.**~~ Resuelto el 16/10/2026. Si el SMTP falla, la consulta se guarda en Cloudflare KV (`CONSULTAS_PENDIENTES`, `src/lib/intake/pendientes.ts`) y la tarea programada de `worker.ts` la reenvía cada 10 minutos con el asunto "[REENVÍO — recibida el …]". Se borra al entregarse y, como máximo, a los 30 días. Las consultas pendientes se pueden ver en el panel de Cloudflare → Storage & Databases → KV → `vindex-consultas-pendientes`.
 4. ~~**Latencia del envío.**~~ Resuelto el 16/10/2026. La persona solo espera Turnstile y el correo al estudio (o su guardado en KV). La confirmación y los WhatsApp corren después con `ctx.waitUntil`. Con un SMTP de 2 s por mensaje, la respuesta bajó de 4,2 s a 2,1 s, sin contar las 3 llamadas a Meta que también dejaron de esperarse.
-5. **Validación del navegador más laxa que la del servidor.**
-   - El formulario no limita el largo del nombre (120), el teléfono (30) ni el email (200).
-   - Si alguien los supera, recibe el error genérico "Datos inválidos" en lugar de un mensaje en el campo.
+5. ~~**Validación del navegador más laxa que la del servidor.**~~ Resuelto: el formulario usa los mismos `LIMITES` que el servidor (`src/data/intake.ts`).
 6. **Fechas del sitemap escritas a mano** (`lastModified` en `sitemap.ts`). Si se rediseña una página y no se actualiza su fecha, Google recibe una fecha vieja.
 7. **Relación por texto entre notas, tips y áreas.** Un error de tipeo en `materia:` o `categoria:` hace desaparecer los enlaces relacionados sin ningún aviso en el build.
 8. **Conversor de markdown propio.** No escapa comillas dentro de la URL de un enlace. El riesgo es bajo porque el contenido lo escribe solo el estudio, pero no conviene publicar contenido de terceros por esta vía.
@@ -80,7 +76,6 @@ Ordenadas por impacto en el negocio.
 | Tema | Detalle | Acción sugerida |
 |---|---|---|
 | `middleware.ts` | Next 16 lo marca como obsoleto en favor de `proxy.ts`, pero OpenNext todavía no soporta `proxy.ts`. | Migrar cuando OpenNext lo soporte. |
-| `<img>` en `/direccion` | Único aviso de lint. | Evaluar `next/image` con loader de Cloudflare sin tocar el diseño. |
 | Clases repetidas | La etiqueta chica en mayúsculas (`text-[11px] font-bold uppercase tracking-[0.22em]…`) y el cuerpo de artículo (blog y tips, con tamaños distintos) se repiten. | Extraer componentes cuando se toque ese diseño. |
 
 ## 5. Limpieza del 16/10/2026

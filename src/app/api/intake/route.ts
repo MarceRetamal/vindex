@@ -10,6 +10,8 @@ import {
   type Transporter,
 } from '@/lib/intake/correo'
 import { guardarPendiente } from '@/lib/intake/pendientes'
+import { ipExcedida, telefonoExcedido } from '@/lib/intake/limite'
+import { normalizarTelefonoWhatsApp } from '@/lib/intake/telefono'
 import { getCloudflareContext } from '@opennextjs/cloudflare'
 export const runtime = 'nodejs'
 
@@ -34,18 +36,6 @@ const intakeSchema = z.object({
 // Revisar el calendario en developers.facebook.com → Graph API → Changelog.
 const WHATSAPP_API = 'https://graph.facebook.com/v25.0'
 const PLANTILLA_WHATSAPP = 'vindex LEGAL_admision_v2_parte'
-
-// Lleva el teléfono que escribió la persona al formato internacional que pide
-// la API de WhatsApp (549...). Solo reconoce los prefijos listados: un número
-// cargado como 221..., 0221... o con 15 se envía tal cual (ver el informe de
-// arquitectura antes de ampliarlo, porque cambia a quién le llega el mensaje).
-function normalizarTelefonoWhatsApp(telefono: string): string {
-  const soloDigitos = telefono.replace(/\D/g, '')
-  if (soloDigitos.startsWith('5409')) return '549' + soloDigitos.substring(4)
-  if (soloDigitos.startsWith('549')) return soloDigitos
-  if (['11', '34', '26', '35'].some((prefijo) => soloDigitos.startsWith(prefijo))) return '549' + soloDigitos
-  return soloDigitos
-}
 
 async function enviarPlantillaWhatsApp(
   credenciales: { phoneNumberID: string; accessToken: string },
@@ -72,8 +62,17 @@ async function enviarPlantillaWhatsApp(
   })
 
   if (!response.ok) {
-    const errData = await response.json()
-    console.error(`Meta API rechazó la Parte ${parte}:`, errData)
+    // Solo se registra el código del error: el cuerpo completo puede traer el
+    // teléfono de quien consultó. El cuerpo puede no ser JSON.
+    const errData = (await response.json().catch(() => null)) as
+      | { error?: { code?: number; type?: string; fbtrace_id?: string } }
+      | null
+    console.error(`Meta API rechazó la Parte ${parte}:`, {
+      status: response.status,
+      code: errData?.error?.code,
+      type: errData?.error?.type,
+      fbtrace_id: errData?.error?.fbtrace_id,
+    })
   }
 }
 
@@ -119,7 +118,7 @@ async function enSegundoPlano(tarea: () => Promise<void>) {
 // 🔒 Verifica el token de Turnstile contra la API de Cloudflare (siteverify).
 // Si esto falla o no está bien configurado, el envío se rechaza — nunca se
 // asume "humano" por defecto.
-async function verifyTurnstile(token: string, remoteIp: string | null): Promise<boolean> {
+async function verifyTurnstile(token: string, remoteIp: string | null): Promise<boolean | 'error'> {
   const secret = getEnv('TURNSTILE_SECRET_KEY')
 
   const formData = new URLSearchParams()
@@ -127,13 +126,27 @@ async function verifyTurnstile(token: string, remoteIp: string | null): Promise<
   formData.append('response', token)
   if (remoteIp) formData.append('remoteip', remoteIp)
 
-  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-    method: 'POST',
-    body: formData,
-  })
+  try {
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body: formData,
+    })
+    if (!response.ok) return 'error'
+    const outcome = (await response.json()) as { success?: boolean }
+    return outcome.success === true
+  } catch (error) {
+    console.error('No se pudo consultar Turnstile:', error)
+    return 'error'
+  }
+}
 
-  const outcome = (await response.json()) as { success: boolean }
-  return outcome.success === true
+// Número de referencia de la consulta (VX-XXXXXX). 6 caracteres de un alfabeto
+// de 32 sin letras que se confunden (I, O, 0, 1): ~1.000 millones de combinaciones,
+// con números aleatorios criptográficos (&31 sobre un byte no introduce sesgo).
+const ALFABETO_ID = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+function generarRequestID(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(6))
+  return 'VX-' + Array.from(bytes, (b) => ALFABETO_ID[b & 31]).join('')
 }
 
 // 4. ENRUTADOR POST PRINCIPAL
@@ -147,6 +160,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, warnings: [] })
     }
 
+    const clientIp = request.headers.get('CF-Connecting-IP')
+
+    // Límite por IP, antes de gastar una llamada a Turnstile.
+    if (await ipExcedida(clientIp)) {
+      return NextResponse.json(
+        { ok: false, error: 'Recibimos muchos intentos desde tu conexión. Esperá un minuto e intentá de nuevo.' },
+        { status: 429, headers: { 'Retry-After': '60' } }
+      )
+    }
+
     // 🔒 CAPTCHA invisible (Cloudflare Turnstile) — se verifica antes que nada.
     const turnstileToken = String(body.turnstileToken ?? '').trim()
     if (!turnstileToken) {
@@ -156,8 +179,13 @@ export async function POST(request: Request) {
       )
     }
 
-    const clientIp = request.headers.get('CF-Connecting-IP')
     const isHuman = await verifyTurnstile(turnstileToken, clientIp)
+    if (isHuman === 'error') {
+      return NextResponse.json(
+        { ok: false, error: 'No pudimos completar la verificación de seguridad. Intentá de nuevo en unos minutos.' },
+        { status: 503 }
+      )
+    }
     if (!isHuman) {
       return NextResponse.json(
         { ok: false, error: 'No pudimos verificar que sos una persona. Intentá de nuevo.' },
@@ -176,7 +204,15 @@ export async function POST(request: Request) {
 
     const payload: IntakePayload = parsed.data
 
-    const requestID = `VX-${Math.floor(10000 + Math.random() * 90000)}`
+    // Tope de consultas por teléfono: evita usar el sitio para escribirle a un tercero.
+    if (await telefonoExcedido(normalizarTelefonoWhatsApp(payload.phone))) {
+      return NextResponse.json(
+        { ok: false, error: 'Ya recibimos varias consultas con este teléfono. Te vamos a contactar a la brevedad.' },
+        { status: 429 }
+      )
+    }
+
+    const requestID = generarRequestID()
 
     // El correo al estudio es lo que no puede perderse. Si falla, la consulta
     // se guarda y una tarea programada reintenta el envío cada 10 minutos:
