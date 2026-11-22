@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { buildMetadata } from '@/lib/metadata'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { PageCta } from '@/components/ui/PageCta'
@@ -41,12 +42,13 @@ export default function DireccionPage() {
       <div className="mt-16 md:mt-24">
         <FadeIn>
           <div data-glass className="glass flex flex-col items-center gap-6 rounded-[28px] p-6 text-center sm:flex-row sm:items-center sm:text-left md:p-8">
-            <img
+            {/* unoptimized: la foto es un .webp chico de /public; el sitio no usa el optimizador de imágenes de Next en Cloudflare. */}
+            <Image
+              unoptimized
               src={credentials.photoSrc}
               alt={credentials.fullName}
               width={160}
               height={160}
-              decoding="async"
               className="h-28 w-28 shrink-0 rounded-full border border-[var(--border-strong)] object-cover object-top grayscale-[10%] contrast-[1.05] md:h-36 md:w-36"
             />
             <div className="space-y-1.5">
